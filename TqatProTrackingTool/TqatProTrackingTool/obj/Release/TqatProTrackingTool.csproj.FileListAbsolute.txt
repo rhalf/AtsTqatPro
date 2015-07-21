@@ -1,0 +1,10 @@
+C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProTrackingTool\obj\Release\Controls\UserControls\PanelLogin.baml
+C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProTrackingTool\obj\Release\FormMain.baml
+C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProTrackingTool\obj\Release\App.baml
+C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProTrackingTool\obj\Release\Controls\UserControls\PanelLogin.g.cs
+C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProTrackingTool\obj\Release\DialogLogin.g.cs
+C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProTrackingTool\obj\Release\FormMain.g.cs
+C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProTrackingTool\obj\Release\App.g.cs
+C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProTrackingTool\obj\Release\GeneratedInternalTypeHelper.g.cs
+C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProTrackingTool\obj\Release\TqatProTrackingTool_MarkupCompile.cache
+C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProTrackingTool\obj\Release\TqatProTrackingTool_MarkupCompile.lref

@@ -1,0 +1,4 @@
+C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProModel\bin\Debug\TqatProModel.dll
+C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProModel\bin\Debug\TqatProModel.pdb
+C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProModel\obj\Debug\TqatProModel.dll
+C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProModel\obj\Debug\TqatProModel.pdb

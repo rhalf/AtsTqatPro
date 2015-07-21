@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TqatProTrackingTool", "TqatProTrackingTool\TqatProTrackingTool.csproj", "{F3F8CB92-112B-44D2-95FA-D988ADFF4C46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TqatProModel", "TqatProModel\TqatProModel.csproj", "{FA88C06E-F5F9-4171-BAFD-C4197DBE7AA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TqatProViewModel", "TqatProViewModel\TqatProViewModel.csproj", "{AE4C7C58-FE48-4E7D-9B1C-1957A8ABBFD1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3F8CB92-112B-44D2-95FA-D988ADFF4C46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3F8CB92-112B-44D2-95FA-D988ADFF4C46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3F8CB92-112B-44D2-95FA-D988ADFF4C46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3F8CB92-112B-44D2-95FA-D988ADFF4C46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA88C06E-F5F9-4171-BAFD-C4197DBE7AA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA88C06E-F5F9-4171-BAFD-C4197DBE7AA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA88C06E-F5F9-4171-BAFD-C4197DBE7AA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA88C06E-F5F9-4171-BAFD-C4197DBE7AA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE4C7C58-FE48-4E7D-9B1C-1957A8ABBFD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE4C7C58-FE48-4E7D-9B1C-1957A8ABBFD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE4C7C58-FE48-4E7D-9B1C-1957A8ABBFD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE4C7C58-FE48-4E7D-9B1C-1957A8ABBFD1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
