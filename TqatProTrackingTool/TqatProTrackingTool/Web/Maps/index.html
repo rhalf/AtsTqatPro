@@ -28,17 +28,36 @@
             <input type="hidden" id="trackerLabel" />
             <input type="hidden" id="trackerLatitude" />
             <input type="hidden" id="trackerLongitude" />
+            <input type="hidden" id="trackerIcon" />
+            <input type="hidden" id="trackerIconAlert" />
             <input type="hidden" id="trackerDegrees" />
+            <input type="hidden" id="trackerIsEnabled" />
+            <input type="hidden" id="trackerIconStatus" />
             <input type="button" id="trackerSubmit" onclick="parse('TRACKER')" />
         </form>
 
         <form id="formPoi" name="formPoi">
             <input type="hidden" id="poiId" />
             <input type="hidden" id="poiName" />
+            <input type="hidden" id="poiIcon" />
             <input type="hidden" id="poiDescription" />
             <input type="hidden" id="poiLatitude" />
             <input type="hidden" id="poiLongitude" />
             <input type="button" id="poiSubmit" onclick="parse('POI')" />
+        </form>
+
+        <form id="formGeofence" name="formGeofence">
+            <input type="hidden" id="geofenceId" />
+            <input type="hidden" id="geofenceName" />
+            <input type="hidden" id="geofenceCoordinates" />>
+            <input type="button" id="geofenceSubmit" onclick="parse('GEOFENCE')" />
+        </form>
+
+        <form id="formCommand" name="formCommand">
+            <input type="hidden" id="commandId" />
+            <input type="hidden" id="commandName" />
+            <input type="hidden" id="commandValue" />
+            <input type="button" id="commandSubmit" onclick="parse('COMMAND')" />
         </form>
     </div>
 </body>

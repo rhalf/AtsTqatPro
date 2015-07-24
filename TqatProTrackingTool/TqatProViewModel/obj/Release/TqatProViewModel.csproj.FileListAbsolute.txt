@@ -1,0 +1,7 @@
+C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProViewModel\bin\Release\TqatProViewModel.dll
+C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProViewModel\bin\Release\TqatProViewModel.pdb
+C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProViewModel\bin\Release\TqatProModel.dll
+C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProViewModel\bin\Release\TqatProModel.pdb
+C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProViewModel\obj\Release\TqatProViewModel.csprojResolveAssemblyReference.cache
+C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProViewModel\obj\Release\TqatProViewModel.dll
+C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProViewModel\obj\Release\TqatProViewModel.pdb

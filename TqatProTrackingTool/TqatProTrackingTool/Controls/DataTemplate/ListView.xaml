@@ -46,4 +46,18 @@
         </StackPanel>
     </DataTemplate>
 
+    <!--ListViewData-->
+    <DataTemplate x:Key="listViewTrackersData">
+        <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+            <Label Content="{Binding Tracker.Id}"/>
+            <Label Content="{Binding DateTime}"/>
+            <Label Content="{Binding Coordinate}"/>
+            <Label Content="{Binding Speed}"/>
+            <Label Content="{Binding Mileage}"/>
+            <Label Content="{Binding Distance}"/>
+            <Label Content="{Binding EventCode}"/>
+
+        </StackPanel>
+    </DataTemplate>
+
 </ResourceDictionary>

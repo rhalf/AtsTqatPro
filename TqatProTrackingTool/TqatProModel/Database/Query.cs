@@ -433,6 +433,7 @@ namespace TqatProModel.Database {
 
         public TrackerData getTrackerLatestData(Company company, Tracker tracker) {
             TrackerData trackerData = new TrackerData();
+            trackerData.Tracker = tracker;
             try {
                 mysqlConnection.Open();
 
@@ -447,21 +448,20 @@ namespace TqatProModel.Database {
                 MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
 
                 if (!mySqlDataReader.HasRows) {
-                    trackerData = null;
+                    trackerData.isDataEmpty = true;
                     return trackerData;
                 } else {
                     mySqlDataReader.Read();
-                  
+                    trackerData.isDataEmpty = false;
                     trackerData.Id = mySqlDataReader.GetInt32("gm_id");
-                    trackerData.TrackerId = tracker.Id;
                     trackerData.DateTime = Parser.UnixTime.toDateTime(double.Parse(mySqlDataReader.GetString("gm_time")));
-
                     double latitude = double.Parse(mySqlDataReader.GetString("gm_lat"));
                     double longitude = double.Parse(mySqlDataReader.GetString("gm_lng"));
                     trackerData.Coordinate = new Coordinate(latitude, longitude);
 
                     trackerData.Speed = int.Parse(mySqlDataReader.GetString("gm_speed"));
                     trackerData.Degrees = int.Parse(mySqlDataReader.GetString("gm_ori"));
+                    trackerData.Direction= Direction.degreesToCardinalDetailed(double.Parse(mySqlDataReader.GetString("gm_ori")));
                     trackerData.Mileage = double.Parse(mySqlDataReader.GetString("gm_mileage"));
 
                     //1,			            //                                                          (0)

@@ -52,9 +52,11 @@
     <Compile Include="Devices\Meitrack\Mvt100.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="Geofence.cs" />
-    <Compile Include="Location.cs" />
+    <Compile Include="Coordinate.cs" />
+    <Compile Include="MapCommand.cs" />
     <Compile Include="Parser\General.cs" />
     <Compile Include="Poi.cs" />
+    <Compile Include="ThreadProperties.cs" />
     <Compile Include="TrackerData.cs" />
     <Compile Include="Tracker.cs" />
     <Compile Include="User.cs" />

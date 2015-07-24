@@ -46,53 +46,163 @@ namespace TqatProTrackingTool {
         //Variable Items
         Map map = new Map();
 
+        public ThreadProperties threadProperties = new ThreadProperties();
 
         public List<UserItem> userItems;
 
-        Thread threadTrackerUpdateManagerPointer;
+
+        #region Threads
+
+        Thread threadTrackerManagerPointer, threadGeofenceManagerPointer, threadPoiManagerPointer;
+
 
         private void threadTrackerUpdateManager() {
+
+            int maxWorkerThreads = 1000;
+            int maxCompletionPortThreads = 1000;
+            int minWorkerThreads = 100;
+            int minCompletionPortThreads = 100;
+            ThreadPool.SetMaxThreads(maxWorkerThreads, maxCompletionPortThreads);
+            ThreadPool.SetMinThreads(minWorkerThreads, minCompletionPortThreads); 
+
+            //threadProperties.MaxThreadCount = 1000;
+
             while (true) {
                 try {
                     foreach (TrackerItem trackerItem in listViewTrackers.Items) {
-                        if (trackerItem.IsChecked == true) {
-                            ThreadPool.QueueUserWorkItem(new WaitCallback(updateTrackerData), trackerItem);
-                        }
+                        ThreadPool.QueueUserWorkItem(new WaitCallback(updateTrackerData), trackerItem);
+                        Dispatcher.BeginInvoke(new Action(() => {
+                            threadCount.Content = threadProperties.CurrentThreadCount.ToString();
+                        }));
+                        Thread.Sleep(100);
                     }
-                    Thread.Sleep(3000);
+                    Thread.Sleep(5000);
                 } catch (Exception exception) {
+
                 }
             }
         }
+        private void threadGeofenceUpdateManager(object obj) {
+            Dispatcher.BeginInvoke(new Action(() => {
+                while (!webBrowserMap.IsLoaded) {
+                    ;
+                }
 
-        private void updateTrackerData(object state) {
-            TrackerItem trackerItem = (TrackerItem)state;
-            Query query = new Query(database);
+                MapCommand mapCommand = new MapCommand();
+                mapCommand.Name = "ClearGeofence";
+                mapCommand.Value = "";
 
-            //trackerDatas.Enqueue(query.getTrackerLatestData(company, trackerItem.getTracker()));
-            TrackerData trackerData = query.getTrackerLatestData(company, trackerItem.getTracker());
-            if (trackerData != null) {
+                map.processCommand(webBrowserMap, mapCommand);
+            }));
+
+            foreach (Geofence geofence in company.Geofences) {
                 Dispatcher.BeginInvoke(new Action(() => {
-                    Map map = new Map();
-                    map.loadTracker(webBrowserMap, trackerItem.getTracker(), trackerData);
+                    while (!webBrowserMap.IsLoaded) {
+                        ;
+                    }
+
+                    map.loadGeofence(webBrowserMap, geofence);
                 }));
             }
         }
+        private void threadPoiUpdateManager(object obj) {
+            User selectedUser = (User)obj;
 
+            Dispatcher.BeginInvoke(new Action(() => {
+                while (!webBrowserMap.IsLoaded) {
+                    ;
+                }
 
-        //private void threadFuncUpdateMap() {
-        //    Dispatcher.BeginInvoke(new Action(() => {
-        //        webBrowserMap.Refresh();
-        //    }));
+                MapCommand mapCommand = new MapCommand();
+                mapCommand.Name = "ClearPoi";
+                mapCommand.Value = "";
+                map.processCommand(webBrowserMap, mapCommand);
+            }));
 
-        //    for (int count = 0; count < 1500; count++) {
-        //        Thread.Sleep(1);
-        //    }
-        //}
+            if (selectedUser.Pois != null) {
+                foreach (Poi poi in selectedUser.Pois) {
+                    Dispatcher.BeginInvoke(new Action(() => {
+                        while (!webBrowserMap.IsLoaded) {
+                            ;
+                        }
+                        map.loadPoi(webBrowserMap, poi);
+                    }));
+                }
+            }
+        }
+        private void updateTrackerData(object state) {
+            lock (threadProperties) {
+                threadProperties.CurrentThreadCount++;
+            }
+            TrackerItem trackerItem = (TrackerItem)state;
+            Query query = new Query(database);
+            TrackerData trackerData;
 
+            if (trackerItem.IsChecked) {
+                trackerData = query.getTrackerLatestData(company, trackerItem.getTracker());
+            } else {
+                trackerData = new TrackerData();
+                trackerData.Tracker = trackerItem.getTracker();
+                trackerData.isDataEmpty = true;
+            }
+
+            Dispatcher.BeginInvoke(new Action(() => {
+                if (!webBrowserMap.IsLoaded) {
+                    lock (threadProperties) {
+                        threadProperties.CurrentThreadCount--;
+                    }
+                    return;
+                }
+
+                //lock (map) {
+                    map.loadTracker(webBrowserMap, trackerItem, trackerData, (string)ribbonGalleryComboBoxDisplayMember.SelectedValue);
+                //}
+
+                if (trackerData.isDataEmpty == false) {
+                    bool isExisting = false;
+
+                    for (int index = 0; listViewTrackersData.Items.Count > index; index++) {
+                        TrackerData trackerDataItem = (TrackerData)listViewTrackersData.Items[index];
+                        if (trackerDataItem.Tracker.Id == trackerData.Tracker.Id) {
+                            listViewTrackersData.Items.RemoveAt(index);
+                            listViewTrackersData.Items.Insert(index, trackerData);
+                            isExisting = true;
+                            break;
+                        }
+                    }
+
+                    if (isExisting == false) {
+                        listViewTrackersData.Items.Add(trackerData);
+                    }
+                } else {
+                    for (int index = 0; listViewTrackersData.Items.Count > index; index++) {
+                        TrackerData trackerDataItem = (TrackerData)listViewTrackersData.Items[index];
+                        if (trackerDataItem.Tracker.Id == trackerData.Tracker.Id) {
+                            listViewTrackersData.Items.RemoveAt(index);
+                        }
+                    }
+                }
+
+            }));
+
+            lock (threadProperties) {
+                threadProperties.CurrentThreadCount--;
+            }
+        }
+
+        #endregion
+        #region Initialized
         private void loadMap() {
             Uri uri = new Uri(Directory.GetCurrentDirectory() + "\\" + "Web" + "\\" + "Maps" + "\\" + "index.html");
             webBrowserMap.Navigate(uri);
+            webBrowserMap.LoadCompleted += webBrowserMap_LoadCompleted;
+        }
+
+        void webBrowserMap_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e) {
+            threadTrackerManagerPointer = new Thread(threadTrackerUpdateManager);
+            threadTrackerManagerPointer.Start();
+            threadGeofenceManagerPointer = new Thread(threadGeofenceUpdateManager);
+            threadGeofenceManagerPointer.Start();
         }
 
         public FormMain(Company company, User user, List<User> users, List<Tracker> trackers, Database database) {
@@ -116,58 +226,10 @@ namespace TqatProTrackingTool {
 
             RibbonMenuButtonUser.ItemsSource = userItems;
 
-            threadTrackerUpdateManagerPointer = new Thread(threadTrackerUpdateManager);
-            threadTrackerUpdateManagerPointer.Start();
-
         }
+        #endregion
 
-
-        private void formCommandTrackers_Click(object sender, RoutedEventArgs e) {
-
-
-        }
-
-        //private void comboBoxUser_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-        //    ComboBox comboBox = (ComboBox)sender;
-        //    User userClicked = (User)comboBox.SelectedItem;
-        //    List<TrackerItem> trackerItem = new List<TrackerItem>();
-        //    foreach (User selectedUser in users) {
-        //        if (userClicked.Id == selectedUser.Id) {
-        //            foreach (Tracker trackerSelected in trackers) {
-        //                foreach (User trackerUser in trackerSelected.Users) {
-        //                    if (trackerUser.Username == selectedUser.Username) {
-        //                        trackerItem.Add(new TrackerItem(trackerSelected));
-        //                    }
-        //                }
-        //            }
-        //            break;
-        //        }
-        //    }
-        //    listViewTrackers.ItemsSource = trackerItem;
-
-
-
-        //}
-
-        private void comboBoxDisplayMember_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-
-            ComboBox comboBox = (ComboBox)sender;
-            Label labelSelected = (Label)comboBox.SelectedItem;
-
-            //listViewTrackers.ItemTemplate = (DataTemplate)Resources["listView" + labelSelected.Content.ToString()];
-        }
-
-        //private void MetroWindow_SizeChanged(object sender, SizeChangedEventArgs e) {
-        //    if (threadMapUpdater == null)
-        //        return;
-
-        //    if (!threadMapUpdater.IsAlive) {
-        //        threadMapUpdater = new Thread(threadFuncUpdateMap);
-        //        threadMapUpdater.Start();
-        //    }
-        //}
-
-
+        #region RibbonMenuButton
         private void StyleRibbonMenuButtonUser_Click(object sender, RoutedEventArgs e) {
             RibbonMenuItem ribbonMenuItemSender = (RibbonMenuItem)sender;
 
@@ -176,11 +238,9 @@ namespace TqatProTrackingTool {
             List<TrackerItem> trackerItem = new List<TrackerItem>();
             foreach (User selectedUser in users) {
                 if (userClicked.Id == selectedUser.Id) {
-                    if (selectedUser.Pois != null) {
-                        foreach (Poi poi in selectedUser.Pois) {
-                            map.loadPoi(webBrowserMap, poi);
-                        }
-                    }
+
+                    threadPoiManagerPointer = new Thread(threadPoiUpdateManager);
+                    threadPoiManagerPointer.Start(selectedUser);
 
                     foreach (Tracker trackerSelected in trackers) {
                         foreach (User trackerUser in trackerSelected.Users) {
@@ -196,20 +256,27 @@ namespace TqatProTrackingTool {
             DataTemplate dataTemplate = (DataTemplate)Application.Current.Resources["listViewVehicleRegistration"];
             listViewTrackers.ItemTemplate = dataTemplate;
 
-            //User userInstance = userClicked.getUser();
-
-        }
-
-        private void RibbonGalleryComboBoxTrackers_SelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
-            RibbonGallery ribbonGallery = (RibbonGallery)sender;
+            for (int index = 0; index < listViewTrackers.Items.Count; index++) {
+                ((TrackerItem)listViewTrackers.Items[index]).IsChecked = true;
+            }
         }
 
         private void RibbonComboBoxDisplayMember_SelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
             RibbonGallery ribbonGallery = (RibbonGallery)sender;
             RibbonGalleryItem ribbonGalleryItem = (RibbonGalleryItem)ribbonGallery.SelectedItem;
 
-            DataTemplate dataTemplate = (DataTemplate)Application.Current.Resources["listView" + ribbonGalleryItem.Content];
+            DataTemplate dataTemplate = (DataTemplate)Application.Current.Resources["listView" + ribbonGalleryItem.Content.ToString()];
             listViewTrackers.ItemTemplate = dataTemplate;
+
+            GridView gridView = (GridView)listViewTrackersData.View;
+
+            for (int index = 0; gridView.Columns.Count > index; index++) {
+                if (gridView.Columns[index].Header.ToString() == "Label") {
+                    Binding binding = new Binding("Tracker." + ribbonGalleryItem.Content.ToString());
+
+                    gridView.Columns[index].DisplayMemberBinding = binding;
+                }
+            }
         }
 
         private void ribbonButtonTrackers_Click(object sender, RoutedEventArgs e) {
@@ -219,6 +286,50 @@ namespace TqatProTrackingTool {
                 gridTrackers.Width = 200;
             }
         }
+
+        #endregion
+
+
+        private void formCommandTrackers_Click(object sender, RoutedEventArgs e) {
+
+
+        }
+
+        private void ribbonButtonTrackersData_Click(object sender, RoutedEventArgs e) {
+            if (gridTrackersData.Height == 300) {
+                gridTrackersData.Height = 0;
+            } else {
+                gridTrackersData.Height = 300;
+            }
+
+        }
+
+
+
+        private void listViewTrackersData_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            ListView listViewTrackersData = (ListView)sender;
+            TrackerData trackerData = (TrackerData)listViewTrackersData.SelectedItem;
+
+            if (trackerData == null)
+                return;
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("[{\"Latitude\":\"");
+            stringBuilder.Append(trackerData.Coordinate.latitude.ToString());
+            stringBuilder.Append("\",\"Longitude\":\"");
+            stringBuilder.Append(trackerData.Coordinate.longitude.ToString());
+            stringBuilder.Append("\"}]");
+
+            if (webBrowserMap.IsLoaded) {
+                MapCommand mapCommand = new MapCommand();
+                mapCommand.Name = "SetFocus";
+                mapCommand.Value = stringBuilder.ToString();
+
+                map.processCommand(webBrowserMap, mapCommand);
+            }
+        }
+
+
 
 
 

@@ -9,11 +9,22 @@ using TqatProModel.Devices.Meitrack;
 namespace TqatProModel {
 
     public class TrackerData {
-        public int Id {
+
+
+        public bool isDataEmpty {
             get;
             set;
         }
-        public int TrackerId {
+
+        public TrackerData() {
+        }
+
+        public Tracker Tracker {
+            get;
+            set;
+        }
+
+        public int Id {
             get;
             set;
         }
@@ -85,6 +96,8 @@ namespace TqatProModel {
             get;
             set;
         }
+
+
     }
 }
 

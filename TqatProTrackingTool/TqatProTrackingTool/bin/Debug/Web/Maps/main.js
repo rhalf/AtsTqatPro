@@ -3,6 +3,7 @@ var polyLines = new Array();
 var markers = new Array();
 var infoWindows = new Array();
 var geofences = new Array();
+var geofencesLabels = new Array();
 var pois = new Array();
 var mapLabels = new Array();
 
@@ -14,7 +15,7 @@ function initialize() {
 
     var mapProp = {
         center: coordinate,
-        zoom: 11,
+        zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
@@ -23,31 +24,31 @@ function initialize() {
     //setInterval(update, 3000);
 }
 
-function update() {
-    for (var index = 0; index < markers.length; index++) {
-        markers[index].setMap(map);
-    }
+//function update() {
+//    for (var index = 0; index < markers.length; index++) {
+//        markers[index].setMap(map);
+//    }
 
-    for (var index = 0; index < polyLines.length; index++) {
-        polyLines[index].setMap(map);
-    }
+//    for (var index = 0; index < polyLines.length; index++) {
+//        polyLines[index].setMap(map);
+//    }
 
-    for (var index = 0; index < infoWindows.length; index++) {
-        infoWindows[index].open(map);
-    }
+//    for (var index = 0; index < infoWindows.length; index++) {
+//        infoWindows[index].open(map);
+//    }
 
-    for (var index = 0; index < geofences.length; index++) {
-        geofences[index].open(map);
-    }
+//    for (var index = 0; index < geofences.length; index++) {
+//        geofences[index].setMap(map);
+//    }
 
-    for (var index = 0; index < pois.length; index++) {
-        pois[index].setMap(map);
-    }
+//    for (var index = 0; index < pois.length; index++) {
+//        pois[index].setMap(map);
+//    }
 
-    for (var index = 0; index < mapLabels.length; index++) {
-        mapLabels[index].setMap(map);
-    }
-}
+//    for (var index = 0; index < mapLabels.length; index++) {
+//        mapLabels[index].setMap(map);
+//    }
+//}
 
 google.maps.event.addDomListener(window, 'load', initialize);
 

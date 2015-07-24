@@ -5,8 +5,12 @@ function Tracker() {
     this.Label = "";
     this.Latitude = "";
     this.Longitude = "";
+    this.Icon = "";
+    this.IconAlert = "";
     this.Orientation = "";
     this.Longitude = "";
+    this.IsEnabled = "";
+    this.IconStatus = "";
 }
 
 function Poi() {
@@ -15,4 +19,17 @@ function Poi() {
     this.Description = "";
     this.Latitude = "";
     this.Longitude = "";
+    this.Icon = "";
+}
+
+function Geofence() {
+    this.Id = "";
+    this.Name = "";
+    this.Coordinates = "";
+}
+
+function Command() {
+    this.Id = "";
+    this.Name = "";
+    this.Value = "";
 }

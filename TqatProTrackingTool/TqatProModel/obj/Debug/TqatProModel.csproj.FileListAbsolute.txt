@@ -2,3 +2,7 @@ C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatPro
 C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProModel\bin\Debug\TqatProModel.pdb
 C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProModel\obj\Debug\TqatProModel.dll
 C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProModel\obj\Debug\TqatProModel.pdb
+C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProModel\bin\Debug\TqatProModel.dll
+C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProModel\bin\Debug\TqatProModel.pdb
+C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProModel\obj\Debug\TqatProModel.dll
+C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProModel\obj\Debug\TqatProModel.pdb

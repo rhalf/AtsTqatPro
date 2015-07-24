@@ -82,5 +82,9 @@ namespace TqatProModel {
             }
             return status;
         }
+
+        public override string ToString() {
+            return this.Name;
+        }
     }
 }
