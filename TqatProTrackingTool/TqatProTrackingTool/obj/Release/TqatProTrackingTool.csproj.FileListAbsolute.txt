@@ -8,7 +8,6 @@ C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatPro
 C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProTrackingTool\obj\Release\GeneratedInternalTypeHelper.g.cs
 C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProTrackingTool\obj\Release\TqatProTrackingTool_MarkupCompile.cache
 C:\Users\Ralph\Documents\Visual Studio 2013\Projects\TqatProTrackingTool\TqatProTrackingTool\obj\Release\TqatProTrackingTool_MarkupCompile.lref
-C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\bin\Release\TqatProTrackingTool.exe.config
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\bin\Release\Web\Maps\images\alarm\alarmExpiry.png
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\bin\Release\Web\Maps\images\alarm\alarmGeofence.png
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\bin\Release\Web\Maps\images\alarm\alarmLostSignal.png
@@ -89,6 +88,7 @@ C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTracking
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\bin\Release\Web\Maps\libraries\css\style.css
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\bin\Release\Web\Maps\index.html
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\bin\Release\Web\Maps\html.html
+C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\bin\Release\TqatProTrackingTool.exe.config
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\bin\Release\TqatProTrackingTool.exe
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\bin\Release\TqatProTrackingTool.pdb
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\bin\Release\MahApps.Metro.dll
@@ -113,7 +113,6 @@ C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTracking
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\obj\Release\Controls\DataTemplate\ListView.baml
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\obj\Release\Controls\Style\GridSplitter.baml
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\obj\Release\Controls\UserControls\PanelLogin.baml
-C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\obj\Release\FormMain.baml
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\obj\Release\App.baml
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\obj\Release\Controls\UserControls\PanelLogin.g.cs
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\obj\Release\DialogLogin.g.cs
@@ -124,6 +123,7 @@ C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTracking
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\obj\Release\TqatProTrackingTool_MarkupCompile.cache
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\obj\Release\TqatProTrackingTool_MarkupCompile.lref
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\obj\Release\DialogLogin.baml
+C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\obj\Release\FormMain.baml
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\obj\Release\TqatProTrackingTool.g.resources
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\obj\Release\TqatProTrackingTool.Properties.Resources.resources
 C:\Users\Ralph\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProTrackingTool\obj\Release\TqatProTrackingTool.csproj.GenerateResource.Cache

@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:TqatProTrackingTool"
         x:Class="TqatProTrackingTool.FormMain"
         
-        Title="FormMain" Height="600" Width="400"
+        Title="Tqat Pro Tracking Tool" Height="600" Width="400"
         GlowBrush="{DynamicResource AccentColorBrush}"
         ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"
@@ -20,9 +20,9 @@
       
         ShowMinButton="False"
         ShowMaxRestoreButton="False"
-     
+        
         WindowButtonCommandsOverlayBehavior="Always"
-       
+        Icon="Resources/images/128/Ats/satellite_01.png"
     >
 
 
@@ -60,7 +60,38 @@
             <ColumnDefinition  Width="*"/>
         </Grid.ColumnDefinitions>
         <Ribbon Grid.Column="0" Grid.Row="0">
-            <RibbonTab Header="Trackers">
+            <Ribbon.ApplicationMenu>
+                <RibbonApplicationMenu>
+                    <RibbonApplicationMenuItem ImageSource="Resources/images/128/Ats/logo_01.png" Header="Advanced Technologies And Solutions" Click="RibbonApplicationMenuItemAts_Click"></RibbonApplicationMenuItem>
+                    <Label></Label>
+                    <Label></Label>
+                    <Label></Label>
+                    <Label></Label>
+                    <RibbonApplicationMenu.AuxiliaryPaneContent>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Company : "></Label>
+                                <Label x:Name="labelCompany"></Label>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Username : "></Label>
+                                <Label x:Name="labelUser"></Label>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Connected : "></Label>
+                                <Label x:Name="labelDatabaseHost"></Label>
+                            </StackPanel>
+                        </StackPanel>
+                    </RibbonApplicationMenu.AuxiliaryPaneContent>
+                    <RibbonApplicationMenu.FooterPaneContent>
+                        <StackPanel Orientation="Horizontal">
+                            <RibbonApplicationMenuItem ImageSource="Resources/images/128/Animated/logout_01.png" Header="Logout" Click="RibbonApplicationMenuItemLogout_Click"></RibbonApplicationMenuItem>
+                            <RibbonApplicationMenuItem ImageSource="Resources/images/128/Animated/shutdown_01.png" Header="Exit" Click="RibbonApplicationMenuItemExit_Click"></RibbonApplicationMenuItem>
+                        </StackPanel>
+                    </RibbonApplicationMenu.FooterPaneContent>
+                </RibbonApplicationMenu>
+            </Ribbon.ApplicationMenu>
+            <RibbonTab Header="Live Tracking">
                 <RibbonGroup Header="User">
                     <RibbonMenuButton x:Name="RibbonMenuButtonUser" LargeImageSource="Resources/images/128/Animated/user_00.png" Label="User" ItemContainerStyle="{StaticResource StyleRibbonMenuButtonUser}"/>
                 </RibbonGroup>
@@ -82,9 +113,9 @@
 
                 </RibbonGroup>
                 <RibbonGroup Header="Trackers">
-                    <RibbonButton x:Name="ribbonButtonTrackers" LargeImageSource="Resources/images/128/Animated/car_00.png" Label="Trackers List" Click="ribbonButtonTrackers_Click"/>
+                    <RibbonButton x:Name="ribbonButtonTrackers" LargeImageSource="Resources/images/128/Animated/car_00.png" Label="List  Show Hide" Click="ribbonButtonTrackers_Click"/>
 
-                    <RibbonButton x:Name="ribbonButtonTrackersData" LargeImageSource="Resources/images/128/Animated/car_00.png" Label="Trackers Data" Click="ribbonButtonTrackersData_Click"/>
+                    <RibbonButton x:Name="ribbonButtonTrackersData" LargeImageSource="Resources/images/128/Animated/car_00.png" Label="Data Show Hide" Click="ribbonButtonTrackersData_Click"/>
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
@@ -95,10 +126,35 @@
                 <ColumnDefinition Width="*"/>
                 <!--<ColumnDefinition Width="*"/>-->
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="gridTrackers" Width="0">
-                <GroupBox Header="Trackers" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <ListView x:Name="listViewTrackers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2"/>
+            <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="gridTrackers" Width="200">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <GroupBox Grid.Row="0" Header="Trackers" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <ListView x:Name="listViewTrackers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2" SelectionChanged="listViewTrackers_SelectionChanged">
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Check All" Padding="3" Margin="3" Click="MenuItemlistViewTrackers_checkAll_Click">
+                                    <MenuItem.Icon>
+                                        <Image Source="Resources/images/16/checkAll.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Uncheck All" Padding="3" Margin="3" Click="MenuItemlistViewTrackers_uncheckAll_Click">
+                                    <MenuItem.Icon>
+                                        <Image Source="Resources/images/16/uncheckAll.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                    </ListView>
                 </GroupBox>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <Label Content="Trackers : "/>
+                    <Label Content="{Binding Items.Count, ElementName=listViewTrackers, Mode=OneWay}"/>
+                    <!--<Label Content="Checked : "/>
+                    <Label x:Name="labelCheckedTrackerItems"/>-->
+                </StackPanel>
             </Grid>
             <Grid Grid.Column="1" >
                 <Grid.RowDefinitions>
@@ -106,60 +162,60 @@
                     <RowDefinition Height="auto" MaxHeight="300"/>
                 </Grid.RowDefinitions>
                 <WebBrowser Grid.Row="0" x:Name="webBrowserMap"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Panel.ZIndex="-100"/>
-                <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="gridTrackersData" Height="0">
+                <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="gridTrackersData"  Height="300">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <GroupBox Grid.Row="0" Header="Trackers Data" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <ListView x:Name="listViewTrackersData" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2" SelectionChanged="listViewTrackersData_SelectionChanged">
-                            <!--ItemTemplate="{StaticResource listViewTrackersData}"-->
-                            <ListView.View>
-                                <GridView AllowsColumnReorder="false">
-                                    <!--<GridViewColumn Header="Id" Width="Auto" DisplayMemberBinding="{Binding Tracker.Id}"/>-->
-                                    <GridViewColumn Header="Label" Width="Auto" DisplayMemberBinding="{Binding Tracker.VehicleRegistration}"/>
-                                    <GridViewColumn Header="Date" Width="Auto" DisplayMemberBinding="{Binding DateTime}" />
-                                    <GridViewColumn Header="Coordinate" Width="Auto" DisplayMemberBinding="{Binding Coordinate}" />
-                                    <GridViewColumn Header="Speed" Width="Auto" DisplayMemberBinding="{Binding Speed}" />
-                                    <GridViewColumn Header="Mileage" Width="Auto" DisplayMemberBinding="{Binding Mileage}" />
-                                    <GridViewColumn Header="Altitude" Width="Auto" DisplayMemberBinding="{Binding Altitude}" />
-                                    <GridViewColumn Header="Degrees" Width="Auto" DisplayMemberBinding="{Binding Degrees}" />
-                                    <GridViewColumn Header="Direction" Width="Auto" DisplayMemberBinding="{Binding Direction}" />
-                                    <GridViewColumn Header="GpsSatellites" Width="Auto" DisplayMemberBinding="{Binding GpsSatellites}" />
-                                    <GridViewColumn Header="GsmSignal" Width="Auto" DisplayMemberBinding="{Binding GsmSignal}" />
+                    <Grid Grid.Row="0"   HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <GroupBox  Header="Trackers Data" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <ListView x:Name="listViewTrackersData" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2" SelectionChanged="listViewTrackersData_SelectionChanged" >
+                                <!--ItemTemplate="{StaticResource listViewTrackersData}"-->
+                                <ListView.View>
+                                    <GridView AllowsColumnReorder="false">
+                                        <!--<GridViewColumn Header="Id" Width="Auto" DisplayMemberBinding="{Binding Tracker.Id}"/>-->
+                                        <GridViewColumn Header="Label" Width="Auto" DisplayMemberBinding="{Binding Tracker.VehicleRegistration}"/>
+                                        <GridViewColumn Header="Date" Width="Auto" DisplayMemberBinding="{Binding DateTime}" />
+                                        <GridViewColumn Header="Coordinate" Width="Auto" DisplayMemberBinding="{Binding Coordinate}" />
+                                        <GridViewColumn Header="Speed" Width="Auto" DisplayMemberBinding="{Binding Speed}" />
+                                        <GridViewColumn Header="Mileage" Width="Auto" DisplayMemberBinding="{Binding Mileage}" />
+                                        <GridViewColumn Header="Altitude" Width="Auto" DisplayMemberBinding="{Binding Altitude}" />
+                                        <GridViewColumn Header="Degrees" Width="Auto" DisplayMemberBinding="{Binding Degrees}" />
+                                        <GridViewColumn Header="Direction" Width="Auto" DisplayMemberBinding="{Binding Direction}" />
+                                        <GridViewColumn Header="GpsSatellites" Width="Auto" DisplayMemberBinding="{Binding GpsSatellites}" />
+                                        <GridViewColumn Header="GsmSignal" Width="Auto" DisplayMemberBinding="{Binding GsmSignal}" />
 
-                                    <GridViewColumn Header="ACC" Width="Auto">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <CheckBox IsChecked="{Binding ACC}" IsHitTestVisible="False"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn Header="SOS" Width="Auto">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <CheckBox IsChecked="{Binding SOS}" IsHitTestVisible="False"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn Header="OverSpeed" Width="Auto">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <CheckBox IsChecked="{Binding OverSpeed}"  IsHitTestVisible="False"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn Header="EventCode" Width="Auto" DisplayMemberBinding="{Binding EventCode}" />
-                                    <GridViewColumn Header="Battery" Width="Auto" DisplayMemberBinding="{Binding Battery}" />
-                                    <GridViewColumn Header="BatteryVoltage" Width="Auto" DisplayMemberBinding="{Binding BatteryVoltage}" />
-                                    <GridViewColumn Header="ExternalVoltage" Width="Auto" DisplayMemberBinding="{Binding ExternalVoltage}" />
-                                    <GridViewColumn Header="Geofence" Width="Auto" DisplayMemberBinding="{Binding Geofence}" />
-                                </GridView>
-                            </ListView.View>
-
-                        </ListView>
-
-                    </GroupBox>
+                                        <GridViewColumn Header="ACC" Width="Auto">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox IsChecked="{Binding ACC}" IsHitTestVisible="False"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="SOS" Width="Auto">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox IsChecked="{Binding SOS}" IsHitTestVisible="False"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="OverSpeed" Width="Auto">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox IsChecked="{Binding OverSpeed}"  IsHitTestVisible="False"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="EventCode" Width="Auto" DisplayMemberBinding="{Binding EventCode}" />
+                                        <GridViewColumn Header="Battery" Width="Auto" DisplayMemberBinding="{Binding Battery}" />
+                                        <GridViewColumn Header="BatteryVoltage" Width="Auto" DisplayMemberBinding="{Binding BatteryVoltage}" />
+                                        <GridViewColumn Header="ExternalVoltage" Width="Auto" DisplayMemberBinding="{Binding ExternalVoltage}" />
+                                        <GridViewColumn Header="Geofence" Width="Auto" DisplayMemberBinding="{Binding Geofence}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </GroupBox>
+                    </Grid>
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
                         <Label Content="Trackers : "/>
                         <Label Content="{Binding Items.Count, ElementName=listViewTrackersData, Mode=OneWay}"/>

@@ -245,7 +245,7 @@ namespace TqatProModel.Database {
             }
         }
 
-        public List<User> getUsers(Company company) {
+        public List<User> getUsers(Company company, User user) {
             List<User> users = new List<User>();
             try {
                 mysqlConnection = new MySqlConnection(database.getConnectionString());
@@ -254,7 +254,8 @@ namespace TqatProModel.Database {
 
                 string sql =
                     "SELECT * " +
-                    "FROM cmp_" + company.DatabaseName + ".usrs";
+                    "FROM cmp_" + company.DatabaseName + ".usrs " +
+                    "WHERE cmp_" + company.DatabaseName + ".usrs.upriv >= " + user.AccessLevel.ToString() + ";";
 
                 MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
 
@@ -265,37 +266,37 @@ namespace TqatProModel.Database {
                     throw new QueryException(1, "Users table is empty.");
                 } else {
                     while (mySqlDataReader.Read()) {
-                        User user = new User();
-                        user.Id = mySqlDataReader.GetInt32("uid");
-                        user.Username = mySqlDataReader.GetString("uname");
-                        user.Password = mySqlDataReader.GetString("upass");
-                        user.Email = mySqlDataReader.GetString("uemail");
-                        user.Main = mySqlDataReader.GetString("umain");
-                        user.AccessLevel = int.Parse(mySqlDataReader.GetString("upriv"));
-                        user.Timezone = mySqlDataReader.GetString("utimezone");
-                        user.IsActive = mySqlDataReader.GetString("uactive").Equals("1");
-                        user.DatabaseName = mySqlDataReader.GetString("udbs");
+                        User userSubordinate = new User();
+                        userSubordinate.Id = mySqlDataReader.GetInt32("uid");
+                        userSubordinate.Username = mySqlDataReader.GetString("uname");
+                        userSubordinate.Password = mySqlDataReader.GetString("upass");
+                        userSubordinate.Email = mySqlDataReader.GetString("uemail");
+                        userSubordinate.Main = mySqlDataReader.GetString("umain");
+                        userSubordinate.AccessLevel = int.Parse(mySqlDataReader.GetString("upriv"));
+                        userSubordinate.Timezone = mySqlDataReader.GetString("utimezone");
+                        userSubordinate.IsActive = mySqlDataReader.GetString("uactive").Equals("1");
+                        userSubordinate.DatabaseName = mySqlDataReader.GetString("udbs");
 
                         if (!String.IsNullOrEmpty(mySqlDataReader.GetString("uexpiredate"))) {
                             string dateTime = (mySqlDataReader.GetString("uexpiredate"));
                             if (!String.IsNullOrEmpty(dateTime)) {
                                 DateTime parsedDate = SubStandard.dateTime(dateTime);
-                                user.DateTimeExpired = parsedDate;
+                                userSubordinate.DateTimeExpired = parsedDate;
                             }
                         } else {
-                            user.DateTimeExpired = new DateTime(2050, 01, 01);
+                            userSubordinate.DateTimeExpired = new DateTime(2050, 01, 01);
                         }
 
                         if (!String.IsNullOrEmpty(mySqlDataReader.GetString("ucreatedate"))) {
                             string dateTime = mySqlDataReader.GetString("ucreatedate");
                             if (!String.IsNullOrEmpty(dateTime)) {
                                 DateTime parsedDate = SubStandard.dateTime(dateTime);
-                                user.DateTimeCreated = parsedDate;
+                                userSubordinate.DateTimeCreated = parsedDate;
                             }
                         } else {
-                            user.DateTimeCreated = new DateTime(2010, 01, 01);
+                            userSubordinate.DateTimeCreated = new DateTime(2010, 01, 01);
                         }
-                        users.Add(user);
+                        users.Add(userSubordinate);
                     }
                     mySqlDataReader.Dispose();
                 }
@@ -438,10 +439,15 @@ namespace TqatProModel.Database {
                 mysqlConnection.Open();
 
                 string sql =
-                     "SELECT * " +
+                     //"SELECT * " +
+                     //"FROM trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + " " +
+                     //"ORDER BY " +
+                     //"trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + ".gm_time " +
+                     //"DESC limit 1;";
+                    "SELECT * " +
                      "FROM trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + " " +
                      "ORDER BY " +
-                     "trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + ".gm_time " +
+                     "trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + ".gm_id " +
                      "DESC limit 1;";
 
                 MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
@@ -523,12 +529,13 @@ namespace TqatProModel.Database {
                     return trackerData;
                 }
 
-            } catch (QueryException queryException) {
-                throw queryException;
-            } catch (MySqlException mySqlException) {
-                throw new QueryException(1, mySqlException.Message);
+            //} catch (QueryException queryException) {
+                //throw queryException;
+            //} catch (MySqlException mySqlException) {
+                //throw new QueryException(1, mySqlException.Message);
             } catch (Exception exception) {
-                throw new QueryException(1, exception.Message);
+                //throw new QueryException(1, exception.Message);
+                return trackerData;
             } finally {
                 mysqlConnection.Close();
             }

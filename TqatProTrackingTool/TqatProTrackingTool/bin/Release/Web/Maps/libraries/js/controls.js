@@ -8,12 +8,18 @@
             mapTool.addPoi(poi);
             break;
         case "TRACKER":
-            var tracker = parser.getTracker();
-            mapTool.addTracker(tracker);
+            setTimeout(function () {
+                var tracker = parser.getTracker();
+                mapTool.addTracker(tracker);
+            }, 0);
             break;
         case "GEOFENCE":
             var geofence = parser.getGeofence();
             mapTool.addGeofence(geofence);
+            break;
+        case "COMMAND":
+            var command = parser.getCommand();
+            mapTool.processCommand(command);
             break;
     }
 }
@@ -38,7 +44,8 @@ function Parser() {
         tracker.Degrees = document.getElementById("trackerDegrees").value;
         tracker.Icon = document.getElementById("trackerIcon").value;
         tracker.IconAlert = document.getElementById("trackerIconAlert").value;
-        tracker.IsChecked = document.getElementById("trackerIsChecked").value;
+        tracker.IsEnabled = document.getElementById("trackerIsEnabled").value;
+        tracker.IconStatus = document.getElementById("trackerIconStatus").value;
 
         return tracker;
     }
@@ -48,6 +55,13 @@ function Parser() {
         geofence.Coordinates = document.getElementById("geofenceCoordinates").value;
         geofence.Name = document.getElementById("geofenceName").value;
         return geofence;
+    }
+    this.getCommand = function () {
+        command = new Command();
+        command.Id = document.getElementById("commandId").value;
+        command.Name = document.getElementById("commandName").value;
+        command.Value = document.getElementById("commandValue").value;
+        return command;
     }
 }
 
@@ -123,33 +137,34 @@ function MapTool() {
         geofencesLabels.push(labelGeofence);
     }
     this.addTracker = function () {
+        //alert(tracker.IconAlert);
         var coordinate = new google.maps.LatLng(tracker.Latitude, tracker.Longitude);
 
 
-        if (tracker.IsChecked != 1) {
-            for (var index in markers) {
-                if (markers[index].trackerId == tracker.Id) {
-                    markers[index].setMap(null);
-                    delete markers[index];
+        if (tracker.IsEnabled != 1) {
+            for (var index in trackers) {
+                if (trackers[index].trackerId == tracker.Id) {
+                    trackers[index].setMap(null);
+                    delete trackers[index];
                     return;
                 }
             }
             return;
-        } 
+        }
 
-        //alert(tracker.IconAlert);
+
 
         var markerTracker =
        '<div class="divTracker">' +
            '<img class="imgTrackerAlarm" src="images/alarm/' + tracker.IconAlert + '.png"/>' +
-           '<img class="imgTrackerVehicle" src="images/tracker/icon_' + tracker.Icon + '_driver.gif" style="display:block;transform:rotate(' + tracker.Degrees + 'deg)";/>' +
+           '<img class="imgTrackerVehicle" src="images/tracker/icon_' + tracker.Icon + '_' + tracker.IconStatus + '.gif" style="display:block;transform:rotate(' + tracker.Degrees + 'deg)";/>' +
            '<label class="labelTracker">' + tracker.Label + '</label>' +
         '</div>';
 
-        for (var index in markers) {
-            if (markers[index].trackerId == tracker.Id) {
-                markers[index].setPosition(coordinate);
-                markers[index].set('labelContent', markerTracker);
+        for (var index in trackers) {
+            if (trackers[index].trackerId == tracker.Id) {
+                trackers[index].setPosition(coordinate);
+                trackers[index].set('labelContent', markerTracker);
                 return;
             }
         }
@@ -190,38 +205,77 @@ function MapTool() {
             trackerId: tracker.Id
         });
 
-        markers.push(markerTracker);
+        trackers.push(markerTracker);
     }
+    this.processCommand = function (command) {
+
+        switch (command.Name) {
+            case "ClearPoi": {
+                for (var index = 0; index < pois.length; index++) {
+                    if (pois[index] != null) {
+                        pois[index].setMap(null);
+                        delete pois[index];
+                    }
+                }
+                break;
+            }
+            case "ClearGeofence": {
+                for (var index = 0; index < geofences.length; index++) {
+                    if (geofences[index] != null) {
+                        geofences[index].setMap(null);
+                        geofencesLabels[index].setMap(null);
+                        delete geofences[index];
+                        delete geofencesLabels[index];
+                    }
+                }
+                break;
+            }  case "ClearTracker": {
+                for (var index = 0; index < trackers.length; index++) {
+                    if (trackers[index] != null) {
+                        trackers[index].setMap(null);
+                        trackers[index].setMap(null);
+                        delete trackers[index];
+                        delete trackers[index];
+                    }
+                }
+                break;
+            }
+            case "SetFocus": {
+                var coordinate = JSON.parse(command.Value);
+                map.setCenter(new google.maps.LatLng(coordinate[0].Latitude, coordinate[0].Longitude));
+                break;
+            }
+        }
+    }
+
+
+
+
+    //function rotator(options) {
+
+    //    var a = options.delay;
+    //    var b = options.media;
+    //    var mediaArr = [];
+
+    //    for (var i = 0, j = b.length; i < j; i++) {
+    //        mediaArr.push(b[i].img);
+    //    }
+
+    //    document.write('<div id="rotatorContainer"></div>');
+    //    var container = document.getElementById('rotatorContainer');
+    //    var Start = 0;
+
+    //    rotatorCore();
+
+    //    function rotatorCore() {
+    //        Start = Start + 1;
+
+    //        if (Start >= mediaArr.length)
+    //            Start = 0;
+    //        container.innerHTML = mediaArr[Start];
+    //        setTimeout(rotatorCore, a);
+
+    //    }
+
 }
-
-
-
-
-//function rotator(options) {
-
-//    var a = options.delay;
-//    var b = options.media;
-//    var mediaArr = [];
-
-//    for (var i = 0, j = b.length; i < j; i++) {
-//        mediaArr.push(b[i].img);
-//    }
-
-//    document.write('<div id="rotatorContainer"></div>');
-//    var container = document.getElementById('rotatorContainer');
-//    var Start = 0;
-
-//    rotatorCore();
-
-//    function rotatorCore() {
-//        Start = Start + 1;
-
-//        if (Start >= mediaArr.length)
-//            Start = 0;
-//        container.innerHTML = mediaArr[Start];
-//        setTimeout(rotatorCore, a);
-
-//    }
-
-//}
 

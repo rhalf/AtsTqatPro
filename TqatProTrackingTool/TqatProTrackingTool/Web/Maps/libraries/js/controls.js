@@ -142,10 +142,10 @@ function MapTool() {
 
 
         if (tracker.IsEnabled != 1) {
-            for (var index in markers) {
-                if (markers[index].trackerId == tracker.Id) {
-                    markers[index].setMap(null);
-                    delete markers[index];
+            for (var index in trackers) {
+                if (trackers[index].trackerId == tracker.Id) {
+                    trackers[index].setMap(null);
+                    delete trackers[index];
                     return;
                 }
             }
@@ -161,10 +161,10 @@ function MapTool() {
            '<label class="labelTracker">' + tracker.Label + '</label>' +
         '</div>';
 
-        for (var index in markers) {
-            if (markers[index].trackerId == tracker.Id) {
-                markers[index].setPosition(coordinate);
-                markers[index].set('labelContent', markerTracker);
+        for (var index in trackers) {
+            if (trackers[index].trackerId == tracker.Id) {
+                trackers[index].setPosition(coordinate);
+                trackers[index].set('labelContent', markerTracker);
                 return;
             }
         }
@@ -205,7 +205,7 @@ function MapTool() {
             trackerId: tracker.Id
         });
 
-        markers.push(markerTracker);
+        trackers.push(markerTracker);
     }
     this.processCommand = function (command) {
 
@@ -226,6 +226,16 @@ function MapTool() {
                         geofencesLabels[index].setMap(null);
                         delete geofences[index];
                         delete geofencesLabels[index];
+                    }
+                }
+                break;
+            }  case "ClearTracker": {
+                for (var index = 0; index < trackers.length; index++) {
+                    if (trackers[index] != null) {
+                        trackers[index].setMap(null);
+                        trackers[index].setMap(null);
+                        delete trackers[index];
+                        delete trackers[index];
                     }
                 }
                 break;

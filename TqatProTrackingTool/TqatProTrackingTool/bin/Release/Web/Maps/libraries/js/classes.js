@@ -9,7 +9,8 @@ function Tracker() {
     this.IconAlert = "";
     this.Orientation = "";
     this.Longitude = "";
-    this.IsChecked = "";
+    this.IsEnabled = "";
+    this.IconStatus = "";
 }
 
 function Poi() {
@@ -19,11 +20,16 @@ function Poi() {
     this.Latitude = "";
     this.Longitude = "";
     this.Icon = "";
-
 }
 
 function Geofence() {
     this.Id = "";
     this.Name = "";
     this.Coordinates = "";
+}
+
+function Command() {
+    this.Id = "";
+    this.Name = "";
+    this.Value = "";
 }

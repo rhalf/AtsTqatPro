@@ -34,9 +34,9 @@ namespace TqatProTrackingTool {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow {
+    public partial class DialogLogin : MetroWindow {
 
-        public MainWindow() {
+        public DialogLogin() {
             InitializeComponent();
         }
 
@@ -88,7 +88,7 @@ namespace TqatProTrackingTool {
 
                 query.fillGeofences(company);
 
-                users = query.getUsers(company);
+                users = query.getUsers(company, user);
                 trackers = query.getTrackers(company, users);
 
 
@@ -110,8 +110,14 @@ namespace TqatProTrackingTool {
 
             } catch (DatabaseException databaseException) {
                 Debug.Print(databaseException.Message);
+                Dispatcher.Invoke(new Action(() => {
+                    panelLogin.ErrorNote = "Failed! Database Exception. Pls. try again.";
+                }));
             } catch (Exception exception) {
                 Debug.Print(exception.Message);
+                Dispatcher.Invoke(new Action(() => {
+                    panelLogin.ErrorNote = "Failed! Exception. Pls. try again.";
+                }));
             } finally {
                 Dispatcher.Invoke(new Action(() => {
                     panelLogin.IsEnabled = true;
@@ -126,16 +132,21 @@ namespace TqatProTrackingTool {
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e) {
 
-            Settings.Default.databaseHost = "184.107.175.154";
-            Settings.Default.databaseUsername = "reportapp";
-            Settings.Default.databasePassword = "my5q1r3p0rt@pp!@#";
+            //Settings.Default.databaseHost = "184.107.175.154";
+            //Settings.Default.databaseUsername = "reportapp";
+            //Settings.Default.databasePassword = "my5q1r3p0rt@pp!@#";
+            //Settings.Default.Save();
+
+            Settings.Default.databaseHost = "108.163.190.202";
+            Settings.Default.databaseUsername = "atstqatpro";
+            Settings.Default.databasePassword = "@t5tq@pr0!@#";
             Settings.Default.Save();
 
-            Settings.Default.accountCompanyUsername = "mowasalat";
-            Settings.Default.accountUsername = "admin";
-            Settings.Default.accountPassword = "admin";
-            Settings.Default.accountRememberMe = true;
-            Settings.Default.Save();
+            //Settings.Default.accountCompanyUsername = "mowasalat";
+            //Settings.Default.accountUsername = "admin";
+            //Settings.Default.accountPassword = "admin";
+            //Settings.Default.accountRememberMe = true;
+            //Settings.Default.Save();
 
             if (Settings.Default.accountRememberMe == true) {
                 panelLogin.CompanyUsername = Settings.Default.accountCompanyUsername;

@@ -48,6 +48,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>TqatProTrackingTool.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>satellite_01.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MahApps.Metro, Version=1.1.2.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
@@ -232,6 +238,13 @@
     <Resource Include="Web\Maps\images\alarm\breakdown.png" />
     <Resource Include="Web\Maps\images\alarm\CRExpired.png" />
     <Resource Include="Web\Maps\images\alarm\emergency.png" />
+    <Resource Include="Resources\images\16\checkAll.png" />
+    <Resource Include="Resources\images\16\uncheckAll.png" />
+    <Resource Include="Resources\images\128\Animated\logout_01.png" />
+    <Resource Include="Resources\images\128\Animated\shutdown_01.png" />
+    <Resource Include="Resources\images\128\Ats\logo_01.png" />
+    <Resource Include="satellite_01.ico" />
+    <Resource Include="Resources\images\128\Ats\satellite_01.png" />
     <Content Include="Web\Maps\images\alarm\alarmExpiry.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
