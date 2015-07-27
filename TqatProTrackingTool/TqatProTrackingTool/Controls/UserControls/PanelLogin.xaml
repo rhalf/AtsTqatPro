@@ -7,6 +7,7 @@
     mc:Ignorable="d" 
              
     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
+    
     <Grid>
         <StackPanel 
                 Orientation="Vertical"

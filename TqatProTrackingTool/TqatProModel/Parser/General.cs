@@ -25,8 +25,8 @@ namespace TqatProModel.Parser {
     public class UnixTime {
         public static DateTime toDateTime(double unixTimeStamp) {
             DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-            dateTime = dateTime.AddSeconds(unixTimeStamp).ToLocalTime();
-            return dateTime;
+            dateTime = dateTime.AddSeconds(unixTimeStamp);
+            return dateTime.ToLocalTime();
         }
 
         public static double toUnixTimestamp(DateTime dateTime) {

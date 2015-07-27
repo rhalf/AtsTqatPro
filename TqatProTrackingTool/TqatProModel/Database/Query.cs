@@ -439,16 +439,16 @@ namespace TqatProModel.Database {
                 mysqlConnection.Open();
 
                 string sql =
-                     //"SELECT * " +
-                     //"FROM trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + " " +
-                     //"ORDER BY " +
-                     //"trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + ".gm_time " +
-                     //"DESC limit 1;";
-                    "SELECT * " +
+                     "SELECT * " +
                      "FROM trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + " " +
                      "ORDER BY " +
-                     "trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + ".gm_id " +
+                     "trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + ".gm_time " +
                      "DESC limit 1;";
+                    //"SELECT * " +
+                    // "FROM trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + " " +
+                    // "ORDER BY " +
+                    // "trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + ".gm_id " +
+                    // "DESC limit 1;";
 
                 MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
                 MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
@@ -460,7 +460,8 @@ namespace TqatProModel.Database {
                     mySqlDataReader.Read();
                     trackerData.isDataEmpty = false;
                     trackerData.Id = mySqlDataReader.GetInt32("gm_id");
-                    trackerData.DateTime = Parser.UnixTime.toDateTime(double.Parse(mySqlDataReader.GetString("gm_time")));
+                    double dateTime = double.Parse(mySqlDataReader.GetString("gm_time"));
+                    trackerData.DateTime = Parser.UnixTime.toDateTime(dateTime);
                     double latitude = double.Parse(mySqlDataReader.GetString("gm_lat"));
                     double longitude = double.Parse(mySqlDataReader.GetString("gm_lng"));
                     trackerData.Coordinate = new Coordinate(latitude, longitude);

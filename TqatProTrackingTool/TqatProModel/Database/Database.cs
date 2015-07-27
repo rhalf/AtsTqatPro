@@ -9,7 +9,7 @@ using MySql.Data.MySqlClient;
 namespace TqatProModel.Database {
     public class Database {
         private string databaseName = null;
-        private string host = null;
+        public string Host = null;
         private string username = null;
         private string password = null;
         private int port = 0;
@@ -32,7 +32,7 @@ namespace TqatProModel.Database {
                 throw new DatabaseException(1, "Port should be from 1-65536!");
             }
 
-            this.host = sHost;
+            this.Host = sHost;
             this.username = username;
             this.password = password;
             this.port = port;
@@ -58,7 +58,7 @@ namespace TqatProModel.Database {
                 throw new DatabaseException(1, "Port should be from 1-65536!");
             }
 
-            this.host = host;
+            this.Host = host;
             this.username = username;
             this.password = password;
             this.port = port;
@@ -77,7 +77,7 @@ namespace TqatProModel.Database {
                 throw new DatabaseException(1, "Password is Null or Empty!");
             }
 
-            this.host = sHost;
+            this.Host = sHost;
             this.username = username;
             this.password = password;
             this.port = 3306;
@@ -95,7 +95,7 @@ namespace TqatProModel.Database {
                 throw new DatabaseException(1, "Password is Null or Empty!");
             }
 
-            this.host = sHost;
+            this.Host = sHost;
             this.username = username;
             this.password = password;
             this.port = 3306;
@@ -106,16 +106,16 @@ namespace TqatProModel.Database {
         public string getConnectionString() {
             string sConnectionString;
             if (databaseName != null) {
-                sConnectionString = "SERVER=" + this.host + ";" + "DATABASE=" + this.databaseName + ";" + "UID=" + this.username + ";" + "PASSWORD=" + this.password + ";";
+                sConnectionString = "SERVER=" + this.Host + ";" + "DATABASE=" + this.databaseName + ";" + "UID=" + this.username + ";" + "PASSWORD=" + this.password + ";";
             } else {
-                sConnectionString = "SERVER=" + this.host + ";" + "DATABASE=;" + "UID=" + this.username + ";" + "PASSWORD=" + this.password + "; default command timeout="+this.commandTimeOut;
+                sConnectionString = "SERVER=" + this.Host + ";" + "DATABASE=;" + "UID=" + this.username + ";" + "PASSWORD=" + this.password + "; default command timeout="+this.commandTimeOut;
             }
 
             return sConnectionString;
         }
 
         public void checkConnection() {
-            if (String.IsNullOrEmpty(host)) {
+            if (String.IsNullOrEmpty(Host)) {
                 throw new DatabaseException(1, "Host is Null or Empty!");
             }
             if (String.IsNullOrEmpty(username)) {
