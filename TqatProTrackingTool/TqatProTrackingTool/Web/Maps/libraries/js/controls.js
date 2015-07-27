@@ -138,7 +138,7 @@ function MapTool() {
     }
     this.addTracker = function () {
         //alert(tracker.IconAlert);
-        var coordinate = new google.maps.LatLng(tracker.Latitude, tracker.Longitude);
+      
 
 
         if (tracker.IsEnabled != 1) {
@@ -153,10 +153,10 @@ function MapTool() {
         }
 
 
-
+        var coordinate = new google.maps.LatLng(tracker.Latitude, tracker.Longitude);
         var markerTracker =
        '<div class="divTracker">' +
-           '<img class="imgTrackerAlarm" src="images/alarm/' + tracker.IconAlert + '.png"/>' +
+           '<img class="imgTrackerAlarm" src="images/alarm/' + tracker.IconAlert + '.png" alt="" onError="this.style.display = \'none\';"/>' +
            '<img class="imgTrackerVehicle" src="images/tracker/icon_' + tracker.Icon + '_' + tracker.IconStatus + '.gif" style="display:block;transform:rotate(' + tracker.Degrees + 'deg)";/>' +
            '<label class="labelTracker">' + tracker.Label + '</label>' +
         '</div>';
@@ -242,7 +242,21 @@ function MapTool() {
             }
             case "SetFocus": {
                 var coordinate = JSON.parse(command.Value);
-                map.setCenter(new google.maps.LatLng(coordinate[0].Latitude, coordinate[0].Longitude));
+                var location = new google.maps.LatLng(coordinate[0].Latitude, coordinate[0].Longitude)
+                map.setCenter(location);
+
+                var message = "I'm here!";
+
+                var infoWindow = new google.maps.InfoWindow({
+                    content: message,
+                    position: location
+                });
+
+                infoWindow.open(map);
+                setTimeout(function () {
+                infoWindow.close();
+                }, 3000);
+              
                 break;
             }
         }

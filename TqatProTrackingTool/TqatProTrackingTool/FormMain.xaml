@@ -216,12 +216,29 @@
                             </ListView>
                         </GroupBox>
                     </Grid>
-                    <StackPanel Orientation="Horizontal" Grid.Row="1">
-                        <Label Content="Trackers : "/>
-                        <Label Content="{Binding Items.Count, ElementName=listViewTrackersData, Mode=OneWay}"/>
-                        <Label Content="Threads : "/>
-                        <Label x:Name="threadCount"/>
-                    </StackPanel>
+                    <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="1000*"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.Column="0" >
+                            <Label Content="Trackers : "/>
+                            <Label Content="{Binding Items.Count, ElementName=listViewTrackersData, Mode=OneWay}"/>
+                            <Label Content="Threads : "/>
+                            <Label x:Name="threadCount" Content="0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"  Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                          
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"  Grid.Column="2"  >
+                            <Label Content="Search : "/>
+                            <TextBox x:Name="textBoxSearchTrackerData" Width="100"/>
+                            <Button x:Name="buttonSearchTrackerData" Content="Search" Click="buttonSearchTrackerData_Click"/>
+                        </StackPanel>
+
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

@@ -151,7 +151,9 @@ namespace TqatProTrackingTool.Control {
                                 } else if (trackerData.Speed == 0 && trackerData.ACC == true) {
                                     element.value = "idle";
                                 } else if (trackerData.SOS == true) {
-                                    element.value = "idle";
+                                    element.value = "alarm";
+                                } else {
+                                    element.value = "lost";
                                 }
                             }
                             if (element.id == "trackerIconAlert") {
@@ -159,14 +161,16 @@ namespace TqatProTrackingTool.Control {
                                     element.value = "alarmExpiry";
                                 } else if (trackerData.OverSpeed == true) {
                                     element.value = "alarmOverSpeed";
-                                } else if (trackerData.GsmSignal == 0 || trackerData.GsmSignal == 0) {
+                                } else if (trackerData.GpsSatellites == 0 || trackerData.GsmSignal == 0) {
                                     element.value = "alarmLostSignal";
-                                } else if (trackerData.DateTime.Subtract(DateTime.Now) > (new TimeSpan(01, 00, 00))) {
-                                    element.value = "alarmLostTracker";
+                                    //} else if (trackerData.DateTime.Subtract(DateTime.Now) > (new TimeSpan(01, 00, 00))) {
+                                    //    element.value = "alarmLostTracker";
+                                } else if ((trackerData.Mileage - trackerData.Tracker.MileageInitial) > trackerData.Tracker.MileageLimit) {
+                                    element.value = "alarmMileageLimit";
                                 } else if (trackerData.Geofence != null) {
                                     element.value = "alarmGeofence";
                                 } else {
-                                    element.value = "alarmOk";
+                                    element.value = "alarmOk!";
                                 }
                             }
                         }

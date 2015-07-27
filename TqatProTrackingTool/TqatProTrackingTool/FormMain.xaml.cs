@@ -65,7 +65,7 @@ namespace TqatProTrackingTool {
             int minWorkerThreads = 100;
             int minCompletionPortThreads = 100;
             ThreadPool.SetMaxThreads(maxWorkerThreads, maxCompletionPortThreads);
-            ThreadPool.SetMinThreads(minWorkerThreads, minCompletionPortThreads); 
+            ThreadPool.SetMinThreads(minWorkerThreads, minCompletionPortThreads);
 
             //threadProperties.MaxThreadCount = 1000;
 
@@ -76,9 +76,9 @@ namespace TqatProTrackingTool {
                         Dispatcher.BeginInvoke(new Action(() => {
                             threadCount.Content = threadProperties.CurrentThreadCount.ToString();
                         }));
-                        Thread.Sleep(100);
+                        Thread.Sleep(90);
                     }
-                    Thread.Sleep(5000);
+                    Thread.Sleep(3000);
                 } catch (Exception exception) {
 
                 }
@@ -96,6 +96,9 @@ namespace TqatProTrackingTool {
 
                 map.processCommand(webBrowserMap, mapCommand);
             }));
+
+            if (company.Geofences == null)
+                return;
 
             foreach (Geofence geofence in company.Geofences) {
                 Dispatcher.BeginInvoke(new Action(() => {
@@ -121,16 +124,18 @@ namespace TqatProTrackingTool {
                 map.processCommand(webBrowserMap, mapCommand);
             }));
 
-            if (selectedUser.Pois != null) {
-                foreach (Poi poi in selectedUser.Pois) {
-                    Dispatcher.BeginInvoke(new Action(() => {
-                        while (!webBrowserMap.IsLoaded) {
-                            ;
-                        }
-                        map.loadPoi(webBrowserMap, poi);
-                    }));
-                }
+            if (selectedUser.Pois == null)
+                return;
+
+            foreach (Poi poi in selectedUser.Pois) {
+                Dispatcher.BeginInvoke(new Action(() => {
+                    while (!webBrowserMap.IsLoaded) {
+                        ;
+                    }
+                    map.loadPoi(webBrowserMap, poi);
+                }));
             }
+
         }
         private void threadFunctionTrackerUpdate(object state) {
             lock (threadProperties) {
@@ -165,27 +170,27 @@ namespace TqatProTrackingTool {
                     return;
                 }
 
-                //lock (map) {
+                lock (map) {
                     map.loadTracker(webBrowserMap, trackerItem, trackerData, (string)ribbonGalleryComboBoxDisplayMember.SelectedValue);
-                //}
+                }
 
-                    if (trackerItem.IsChecked) {
-                        bool isExisting = false;
+                if (trackerItem.IsChecked) {
+                    bool isExisting = false;
 
-                        for (int index = 0; listViewTrackersData.Items.Count > index; index++) {
-                            TrackerData trackerDataItem = (TrackerData)listViewTrackersData.Items[index];
-                            if (trackerDataItem.Tracker.Id == trackerData.Tracker.Id) {
-                                listViewTrackersData.Items.RemoveAt(index);
-                                listViewTrackersData.Items.Insert(index, trackerData);
-                                isExisting = true;
-                                break;
-                            }
-                        }
-
-                        if (isExisting == false) {
-                            listViewTrackersData.Items.Add(trackerData);
+                    for (int index = 0; listViewTrackersData.Items.Count > index; index++) {
+                        TrackerData trackerDataItem = (TrackerData)listViewTrackersData.Items[index];
+                        if (trackerDataItem.Tracker.Id == trackerData.Tracker.Id) {
+                            listViewTrackersData.Items.RemoveAt(index);
+                            listViewTrackersData.Items.Insert(index, trackerData);
+                            isExisting = true;
+                            break;
                         }
                     }
+
+                    if (isExisting == false) {
+                        listViewTrackersData.Items.Add(trackerData);
+                    }
+                }
             }));
 
             lock (threadProperties) {
@@ -242,7 +247,7 @@ namespace TqatProTrackingTool {
 
             List<TrackerItem> trackerItem = new List<TrackerItem>();
             listViewTrackersData.Items.Clear();
-            
+
             MapCommand mapCommand = new MapCommand();
             mapCommand.Name = "ClearTracker";
             map.processCommand(webBrowserMap, mapCommand);
@@ -370,13 +375,13 @@ namespace TqatProTrackingTool {
 
         }
 
-   
+
 
         private void RibbonApplicationMenuItemExit_Click(object sender, RoutedEventArgs e) {
             Application.Current.Shutdown();
         }
 
-   
+
 
         private void RibbonApplicationMenuItemLogout_Click(object sender, RoutedEventArgs e) {
             DialogLogin dialogLogin = new DialogLogin();
@@ -388,6 +393,26 @@ namespace TqatProTrackingTool {
 
         private void RibbonApplicationMenuItemAts_Click(object sender, RoutedEventArgs e) {
             Process.Start("http://www.ats-qatar.com/");
+        }
+
+        private void buttonSearchTrackerData_Click(object sender, RoutedEventArgs e) {
+            if (listViewTrackers == null)
+                return;
+
+            //for (int index = 0; gridView.Columns.Count > index; index++) {
+            //    if (gridView.Columns[index].Header.ToString() == "Label") {
+            //        Binding binding = new Binding("Tracker." + ribbonGalleryItem.Content.ToString());
+
+            //        gridView.Columns[index].DisplayMemberBinding = binding;
+            //    }
+            //}
+
+            foreach (DataRow datarow in listViewTrackersData.) {
+                if (trackerData.Tracker.VehicleRegistration == textBoxSearchTrackerData.Text || trackerData.Tracker.VehicleRegistration.Contains(textBoxSearchTrackerData.Text)) {
+                    listViewTrackersData.SelectedItem =(trackerData);
+                }
+
+            }
         }
 
 
