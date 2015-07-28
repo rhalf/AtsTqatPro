@@ -85,8 +85,8 @@ namespace TqatProTrackingTool {
 
                         if (listViewTrackers.Items.Count == listViewTrackersData.Items.Count)
                             Thread.Sleep(60);
-                        else 
-                            Thread.Sleep(30);                        
+                        else
+                            Thread.Sleep(30);
 
                     }
                     if (listViewTrackers.Items.Count == listViewTrackersData.Items.Count)
@@ -186,7 +186,7 @@ namespace TqatProTrackingTool {
                 }
 
                 //lock (map) {
-                    map.loadTracker(webBrowserMap, trackerItem, trackerData, (string)ribbonGalleryComboBoxDisplayMember.SelectedValue);
+                map.loadTracker(webBrowserMap, trackerItem, trackerData, (string)ribbonGalleryComboBoxDisplayMember.SelectedValue);
                 //}
 
                 if (trackerItem.IsChecked) {
@@ -378,6 +378,8 @@ namespace TqatProTrackingTool {
             foreach (TrackerData trackerData in listViewTrackersData.Items) {
                 if (trackerData.Tracker.Id == selectedTrackerItem.getTracker().Id) {
                     listViewTrackersData.SelectedItem = (trackerData);
+                    listViewTrackersData.ScrollIntoView(trackerData);
+
                     break;
                 }
             }
@@ -386,9 +388,6 @@ namespace TqatProTrackingTool {
 
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e) {
-
-        }
 
         private void MenuItemlistViewTrackers_uncheckAll_Click(object sender, RoutedEventArgs e) {
             //MenuItem menuItem = (MenuItem)sender;
@@ -429,64 +428,60 @@ namespace TqatProTrackingTool {
             Process.Start("http://www.ats-qatar.com/");
         }
 
-        private void buttonSearchTrackerData_Click(object sender, RoutedEventArgs e) {
-            findLabelInListViewTrackerData(textBoxSearchTrackerData.Text);
-        }
 
 
-
-        private void findLabelInListViewTrackerData(string value) {
+        private void findLabelInListViewTrackerItem(string value) {
             if (listViewTrackers == null)
                 return;
 
-            foreach (TrackerData trackerData in listViewTrackersData.Items) {
+
+            TrackerItem trackerItemFound = null;
+
+            foreach (TrackerItem trackerItem in listViewTrackers.Items) {
                 switch (ribbonGalleryComboBoxDisplayMember.SelectedValue.ToString()) {
                     case "VehicleRegistration":
-                        if (
-                            trackerData.Tracker.VehicleRegistration == value ||
-                            trackerData.Tracker.VehicleRegistration.Contains(value)) {
-                            listViewTrackersData.SelectedItem = (trackerData);
+
+                        if (trackerItem.VehicleRegistration.IndexOf(value, 0) == 0) {
+                            trackerItemFound = trackerItem;
                         }
                         break;
                     case "VehicleModel":
-                        if (
-                            trackerData.Tracker.VehicleModel == value ||
-                            trackerData.Tracker.VehicleModel.Contains(value)) {
-                            listViewTrackersData.SelectedItem = (trackerData);
+                        if (trackerItem.VehicleModel.IndexOf(value, 0) == 0) {
+                            trackerItemFound = trackerItem;
                         }
                         break;
                     case "OwnerName":
-                        if (
-                            trackerData.Tracker.OwnerName == value ||
-                            trackerData.Tracker.OwnerName.Contains(value)) {
-                            listViewTrackersData.SelectedItem = (trackerData);
+                        if (trackerItem.OwnerName.IndexOf(value, 0) == 0) {
+                            trackerItemFound = trackerItem;
                         }
                         break;
                     case "DriverName":
-                        if (
-                            trackerData.Tracker.DriverName == value ||
-                            trackerData.Tracker.DriverName.Contains(value)) {
-                            listViewTrackersData.SelectedItem = (trackerData);
+                        if (trackerItem.DriverName.IndexOf(value, 0) == 0) {
+                            trackerItemFound = trackerItem;
                         }
                         break;
                     case "TrackerImei":
-                        if (
-                            trackerData.Tracker.TrackerImei == value ||
-                            trackerData.Tracker.TrackerImei.Contains(value)) {
-                            listViewTrackersData.SelectedItem = (trackerData);
+                        if (trackerItem.TrackerImei.IndexOf(value, 0) == 0) {
+                            trackerItemFound = trackerItem;
                         }
                         break;
                     case "SimNumber":
-                        if (
-                            trackerData.Tracker.SimNumber == textBoxSearchTrackerData.Text ||
-                            trackerData.Tracker.SimNumber.Contains(textBoxSearchTrackerData.Text)) {
-                            listViewTrackersData.SelectedItem = (trackerData);
+                        if (trackerItem.SimNumber.IndexOf(value, 0) == 0) {
+                            trackerItemFound = trackerItem;
                         }
                         break;
                 }
 
+                if (trackerItemFound != null) {
+                    listViewTrackers.SelectedItem = (trackerItemFound);
+                    listViewTrackers.ScrollIntoView(trackerItemFound);
+                    return;
+                }
             }
+        }
 
+        private void textBoxSearchTrackerData_KeyUp(object sender, KeyEventArgs e) {
+            findLabelInListViewTrackerItem(textBoxSearchTrackerData.Text);
         }
 
 

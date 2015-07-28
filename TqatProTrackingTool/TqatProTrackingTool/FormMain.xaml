@@ -6,6 +6,8 @@
         xmlns:viewModel="clr-namespace:TqatProViewModel;assembly=TqatProViewModel"
         
         xmlns:local="clr-namespace:TqatProTrackingTool"
+    
+    
         x:Class="TqatProTrackingTool.FormMain"
         
         Title="Tqat Pro Tracking Tool" Height="600" Width="400"
@@ -132,22 +134,36 @@
                     <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <GroupBox Grid.Row="0" Header="Trackers" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <ListView x:Name="listViewTrackers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2" SelectionChanged="listViewTrackers_SelectionChanged">
-                        <ListView.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Check All" Padding="3" Margin="3" Click="MenuItemlistViewTrackers_checkAll_Click">
-                                    <MenuItem.Icon>
-                                        <Image Source="Resources/images/16/checkAll.png" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="Uncheck All" Padding="3" Margin="3" Click="MenuItemlistViewTrackers_uncheckAll_Click">
-                                    <MenuItem.Icon>
-                                        <Image Source="Resources/images/16/uncheckAll.png" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </ContextMenu>
-                        </ListView.ContextMenu>
-                    </ListView>
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="Search : "/>
+                            <TextBox Grid.Column="1" x:Name="textBoxSearchTrackerData" KeyUp="textBoxSearchTrackerData_KeyUp"/>
+                        </Grid>
+                        <ListView x:Name="listViewTrackers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2" SelectionChanged="listViewTrackers_SelectionChanged" Grid.Row="1 ">
+                            <ListView.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Check All" Padding="3" Margin="3" Click="MenuItemlistViewTrackers_checkAll_Click">
+                                        <MenuItem.Icon>
+                                            <Image Source="Resources/images/16/checkAll.png" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Uncheck All" Padding="3" Margin="3" Click="MenuItemlistViewTrackers_uncheckAll_Click">
+                                        <MenuItem.Icon>
+                                            <Image Source="Resources/images/16/uncheckAll.png" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </ListView.ContextMenu>
+                        </ListView>
+                    </Grid>
                 </GroupBox>
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
                     <Label Content="Trackers : "/>
@@ -230,13 +246,13 @@
                             <Label x:Name="threadCount" Content="0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"  Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                          
+
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal"  Grid.Column="2"  >
+                        <!--<StackPanel Orientation="Horizontal"  Grid.Column="2"  >
                             <Label Content="Search : "/>
                             <TextBox x:Name="textBoxSearchTrackerData" Width="100"/>
                             <Button x:Name="buttonSearchTrackerData" Content="Search" Click="buttonSearchTrackerData_Click"/>
-                        </StackPanel>
+                        </StackPanel>-->
 
                     </Grid>
                 </Grid>

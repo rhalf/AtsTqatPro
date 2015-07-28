@@ -264,8 +264,8 @@ function MapTool() {
 
                 getAddress(coordinate.lat(), coordinate.lng(),
                     function (address) {
-                        var message = "Address : " + address;
-                        infoWindow.setContent(message);
+                        //var message = "Address : " + address;
+                        infoWindow.setContent(address);
                         setTimeout(function () {
                             infoWindow.open(map);
                         }, 0);
