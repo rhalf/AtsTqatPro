@@ -161,7 +161,7 @@ namespace TqatProTrackingTool.Control {
                                     element.value = "alarmExpiry";
                                 } else if (trackerData.OverSpeed == true) {
                                     element.value = "alarmOverSpeed";
-                                } else if (trackerData.GpsSatellites == 0 || trackerData.GsmSignal == 0) {
+                                } else if (trackerData.GpsSatellites > 4 || trackerData.GsmSignal == 0) {
                                     element.value = "alarmLostSignal";
                                     //} else if (trackerData.DateTime.Subtract(DateTime.Now) > (new TimeSpan(01, 00, 00))) {
                                     //    element.value = "alarmLostTracker";

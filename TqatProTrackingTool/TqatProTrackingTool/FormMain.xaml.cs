@@ -68,6 +68,12 @@ namespace TqatProTrackingTool {
             ThreadPool.SetMinThreads(minWorkerThreads, minCompletionPortThreads);
 
             //threadProperties.MaxThreadCount = 1000;
+            foreach (TrackerItem trackerItem in listViewTrackers.Items) {
+                ThreadPool.QueueUserWorkItem(new WaitCallback(threadFunctionTrackerUpdate), trackerItem);
+                Dispatcher.BeginInvoke(new Action(() => {
+                    threadCount.Content = threadProperties.CurrentThreadCount.ToString();
+                }));
+            }
 
             while (true) {
                 try {
@@ -76,9 +82,18 @@ namespace TqatProTrackingTool {
                         Dispatcher.BeginInvoke(new Action(() => {
                             threadCount.Content = threadProperties.CurrentThreadCount.ToString();
                         }));
-                        Thread.Sleep(90);
+
+                        if (listViewTrackers.Items.Count == listViewTrackersData.Items.Count)
+                            Thread.Sleep(60);
+                        else 
+                            Thread.Sleep(30);                        
+
                     }
-                    Thread.Sleep(3000);
+                    if (listViewTrackers.Items.Count == listViewTrackersData.Items.Count)
+                        Thread.Sleep(5000);
+                    else
+                        Thread.Sleep(1000);
+
                 } catch (Exception exception) {
 
                 }
@@ -170,9 +185,9 @@ namespace TqatProTrackingTool {
                     return;
                 }
 
-                lock (map) {
+                //lock (map) {
                     map.loadTracker(webBrowserMap, trackerItem, trackerData, (string)ribbonGalleryComboBoxDisplayMember.SelectedValue);
-                }
+                //}
 
                 if (trackerItem.IsChecked) {
                     bool isExisting = false;
@@ -309,7 +324,7 @@ namespace TqatProTrackingTool {
         }
 
         private void ribbonButtonTrackersData_Click(object sender, RoutedEventArgs e) {
-            if (gridTrackersData.Height == 300) {
+            if (gridTrackersData.Height > 0) {
                 gridTrackersData.Height = 0;
             } else {
                 gridTrackersData.Height = 300;
@@ -334,6 +349,9 @@ namespace TqatProTrackingTool {
             stringBuilder.Append("\",\"Longitude\":\"");
             stringBuilder.Append(trackerData.Coordinate.longitude.ToString());
             stringBuilder.Append("\"}]");
+            //stringBuilder.Append("[{\"TrackerId\":\"");
+            //stringBuilder.Append(trackerData.Tracker.Id.ToString());
+            //stringBuilder.Append("\"}]");
 
             if (webBrowserMap.IsLoaded) {
                 MapCommand mapCommand = new MapCommand();
@@ -350,6 +368,22 @@ namespace TqatProTrackingTool {
                 if (trackerItem.IsChecked == true)
                     checkedItems++;
             }
+
+            if (listViewTrackersData == null)
+                return;
+
+            TrackerItem selectedTrackerItem = (TrackerItem)(sender as ListView).SelectedItem;
+
+
+            foreach (TrackerData trackerData in listViewTrackersData.Items) {
+                if (trackerData.Tracker.Id == selectedTrackerItem.getTracker().Id) {
+                    listViewTrackersData.SelectedItem = (trackerData);
+                    break;
+                }
+            }
+
+
+
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e) {
@@ -396,30 +430,64 @@ namespace TqatProTrackingTool {
         }
 
         private void buttonSearchTrackerData_Click(object sender, RoutedEventArgs e) {
-            if (listViewTrackers == null)
-                return;
-
-            //for (int index = 0; gridView.Columns.Count > index; index++) {
-            //    if (gridView.Columns[index].Header.ToString() == "Label") {
-            //        Binding binding = new Binding("Tracker." + ribbonGalleryItem.Content.ToString());
-
-            //        gridView.Columns[index].DisplayMemberBinding = binding;
-            //    }
-            //}
-
-            foreach (DataRow datarow in listViewTrackersData.) {
-                if (trackerData.Tracker.VehicleRegistration == textBoxSearchTrackerData.Text || trackerData.Tracker.VehicleRegistration.Contains(textBoxSearchTrackerData.Text)) {
-                    listViewTrackersData.SelectedItem =(trackerData);
-                }
-
-            }
+            findLabelInListViewTrackerData(textBoxSearchTrackerData.Text);
         }
 
 
 
+        private void findLabelInListViewTrackerData(string value) {
+            if (listViewTrackers == null)
+                return;
 
+            foreach (TrackerData trackerData in listViewTrackersData.Items) {
+                switch (ribbonGalleryComboBoxDisplayMember.SelectedValue.ToString()) {
+                    case "VehicleRegistration":
+                        if (
+                            trackerData.Tracker.VehicleRegistration == value ||
+                            trackerData.Tracker.VehicleRegistration.Contains(value)) {
+                            listViewTrackersData.SelectedItem = (trackerData);
+                        }
+                        break;
+                    case "VehicleModel":
+                        if (
+                            trackerData.Tracker.VehicleModel == value ||
+                            trackerData.Tracker.VehicleModel.Contains(value)) {
+                            listViewTrackersData.SelectedItem = (trackerData);
+                        }
+                        break;
+                    case "OwnerName":
+                        if (
+                            trackerData.Tracker.OwnerName == value ||
+                            trackerData.Tracker.OwnerName.Contains(value)) {
+                            listViewTrackersData.SelectedItem = (trackerData);
+                        }
+                        break;
+                    case "DriverName":
+                        if (
+                            trackerData.Tracker.DriverName == value ||
+                            trackerData.Tracker.DriverName.Contains(value)) {
+                            listViewTrackersData.SelectedItem = (trackerData);
+                        }
+                        break;
+                    case "TrackerImei":
+                        if (
+                            trackerData.Tracker.TrackerImei == value ||
+                            trackerData.Tracker.TrackerImei.Contains(value)) {
+                            listViewTrackersData.SelectedItem = (trackerData);
+                        }
+                        break;
+                    case "SimNumber":
+                        if (
+                            trackerData.Tracker.SimNumber == textBoxSearchTrackerData.Text ||
+                            trackerData.Tracker.SimNumber.Contains(textBoxSearchTrackerData.Text)) {
+                            listViewTrackersData.SelectedItem = (trackerData);
+                        }
+                        break;
+                }
 
+            }
 
+        }
 
 
 

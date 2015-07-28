@@ -138,7 +138,7 @@ function MapTool() {
     }
     this.addTracker = function () {
         //alert(tracker.IconAlert);
-      
+
 
 
         if (tracker.IsEnabled != 1) {
@@ -241,55 +241,77 @@ function MapTool() {
                 break;
             }
             case "SetFocus": {
-                var coordinate = JSON.parse(command.Value);
-                var location = new google.maps.LatLng(coordinate[0].Latitude, coordinate[0].Longitude)
-                map.setCenter(location);
+                var geocoder = new google.maps.Geocoder();
+                var trackerJson = JSON.parse(command.Value);
 
-                var message = "I'm here!";
+                var tracker;
+                var coordinate = new google.maps.LatLng(trackerJson[0].Latitude, trackerJson[0].Longitude);
+                //var trackerId = trackerJson[0].TrackerId;
+                //for (var index = 0; index < trackers.length; index++) {
+                //    if (trackers[index].trackerId == trackerId) {
+                //        tracker = trackers[index];
+                //        break;
+                //    }
+                //}
 
+                map.setCenter(coordinate);
                 var infoWindow = new google.maps.InfoWindow({
-                    content: message,
-                    position: location
+                    position: coordinate
                 });
+               
 
-                infoWindow.open(map);
-                setTimeout(function () {
-                infoWindow.close();
-                }, 3000);
-              
+                
+
+                getAddress(coordinate.lat(), coordinate.lng(),
+                    function (address) {
+                        var message = "Address : " + address;
+                        infoWindow.setContent(message);
+                        setTimeout(function () {
+                            infoWindow.open(map);
+                        }, 0);
+
+                        setTimeout(function () {
+                            infoWindow.close();
+                        }, 3000);
+                    });
+
+
+
+
+
                 break;
             }
         }
     }
-
-
-
-
-    //function rotator(options) {
-
-    //    var a = options.delay;
-    //    var b = options.media;
-    //    var mediaArr = [];
-
-    //    for (var i = 0, j = b.length; i < j; i++) {
-    //        mediaArr.push(b[i].img);
-    //    }
-
-    //    document.write('<div id="rotatorContainer"></div>');
-    //    var container = document.getElementById('rotatorContainer');
-    //    var Start = 0;
-
-    //    rotatorCore();
-
-    //    function rotatorCore() {
-    //        Start = Start + 1;
-
-    //        if (Start >= mediaArr.length)
-    //            Start = 0;
-    //        container.innerHTML = mediaArr[Start];
-    //        setTimeout(rotatorCore, a);
-
-    //    }
-
 }
 
+
+
+
+function getAddress(latitude, longitude, callback) {
+    $.support.cors = true;
+    $.ajax({
+        async: true,
+        dataType: 'json',
+        cache: false,
+        url: "http://nominatim.openstreetmap.org/reverse",
+        data: { format: "json", lat: latitude, lon: longitude },
+        success: function (result) {
+            callback(result.display_name);
+        },
+        error: function (jqXHR) {
+            alert(jqXHR.status);
+            alert(jqXHR.statusText);
+            alert(jqXHR.responseText);
+        }
+    });
+}
+
+//function clone(obj) {
+//    if (null == obj || "object" != typeof obj) return obj;
+//    var copy = obj.constructor();
+//    for (var attr in obj) {
+//        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+//    }
+//    return copy;
+//}
