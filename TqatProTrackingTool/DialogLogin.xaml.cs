@@ -111,12 +111,14 @@ namespace TqatProTrackingTool {
             } catch (DatabaseException databaseException) {
                 Debug.Print(databaseException.Message);
                 Dispatcher.Invoke(new Action(() => {
-                    panelLogin.ErrorNote = "Failed! Database Exception. Pls. try again.";
+                    panelLogin.ErrorNote = databaseException.Message;
+                    Log.write(databaseException);
                 }));
             } catch (Exception exception) {
                 Debug.Print(exception.Message);
                 Dispatcher.Invoke(new Action(() => {
-                    panelLogin.ErrorNote = "Failed! Exception. Pls. try again.";
+                    panelLogin.ErrorNote = exception.Message;
+                    Log.write(exception);
                 }));
             } finally {
                 Dispatcher.Invoke(new Action(() => {

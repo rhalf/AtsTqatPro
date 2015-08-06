@@ -55,6 +55,7 @@
     <Compile Include="Enum.cs" />
     <Compile Include="Geofence.cs" />
     <Compile Include="Coordinate.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="MapCommand.cs" />
     <Compile Include="Parser\General.cs" />
     <Compile Include="Poi.cs" />

@@ -95,7 +95,7 @@ namespace TqatProTrackingTool {
                         Thread.Sleep(1000);
 
                 } catch (Exception exception) {
-
+                    Debug.Print(exception.Message);
                 }
             }
         }
@@ -186,7 +186,11 @@ namespace TqatProTrackingTool {
                 }
 
                 //lock (map) {
-                map.loadTracker(webBrowserMap, trackerItem, trackerData, (string)ribbonGalleryComboBoxDisplayMember.SelectedValue);
+                try {
+                    map.loadTracker(webBrowserMap, trackerItem, trackerData, (string)ribbonGalleryComboBoxDisplayMember.SelectedValue);
+                }catch(Exception exception){
+                    Log.write(exception);
+                }
                 //}
 
                 if (trackerItem.IsChecked) {
