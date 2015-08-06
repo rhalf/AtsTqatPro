@@ -19,6 +19,17 @@ namespace Controls.UserControls {
     /// </summary>
     public partial class PanelLogin : UserControl {
 
+        public bool CompanyIsEnabled {
+            get { return textBoxCompany.IsEnabled; }
+            set { textBoxCompany.IsEnabled = value; }
+        }
+
+        public bool UsernameIsEnabled {
+            get { return textBoxUsername.IsEnabled; }
+            set { textBoxUsername.IsEnabled = value; }
+        }
+
+
         public string CompanyUsername {
             get {
                 return textBoxCompany.Text;

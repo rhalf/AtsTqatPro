@@ -31,6 +31,9 @@
                 Visibility="Hidden"
             />
         <Grid DockPanel.Dock="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
             <UserControls:PanelLogin 
                 x:Name="panelLogin" 
                 VerticalAlignment="Bottom" 

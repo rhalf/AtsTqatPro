@@ -17,3 +17,4 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\TqatProModel.p
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\MySql.Data.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Debug\TqatProModel.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Debug\TqatProModel.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Debug\TqatProModel.csprojResolveAssemblyReference.cache

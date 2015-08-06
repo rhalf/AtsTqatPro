@@ -44,6 +44,8 @@ namespace TqatProMaintenanceTool{
         Query query;
         Company company;
         User user;
+
+        List<Company> companies;
         List<User> users;
         List<Tracker> trackers;
 
@@ -84,19 +86,17 @@ namespace TqatProMaintenanceTool{
                 Database database = new Database(Settings.Default.databaseHost, Settings.Default.databaseUsername, Settings.Default.databasePassword);
                 query = new Query(database);
 
-                query.getCompany(company);
-                query.getUser(company, user);
-
-                query.fillGeofences(company);
-
-                users = query.getUsers(company, user);
-                trackers = query.getTrackers(company, users);
+                companies = query.getCompanies();
+                //query.getUser(company, user);
+                //query.fillGeofences(company);
+                //users = query.getUsers(company, user);
+                //trackers = query.getTrackers(company, users);
 
 
 
-                foreach (User userItem in users) {
-                    query.fillPois(company, userItem);
-                }
+                //foreach (User userItem in users) {
+                //    query.fillPois(company, userItem);
+                //}
 
                 Dispatcher.Invoke(new Action(() => {
                     Settings.Default.accountCompanyUsername = panelLogin.CompanyUsername;
@@ -145,28 +145,22 @@ namespace TqatProMaintenanceTool{
             Settings.Default.databasePassword = "@t5tq@pr0!@#";
             Settings.Default.Save();
 
-            //Settings.Default.accountCompanyUsername = "mowasalat";
-            //Settings.Default.accountUsername = "admin";
-            //Settings.Default.accountPassword = "admin";
-            //Settings.Default.accountRememberMe = true;
-            //Settings.Default.Save();
+            Settings.Default.accountCompanyUsername = "ats";
+            Settings.Default.accountUsername = "master";
+            Settings.Default.accountPassword = "";
+            Settings.Default.accountRememberMe = false;
+            Settings.Default.Save();
 
-            if (Settings.Default.accountRememberMe == true) {
+            panelLogin.CompanyIsEnabled = false;
+            panelLogin.UsernameIsEnabled = false;
+
+            //if (Settings.Default.accountRememberMe == true) {
                 panelLogin.CompanyUsername = Settings.Default.accountCompanyUsername;
                 panelLogin.Username = Settings.Default.accountUsername;
                 panelLogin.Password = Settings.Default.accountPassword;
-                panelLogin.RememberMe = Settings.Default.accountRememberMe;
-            }
+            //   panelLogin.RememberMe = Settings.Default.accountRememberMe;
+            //}
         }
-
-        private void panelLogin_Loaded(object sender, RoutedEventArgs e) {
-
-        }
-
-
-
-
-
 
     }
 }

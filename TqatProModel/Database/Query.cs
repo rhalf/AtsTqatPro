@@ -80,6 +80,58 @@ namespace TqatProModel.Database {
 
         }
 
+        public List<Company> getCompanies() {
+            List<Company> companies = new List<Company>();
+
+            try {
+                mysqlConnection.Open();
+
+                string sql =
+                    "SELECT * " +
+                    "FROM dbt_tracking_master.cmps;";
+
+                MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
+
+                MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
+
+
+
+                if (!mySqlDataReader.HasRows) {
+                    mySqlDataReader.Dispose();
+                    throw new QueryException(1, "Company list is empty.");
+                } else {
+                    while (mySqlDataReader.Read()) {
+                        Company company = new Company();
+                        company.Id = mySqlDataReader.GetInt32("cmpid");
+                        company.Username = mySqlDataReader.GetString("cmpname");
+                        company.DisplayName = mySqlDataReader.GetString("cmpdisplayname");
+                        company.Host = int.Parse(mySqlDataReader.GetString("cmphost"));
+                        company.Email = mySqlDataReader.GetString("cmpemail");
+                        company.PhoneNo = mySqlDataReader.GetString("cmpphoneno");
+                        company.MobileNo = mySqlDataReader.GetString("cmpmobileno");
+                        company.Address = mySqlDataReader.GetString("cmpaddress");
+                        company.IsActive = (mySqlDataReader.GetString("cmpactive") == "1") ? true : false;
+                        company.DateTimeCreated = SubStandard.dateTime(mySqlDataReader.GetString("cmpcreatedate"));
+                        company.DateTimeExpired = SubStandard.dateTime(mySqlDataReader.GetString("cmpexpiredate"));
+                        company.DatabaseName = mySqlDataReader.GetString("cmpdbname");
+
+                        companies.Add(company);
+                    }
+
+                    mySqlDataReader.Dispose();
+                }
+            } catch (MySqlException mySqlException) {
+                throw new QueryException(1, mySqlException.Message);
+            } catch (QueryException queryException) {
+                throw queryException;
+            } catch (Exception exception) {
+                throw new QueryException(1, exception.Message);
+            } finally {
+                mysqlConnection.Close();
+            }
+            return companies;
+        }
+
         public void fillGeofences(Company company) {
             List<Geofence> geofences = new List<Geofence>();
 
@@ -344,7 +396,6 @@ namespace TqatProModel.Database {
         //    }
         //    return dataTable;
         //}
-
         public List<Tracker> getTrackers(Company company, List<User> users) {
             List<Tracker> trackers = new List<Tracker>();
 
@@ -444,11 +495,11 @@ namespace TqatProModel.Database {
                      "ORDER BY " +
                      "trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + ".gm_time " +
                      "DESC limit 1;";
-                    //"SELECT * " +
-                    // "FROM trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + " " +
-                    // "ORDER BY " +
-                    // "trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + ".gm_id " +
-                    // "DESC limit 1;";
+                //"SELECT * " +
+                // "FROM trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + " " +
+                // "ORDER BY " +
+                // "trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + ".gm_id " +
+                // "DESC limit 1;";
 
                 MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
                 MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
@@ -468,7 +519,7 @@ namespace TqatProModel.Database {
 
                     trackerData.Speed = int.Parse(mySqlDataReader.GetString("gm_speed"));
                     trackerData.Degrees = int.Parse(mySqlDataReader.GetString("gm_ori"));
-                    trackerData.Direction= Direction.degreesToCardinalDetailed(double.Parse(mySqlDataReader.GetString("gm_ori")));
+                    trackerData.Direction = Direction.degreesToCardinalDetailed(double.Parse(mySqlDataReader.GetString("gm_ori")));
                     trackerData.Mileage = double.Parse(mySqlDataReader.GetString("gm_mileage"));
 
                     //1,			            //                                                          (0)
@@ -530,9 +581,9 @@ namespace TqatProModel.Database {
                     return trackerData;
                 }
 
-            //} catch (QueryException queryException) {
+                //} catch (QueryException queryException) {
                 //throw queryException;
-            //} catch (MySqlException mySqlException) {
+                //} catch (MySqlException mySqlException) {
                 //throw new QueryException(1, mySqlException.Message);
             } catch (Exception exception) {
                 //throw new QueryException(1, exception.Message);

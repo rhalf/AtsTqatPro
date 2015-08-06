@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using TqatProModel;
 
 namespace TqatProModel {
     public class Company {
@@ -77,5 +78,9 @@ namespace TqatProModel {
             set;
         }
 
+        public List<User> Users {
+            get;
+            set;
+        }
     }
 }
