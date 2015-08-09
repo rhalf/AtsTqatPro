@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MaintenanceServerReport.cs" />
     <Compile Include="TrackerItem.cs" />
     <Compile Include="UserItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

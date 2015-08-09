@@ -3,6 +3,7 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\Cont
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\Controls\Style\GridSplitter.baml
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\Controls\UserControls\PanelLogin.baml
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\FormMain.baml
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\App.baml
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\Controls\UserControls\PanelLogin.g.cs
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\DialogLogin.g.cs
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\FormMain.g.cs
@@ -20,7 +21,6 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\bin\Debug\Tqat
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\bin\Debug\TqatProModel.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\bin\Debug\TqatProViewModel.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\bin\Debug\MahApps.Metro.xml
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\App.baml
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\DialogLogin.baml
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\TqatProMaintenanceTool.g.resources
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\TqatProMaintenanceTool.Properties.Resources.resources

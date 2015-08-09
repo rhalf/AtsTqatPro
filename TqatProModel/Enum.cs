@@ -36,5 +36,8 @@ namespace TqatProModel {
         EXCEPTION
     }
 
-
+    public enum ServerStatus {
+        STOP,
+        RUN
+    }
 }

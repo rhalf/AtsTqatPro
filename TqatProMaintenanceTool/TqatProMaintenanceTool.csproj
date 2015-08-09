@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -131,6 +132,145 @@
       <Project>{ae4c7c58-fe48-4e7d-9b1c-1957a8abbfd1}</Project>
       <Name>TqatProViewModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\images\128\animated\calendar_01.png" />
+    <Resource Include="Resources\images\128\animated\car_00.png" />
+    <Resource Include="Resources\images\128\animated\clock_01.png" />
+    <Resource Include="Resources\images\128\animated\copy_01.png" />
+    <Resource Include="Resources\images\128\animated\documents_01.png" />
+    <Resource Include="Resources\images\128\animated\earth_01.png" />
+    <Resource Include="Resources\images\128\animated\file_01.png" />
+    <Resource Include="Resources\images\128\animated\folder_01.png" />
+    <Resource Include="Resources\images\128\animated\folder_02.png" />
+    <Resource Include="Resources\images\128\animated\folder_green_01.png" />
+    <Resource Include="Resources\images\128\animated\lock_01.png" />
+    <Resource Include="Resources\images\128\animated\logout_01.png" />
+    <Resource Include="Resources\images\128\animated\monitor_01.png" />
+    <Resource Include="Resources\images\128\animated\pdf_01.png" />
+    <Resource Include="Resources\images\128\animated\pen_01.png" />
+    <Resource Include="Resources\images\128\animated\search_01.png" />
+    <Resource Include="Resources\images\128\animated\search_data_01.png" />
+    <Resource Include="Resources\images\128\animated\shutdown_01.png" />
+    <Resource Include="Resources\images\128\animated\usb_01.png" />
+    <Resource Include="Resources\images\128\animated\user_00.png" />
+    <Resource Include="Resources\images\128\animated\user_00a.png" />
+    <Resource Include="Resources\images\128\animated\user_01.png" />
+    <Resource Include="Resources\images\128\animated\user_02.png" />
+    <Resource Include="Resources\images\128\animated\user_03.png" />
+    <Resource Include="Resources\images\128\animated\user_04.png" />
+    <Resource Include="Resources\images\128\animated\user_05.png" />
+    <Resource Include="Resources\images\128\ats\logo_01.png" />
+    <Resource Include="Resources\images\128\ats\satellite_01.png" />
+    <Resource Include="Resources\images\128\crystal\check_00.png" />
+    <Resource Include="Resources\images\128\crystal\cross_00.png" />
+    <Resource Include="Resources\images\128\crystal\enter_00.png" />
+    <Resource Include="Resources\images\128\crystal\users_add_group_00.png" />
+    <Resource Include="Resources\images\128\crystal\users_edit_group_00.png" />
+    <Resource Include="Resources\images\128\crystal\users_offline_00.png" />
+    <Resource Include="Resources\images\128\crystal\users_search_00.png" />
+    <Resource Include="Resources\images\128\crystal\users_switch_00.png" />
+    <Resource Include="Resources\images\128\crystal\user_00.png" />
+    <Resource Include="Resources\images\128\crystal\user_01.png" />
+    <Resource Include="Resources\images\128\crystal\user_02.png" />
+    <Resource Include="Resources\images\128\crystal\user_03.png" />
+    <Resource Include="Resources\images\128\crystal\user_04.png" />
+    <Resource Include="Resources\images\128\crystal\user_05.png" />
+    <Resource Include="Resources\images\128\must_have\add.png" />
+    <Resource Include="Resources\images\128\must_have\arrow_down_red.png" />
+    <Resource Include="Resources\images\128\must_have\arrow_up_green.png" />
+    <Resource Include="Resources\images\128\must_have\calendar.png" />
+    <Resource Include="Resources\images\128\must_have\check.png" />
+    <Resource Include="Resources\images\128\must_have\delete.png" />
+    <Resource Include="Resources\images\128\must_have\folder.png" />
+    <Resource Include="Resources\images\128\must_have\information.png" />
+    <Resource Include="Resources\images\128\must_have\next.png" />
+    <Resource Include="Resources\images\128\must_have\note.png" />
+    <Resource Include="Resources\images\128\must_have\paste.png" />
+    <Resource Include="Resources\images\128\must_have\pause.png" />
+    <Resource Include="Resources\images\128\must_have\play.png" />
+    <Resource Include="Resources\images\128\must_have\previous.png" />
+    <Resource Include="Resources\images\128\must_have\properties.png" />
+    <Resource Include="Resources\images\128\must_have\redo.png" />
+    <Resource Include="Resources\images\128\must_have\refresh.png" />
+    <Resource Include="Resources\images\128\must_have\remove.png" />
+    <Resource Include="Resources\images\128\must_have\save.png" />
+    <Resource Include="Resources\images\128\must_have\stop.png" />
+    <Resource Include="Resources\images\128\must_have\undo.png" />
+    <Resource Include="Resources\images\128\windows8_flat\user_01.png" />
+    <Resource Include="Resources\images\16\checkAll.png" />
+    <Resource Include="Resources\images\16\uncheckAll.png" />
+    <Resource Include="Resources\images\48\user_01.png" />
+    <Resource Include="Resources\images\64\must_have\add.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\arrow_down_red.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\arrow_up_green.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\calendar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\check.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\delete.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\folder.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\information.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\next.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\note.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\paste.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\pause.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\play.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\play64.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\previous.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\properties.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\redo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\refresh.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\remove.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\save.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\stop.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\64\must_have\undo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\satellite_01.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\images\128\Plain\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

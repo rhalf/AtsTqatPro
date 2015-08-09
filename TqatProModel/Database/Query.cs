@@ -365,7 +365,6 @@ namespace TqatProModel.Database {
             return users;
         }
 
-
         //public DataTable getAllCompanies() {
         //    DataTable dataTable = new DataTable();
         //    try {
@@ -413,7 +412,10 @@ namespace TqatProModel.Database {
 
 
                 if (!mySqlDataReader.HasRows) {
-                    throw new QueryException(1, "Tracker's Collection is empty.");
+                    //throw new QueryException(1, "Tracker's Collection is empty.");
+                    mySqlDataReader.Dispose();
+                    mysqlConnection.Close();
+                    return trackers;
                 } else {
 
 
@@ -594,7 +596,54 @@ namespace TqatProModel.Database {
 
         }
 
+        public DataTable getDatabasesSize() {
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("DatabaseName", typeof(string));
+            dataTable.Columns.Add("DatabaseSize(mb)", typeof(double));
+            dataTable.Columns.Add("DatabaseFreeSpace(mb)", typeof(double));
 
+
+              try {
+                mysqlConnection = new MySqlConnection(database.getConnectionString());
+
+                mysqlConnection.Open();
+
+                string sql =
+                    "SELECT table_schema \"databaseName\", " +
+                    "sum( data_length + index_length ) / 1024 / 1024 \"databaseSize\", " +
+                    "sum( data_free )/ 1024 / 1024 \"databaseFreeSpace\" " +
+                    "FROM information_schema.TABLES " +
+                    "GROUP BY table_schema;"; 
+
+                MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
+
+                MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
+
+                if (!mySqlDataReader.HasRows) {
+                    mySqlDataReader.Dispose();
+                    throw new QueryException(1, "No database.");
+                } else {
+                    while (mySqlDataReader.Read()) {
+                        DataRow dataRow = dataTable.NewRow();
+                        dataRow["DatabaseName"] = mySqlDataReader.GetString("databaseName");
+                        dataRow["DatabaseSize(mb)"] = mySqlDataReader.GetString("databaseSize");
+                        dataRow["DatabaseFreeSpace(mb)"] = mySqlDataReader.GetString("databaseFreeSpace");
+
+                        dataTable.Rows.Add(dataRow);
+                    }
+                }
+
+            } catch (MySqlException mySqlException) {
+                throw new QueryException(1, mySqlException.Message);
+            } catch (QueryException queryException) {
+                throw queryException;
+            } catch (Exception exception) {
+                throw new QueryException(1, exception.Message);
+            } finally {
+                mysqlConnection.Close();
+            }
+            return dataTable;
+        } 
 
         //        MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
 

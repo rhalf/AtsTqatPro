@@ -2,8 +2,41 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="MainWindow" Height="350" Width="525"
-    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      Loaded="MetroWindow_Loaded">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="185*"/>
+            <ColumnDefinition Width="332*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
 
+        <Ribbon HorizontalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="2">
+            <RibbonTab Header="Control">
+                <RibbonGroup Header="Control">
+                    <RibbonButton x:Name="RibbonButtonStart" LargeImageSource="Resources/images/64/must_have/play.png" Label="Start" Click="ribbonButtonStart_Click"></RibbonButton>
+                </RibbonGroup>
+                <RibbonGroup Header="View">
+                    <RibbonButton x:Name="RibbonButtonViewTrackersDataSize" LargeImageSource="Resources/images/64/must_have/information.png" Label="Trackers DataSize"></RibbonButton>
+                </RibbonGroup>
+            </RibbonTab>
+        </Ribbon>
+        <TabControl x:Name="tabControl" Grid.Row="1" HorizontalAlignment="Stretch"  Grid.ColumnSpan="2">
+            <TabItem Header="Log" Width="Auto">
+                <ListView x:Name="listViewStatus" Background="AliceBlue" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="False">
+                            <GridViewColumn Header="Sequence" Width="Auto" DisplayMemberBinding="{Binding Sequence}"></GridViewColumn>
+                            <GridViewColumn Header="DateTime"  Width="Auto" DisplayMemberBinding="{Binding DateTime}"></GridViewColumn>
+                            <GridViewColumn Header="Description"  Width="Auto" DisplayMemberBinding="{Binding Description}" ></GridViewColumn>
+                            <GridViewColumn Header="Status"  Width="Auto" DisplayMemberBinding="{Binding Status}"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Controls:MetroWindow>

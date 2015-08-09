@@ -31,7 +31,7 @@ using TqatProModel.Database;
 using TqatProModel.Parser;
 
 
-namespace TqatProMaintenanceTool{
+namespace TqatProMaintenanceTool {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -86,17 +86,20 @@ namespace TqatProMaintenanceTool{
                 Database database = new Database(Settings.Default.databaseHost, Settings.Default.databaseUsername, Settings.Default.databasePassword);
                 query = new Query(database);
 
+
                 companies = query.getCompanies();
-                //query.getUser(company, user);
                 //query.fillGeofences(company);
                 //users = query.getUsers(company, user);
-                //trackers = query.getTrackers(company, users);
+                int count = 0;
+                foreach (Company companyItem in companies) {
+                    query.getUser(companyItem, user);
+                    users = query.getUsers(companyItem, user);
+                    companyItem.Trackers = query.getTrackers(companyItem, users);
+                    Dispatcher.Invoke(new Action(() => {
+                        panelLogin.ErrorNote = "Loading companies... " + (++count).ToString() + "/" + companies.Count.ToString();
+                    }));
+                }
 
-
-
-                //foreach (User userItem in users) {
-                //    query.fillPois(company, userItem);
-                //}
 
                 Dispatcher.Invoke(new Action(() => {
                     Settings.Default.accountCompanyUsername = panelLogin.CompanyUsername;
@@ -104,7 +107,7 @@ namespace TqatProMaintenanceTool{
                     Settings.Default.accountPassword = panelLogin.Password;
                     Settings.Default.accountRememberMe = (bool)panelLogin.RememberMe;
                     Settings.Default.Save();
-                    FormMain formMain = new FormMain(company, user, users, trackers, database);
+                    FormMain formMain = new FormMain(company, user, companies, database);
                     formMain.Show();
                     this.Close();
                 }));
@@ -128,26 +131,26 @@ namespace TqatProMaintenanceTool{
                 }));
             }
         }
-       
+
         private void PanelLogin_OnCancelEventHandler(object sender, RoutedEventArgs e) {
             Application.Current.Shutdown();
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e) {
 
-            //Settings.Default.databaseHost = "184.107.175.154";
-            //Settings.Default.databaseUsername = "reportapp";
-            //Settings.Default.databasePassword = "my5q1r3p0rt@pp!@#";
-            //Settings.Default.Save();
-
-            Settings.Default.databaseHost = "108.163.190.202";
-            Settings.Default.databaseUsername = "atstqatpro";
-            Settings.Default.databasePassword = "@t5tq@pr0!@#";
+            Settings.Default.databaseHost = "184.107.175.154";
+            Settings.Default.databaseUsername = "reportapp";
+            Settings.Default.databasePassword = "my5q1r3p0rt@pp!@#";
             Settings.Default.Save();
+
+            //Settings.Default.databaseHost = "108.163.190.202";
+            //Settings.Default.databaseUsername = "atstqatpro";
+            //Settings.Default.databasePassword = "@t5tq@pr0!@#";
+            //Settings.Default.Save();
 
             Settings.Default.accountCompanyUsername = "ats";
             Settings.Default.accountUsername = "master";
-            Settings.Default.accountPassword = "";
+            Settings.Default.accountPassword = "m@5t3r!@#";
             Settings.Default.accountRememberMe = false;
             Settings.Default.Save();
 
@@ -155,9 +158,9 @@ namespace TqatProMaintenanceTool{
             panelLogin.UsernameIsEnabled = false;
 
             //if (Settings.Default.accountRememberMe == true) {
-                panelLogin.CompanyUsername = Settings.Default.accountCompanyUsername;
-                panelLogin.Username = Settings.Default.accountUsername;
-                panelLogin.Password = Settings.Default.accountPassword;
+            panelLogin.CompanyUsername = Settings.Default.accountCompanyUsername;
+            panelLogin.Username = Settings.Default.accountUsername;
+            panelLogin.Password = Settings.Default.accountPassword;
             //   panelLogin.RememberMe = Settings.Default.accountRememberMe;
             //}
         }
