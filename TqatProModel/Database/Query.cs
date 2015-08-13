@@ -596,11 +596,9 @@ namespace TqatProModel.Database {
 
         }
 
-        public DataTable getDatabasesSize() {
-            DataTable dataTable = new DataTable();
-            dataTable.Columns.Add("DatabaseName", typeof(string));
-            dataTable.Columns.Add("DatabaseSize(mb)", typeof(double));
-            dataTable.Columns.Add("DatabaseFreeSpace(mb)", typeof(double));
+        public List<TrackerDatabaseSize> getDatabasesSize() {
+
+            List<TrackerDatabaseSize> trackerDatabaseSizes = new List<TrackerDatabaseSize>();
 
 
               try {
@@ -612,8 +610,10 @@ namespace TqatProModel.Database {
                     "SELECT table_schema \"databaseName\", " +
                     "sum( data_length + index_length ) / 1024 / 1024 \"databaseSize\", " +
                     "sum( data_free )/ 1024 / 1024 \"databaseFreeSpace\" " +
+
                     "FROM information_schema.TABLES " +
-                    "GROUP BY table_schema;"; 
+                    "WHERE table_schema LIKE \"trk_%\" OR table_schema LIKE \"dbt_%\" " +
+                     "GROUP BY table_schema ;"; 
 
                 MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
 
@@ -624,12 +624,13 @@ namespace TqatProModel.Database {
                     throw new QueryException(1, "No database.");
                 } else {
                     while (mySqlDataReader.Read()) {
-                        DataRow dataRow = dataTable.NewRow();
-                        dataRow["DatabaseName"] = mySqlDataReader.GetString("databaseName");
-                        dataRow["DatabaseSize(mb)"] = mySqlDataReader.GetString("databaseSize");
-                        dataRow["DatabaseFreeSpace(mb)"] = mySqlDataReader.GetString("databaseFreeSpace");
+                        TrackerDatabaseSize trackerDatabaseSize = new TrackerDatabaseSize();
 
-                        dataTable.Rows.Add(dataRow);
+                        trackerDatabaseSize.Name = mySqlDataReader.GetString("databaseName");
+                        trackerDatabaseSize.DatabaseSize = mySqlDataReader.GetDouble("databaseSize");
+                        trackerDatabaseSize.DatabaseFreeSpace = mySqlDataReader.GetDouble("databaseFreeSpace");
+
+                        trackerDatabaseSizes.Add(trackerDatabaseSize);
                     }
                 }
 
@@ -642,7 +643,7 @@ namespace TqatProModel.Database {
             } finally {
                 mysqlConnection.Close();
             }
-            return dataTable;
+              return trackerDatabaseSizes;
         } 
 
         //        MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();

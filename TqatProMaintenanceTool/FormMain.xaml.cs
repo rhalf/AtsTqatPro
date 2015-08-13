@@ -43,7 +43,7 @@ namespace TqatProMaintenanceTool {
         User user;
         List<Company> companies;
         Database database;
-        ListView listViewData = new ListView();
+        DataGrid dataGrid = new DataGrid();
 
         public FormMain(Company company, User user, List<Company> companies, Database database) {
             this.company = company;
@@ -129,22 +129,29 @@ namespace TqatProMaintenanceTool {
         //}
         private void loadDatabases() {
             ThreadPool.QueueUserWorkItem(new WaitCallback(getDatabaseSizes), null);
-
-            //TabItem tabPage = new TabItem();
-
-            //tabPage.Header = "Databases";
-            //tabPage.Content = listViewData;
-
-            //tabControl.Items.Add(tabPage);
         }
 
         private void getDatabaseSizes(object state) {
 
             Query query = new Query(database);
-            DataTable dataTable  = query.getDatabasesSize();
+            List<TrackerDatabaseSize> trackerDatabaseSizes = query.getDatabasesSize();
+            List<TrackerDatabaseSizeItem> trackerDatabaseSizeItems = new List<TrackerDatabaseSizeItem>();
+
+            foreach (TrackerDatabaseSize trackerDatabaseSizeItem in trackerDatabaseSizes) {
+                trackerDatabaseSizeItems.Add(new TrackerDatabaseSizeItem(trackerDatabaseSizeItem));
+            }
+
 
             Dispatcher.BeginInvoke(new Action(() => {
-                listViewData.DataContext = dataTable;
+                DataTemplate dataTemplate = (DataTemplate)Application.Current.Resources["listViewTrackersDatabaseSize"];
+                dataGrid.ItemTemplate = dataTemplate;
+
+                dataGrid.ItemsSource = trackerDatabaseSizeItems;
+                
+                TabItem tabPage = new TabItem();
+                tabPage.Header = "Databases";
+                tabPage.Content = dataGrid;
+                tabControl.Items.Add(tabPage);
             }));
            
         }
@@ -155,7 +162,7 @@ namespace TqatProMaintenanceTool {
             while (serverStatus == ServerStatus.RUN) {
 
                 TimeSpan timeSpan = DateTime.Now.Subtract(dateTimeLastTime);
-                if (timeSpan.Days > 0) {
+                if (timeSpan.Minutes > 0) {
                     MaintenanceServerLog maintenanceServerLogStart = new MaintenanceServerLog();
                     maintenanceServerLogStart.Description = "Starting Maintenance Server.";
                     maintenanceServerLogStart.Status = MaintenanceServerStatus.SUCCESS;

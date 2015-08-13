@@ -13,8 +13,10 @@
 
 
 
+
                 <ResourceDictionary Source="Controls/Style/GridSplitter.xaml"/>
                 <ResourceDictionary Source="Controls/DataTemplate/ListView.xaml"/>
+
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

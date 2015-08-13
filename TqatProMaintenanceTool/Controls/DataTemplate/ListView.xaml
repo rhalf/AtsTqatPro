@@ -70,4 +70,16 @@
         </StackPanel>
     </DataTemplate>
 
+
+    <!--listViewTrackersDatabaseSize-->
+    <DataTemplate x:Key="listViewTrackersDatabaseSize" >
+        <DataGrid>
+            <DataGridTextColumn  Binding ="{Binding Name}" Header="Name"></DataGridTextColumn>
+            <DataGridTextColumn  Binding="{Binding Size}" Header="Database Size" ></DataGridTextColumn>
+            <DataGridTextColumn  Binding="{Binding FreeSpace}" Header="Database Free Space"></DataGridTextColumn>
+            <DataGridTextColumn  Binding="{Binding DateTimeUpdated}" Header="Database Status"></DataGridTextColumn>
+            <DataGridTextColumn  Binding="{Binding Status}" Header="Database Status"></DataGridTextColumn>
+        </DataGrid>
+       
+    </DataTemplate>
 </ResourceDictionary>

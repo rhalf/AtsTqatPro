@@ -62,6 +62,7 @@
     <Compile Include="ThreadProperties.cs" />
     <Compile Include="TrackerData.cs" />
     <Compile Include="Tracker.cs" />
+    <Compile Include="TrackersDatabaseSize.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

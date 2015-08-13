@@ -19,9 +19,9 @@
                 <RibbonGroup Header="Control">
                     <RibbonButton x:Name="RibbonButtonStart" LargeImageSource="Resources/images/64/must_have/play.png" Label="Start" Click="ribbonButtonStart_Click"></RibbonButton>
                 </RibbonGroup>
-                <RibbonGroup Header="View">
+                <!--<RibbonGroup Header="View">
                     <RibbonButton x:Name="RibbonButtonViewTrackersDataSize" LargeImageSource="Resources/images/64/must_have/information.png" Label="Trackers DataSize"></RibbonButton>
-                </RibbonGroup>
+                </RibbonGroup>-->
             </RibbonTab>
         </Ribbon>
         <TabControl x:Name="tabControl" Grid.Row="1" HorizontalAlignment="Stretch"  Grid.ColumnSpan="2">
