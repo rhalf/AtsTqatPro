@@ -13,6 +13,7 @@ using MySql.Data.MySqlClient;
 using TqatProModel;
 using TqatProModel.Devices.Meitrack;
 using TqatProModel.Parser;
+using System.Collections.Concurrent;
 
 namespace TqatProModel.Database {
 
@@ -596,12 +597,12 @@ namespace TqatProModel.Database {
 
         }
 
-        public List<TrackerDatabaseSize> getDatabasesSize() {
+        public ConcurrentQueue<TrackerDatabaseSize> getDatabasesSize() {
 
-            List<TrackerDatabaseSize> trackerDatabaseSizes = new List<TrackerDatabaseSize>();
+            ConcurrentQueue<TrackerDatabaseSize> trackerDatabaseSizes = new ConcurrentQueue<TrackerDatabaseSize>();
 
 
-              try {
+            try {
                 mysqlConnection = new MySqlConnection(database.getConnectionString());
 
                 mysqlConnection.Open();
@@ -613,7 +614,7 @@ namespace TqatProModel.Database {
 
                     "FROM information_schema.TABLES " +
                     "WHERE table_schema LIKE \"trk_%\" OR table_schema LIKE \"dbt_%\" " +
-                     "GROUP BY table_schema ;"; 
+                     "GROUP BY table_schema ;";
 
                 MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
 
@@ -630,7 +631,7 @@ namespace TqatProModel.Database {
                         trackerDatabaseSize.DatabaseSize = mySqlDataReader.GetDouble("databaseSize");
                         trackerDatabaseSize.DatabaseFreeSpace = mySqlDataReader.GetDouble("databaseFreeSpace");
 
-                        trackerDatabaseSizes.Add(trackerDatabaseSize);
+                        trackerDatabaseSizes.Enqueue(trackerDatabaseSize);
                     }
                 }
 
@@ -643,8 +644,55 @@ namespace TqatProModel.Database {
             } finally {
                 mysqlConnection.Close();
             }
-              return trackerDatabaseSizes;
-        } 
+            return trackerDatabaseSizes;
+        }
+
+        public TrackerDatabaseSize getDatabaseSize(string databaseName) {
+
+            TrackerDatabaseSize trackerDatabaseSize = new TrackerDatabaseSize();
+
+
+            try {
+                mysqlConnection = new MySqlConnection(database.getConnectionString());
+
+                mysqlConnection.Open();
+
+                string sql =
+                    "SELECT table_schema \"databaseName\", " +
+                    "sum( data_length + index_length ) / 1024 / 1024 \"databaseSize\", " +
+                    "sum( data_free )/ 1024 / 1024 \"databaseFreeSpace\" " +
+
+                    "FROM information_schema.TABLES " +
+                    "WHERE table_schema LIKE @databaseName;";
+
+                MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
+                mySqlCommand.Parameters.Add("@databaseName", databaseName);
+                MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
+
+                if (!mySqlDataReader.HasRows) {
+                    mySqlDataReader.Dispose();
+                    throw new QueryException(1, "No database.");
+                } else {
+                    mySqlDataReader.Read();
+                    trackerDatabaseSize.Name = mySqlDataReader.GetString("databaseName");
+                    trackerDatabaseSize.DatabaseSize = mySqlDataReader.GetDouble("databaseSize");
+                    trackerDatabaseSize.DatabaseFreeSpace = mySqlDataReader.GetDouble("databaseFreeSpace");
+                }
+
+            } catch (MySqlException mySqlException) {
+                throw new QueryException(1, mySqlException.Message);
+            } catch (QueryException queryException) {
+                throw queryException;
+            } catch (Exception exception) {
+                throw new QueryException(1, exception.Message);
+            } finally {
+                mysqlConnection.Close();
+            }
+
+            return trackerDatabaseSize;
+        }
+
+
 
         //        MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
 

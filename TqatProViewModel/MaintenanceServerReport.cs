@@ -14,6 +14,8 @@ namespace TqatProViewModel {
 
 
     public enum MaintenanceServerStatus {
+        NONE,
+        DONE,
         SUCCESS,
         RUNNING,
         WAITING,

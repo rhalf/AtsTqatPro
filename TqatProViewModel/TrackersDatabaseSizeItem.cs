@@ -14,6 +14,12 @@ namespace TqatProViewModel {
         public TrackerDatabaseSizeItem(TrackerDatabaseSize trackerDatabaseSize) {
             this.trackerDatabaseSize = trackerDatabaseSize;
         }
+
+        public TrackerDatabaseSize TrackerDatabaseSize {
+            set {
+                this.trackerDatabaseSize = value;
+            }
+        }
         public string Name {
             get {
                 return this.trackerDatabaseSize.Name;
@@ -25,7 +31,7 @@ namespace TqatProViewModel {
 
         public string Size {
             get {
-                return Math.Round(this.trackerDatabaseSize.DatabaseSize,2).ToString("0.00");
+                return Math.Round(this.trackerDatabaseSize.DatabaseSize, 2).ToString("0.00");
             }
         }
 
@@ -40,7 +46,7 @@ namespace TqatProViewModel {
             set;
         }
 
-        public string Status {
+        public MaintenanceServerStatus Status {
             get;
             set;
         }
