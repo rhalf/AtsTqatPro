@@ -8,3 +8,11 @@ C:\Users\Rhalf\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTracking
 C:\Users\Rhalf\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProModel\bin\Release\MySql.Data.dll
 C:\Users\Rhalf\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProModel\obj\Release\TqatProModel.dll
 C:\Users\Rhalf\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProModel\obj\Release\TqatProModel.pdb
+C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Release\TqatProModel.dll
+C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Release\TqatProModel.pdb
+C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Release\MySql.Data.dll
+C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Release\Newtonsoft.Json.dll
+C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Release\Newtonsoft.Json.xml
+C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Release\TqatProModel.csprojResolveAssemblyReference.cache
+C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Release\TqatProModel.dll
+C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Release\TqatProModel.pdb

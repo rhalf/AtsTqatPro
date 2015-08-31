@@ -112,6 +112,9 @@ namespace TqatProTrackingTool.Control {
                     if (element.id == "trackerId") {
                         element.value = trackerData.Tracker.Id.ToString();
                     }
+                    if (element.id == "trackerImei") {
+                        element.value = trackerData.Tracker.TrackerImei;
+                    }
                     if (element.id == "trackerLabel") {
                         if (displayMember == "VehicleRegistration") {
                             element.value = trackerData.Tracker.VehicleRegistration;
@@ -156,10 +159,16 @@ namespace TqatProTrackingTool.Control {
                         if (element.id == "trackerIconAlert") {
                             if (trackerData.Tracker.DateTimeExpired.CompareTo(DateTime.Now) <= 0 /*|| trackerItem.Tracker.VehicleRegistrationExpiry.CompareTo(DateTime.Now) <= 0*/) {
                                 element.value = "alarmExpiry";
+                            } else if (trackerData.DateTime.Subtract(DateTime.Now).Hours > 1) {
+                                element.value = "alarmLostTracker";
+                            } else if (trackerData.Speed > 0 && trackerData.ACC == false) {
+                                element.value = "alarmBreakDown";
                             } else if (trackerData.OverSpeed == true) {
                                 element.value = "alarmOverSpeed";
-                            } else if (trackerData.GpsSatellites > 4 || trackerData.GsmSignal == 0) {
-                                element.value = "alarmLostSignal";
+                            } else if (trackerData.GpsSatellites < 3) {
+                                element.value = "alarmLostSignalGps";
+                            } else if (trackerData.GsmSignal < 5) {
+                                element.value = "alarmLostSignalGsm";
                                 //} else if (trackerData.DateTime.Subtract(DateTime.Now) > (new TimeSpan(01, 00, 00))) {
                                 //    element.value = "alarmLostTracker";
                             } else if ((trackerData.Mileage - trackerData.Tracker.MileageInitial) > trackerData.Tracker.MileageLimit) {

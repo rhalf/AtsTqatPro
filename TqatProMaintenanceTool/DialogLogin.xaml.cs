@@ -93,8 +93,8 @@ namespace TqatProMaintenanceTool {
                 int count = 0;
                 foreach (Company companyItem in companies) {
                     query.getUser(companyItem, user);
-                    users = query.getUsers(companyItem, user);
-                    companyItem.Trackers = query.getTrackers(companyItem, users);
+                    //users = query.fillUsers(companyItem, user);
+                    //companyItem.Trackers = query.getTrackers(companyItem, users);
                     Dispatcher.Invoke(new Action(() => {
                         panelLogin.ErrorNote = "Loading companies... " + (++count).ToString() + "/" + companies.Count.ToString();
                     }));

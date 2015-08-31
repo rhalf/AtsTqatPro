@@ -95,7 +95,7 @@
             </Ribbon.ApplicationMenu>
             <RibbonTab Header="Live Tracking">
                 <RibbonGroup Header="User">
-                    <RibbonMenuButton x:Name="RibbonMenuButtonUser" LargeImageSource="Resources/images/128/Animated/user_00.png" Label="User" ItemContainerStyle="{StaticResource StyleRibbonMenuButtonUser}"/>
+                    <RibbonMenuButton x:Name="ribbonMenuButtonUser" LargeImageSource="Resources/images/128/Animated/user_00.png" Label="User" ItemContainerStyle="{StaticResource StyleRibbonMenuButtonUser}"/>
                 </RibbonGroup>
                 <RibbonGroup Header="Display">
                     <RibbonMenuButton  x:Name="ribbonMenuButtonDisplayMember" LargeImageSource="Resources/images/128/Animated/monitor_01.png" Label="Display Member" ItemContainerStyle="{StaticResource StyleRibbonMenuButtonUser}">
@@ -137,9 +137,19 @@
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
+
+                        <Grid Grid.Row="0" VerticalAlignment="Top" Margin="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="Collection : "/>
+                            <ComboBox Grid.Column="1" x:Name="comboBoxCollection" SelectionChanged="comboBoxCollection_SelectionChanged"/>
+                        </Grid>
+                        <Grid Grid.Row="1" VerticalAlignment="Top" Margin="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -147,7 +157,7 @@
                             <Label Grid.Column="0" Content="Search : "/>
                             <TextBox Grid.Column="1" x:Name="textBoxSearchTrackerData" KeyUp="textBoxSearchTrackerData_KeyUp"/>
                         </Grid>
-                        <ListView x:Name="listViewTrackers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2" SelectionChanged="listViewTrackers_SelectionChanged" Grid.Row="1 ">
+                        <ListView  Grid.Row="2" x:Name="listViewTrackers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2" SelectionChanged="listViewTrackers_SelectionChanged">
                             <ListView.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="Check All" Padding="3" Margin="3" Click="MenuItemlistViewTrackers_checkAll_Click">

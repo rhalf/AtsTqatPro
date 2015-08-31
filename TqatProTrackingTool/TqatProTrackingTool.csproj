@@ -235,7 +235,9 @@
     <Resource Include="Resources\images\128\Flat\user_01.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Web\Maps\images\alarm\breakdown.png" />
+    <Content Include="Web\Maps\images\alarm\alarmBreakDown.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Web\Maps\images\alarm\CRExpired.png" />
     <Resource Include="Web\Maps\images\alarm\emergency.png" />
     <Resource Include="Resources\images\16\checkAll.png" />
@@ -251,7 +253,7 @@
     <Content Include="Web\Maps\images\alarm\alarmGeofence.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Web\Maps\images\alarm\alarmLostSignal.png">
+    <Content Include="Web\Maps\images\alarm\alarmLostSignalGps.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Web\Maps\images\alarm\alarmMileageLimit.png" />
@@ -263,6 +265,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\Maps\images\alarm\alarmOk.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Maps\images\alarm\alarmLostSignalGsm.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\Maps\images\tracker\icon_0_alarm.gif">

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using TqatProModel;
+
+
 namespace TqatProModel {
     public class User {
         public int Id {
@@ -55,6 +58,10 @@ namespace TqatProModel {
             set;
         }
         public List<Poi> Pois {
+            get;
+            set;
+        }
+        public List<Collection> Collections {
             get;
             set;
         }

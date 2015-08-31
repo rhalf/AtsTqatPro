@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using TqatProModel;
+
 namespace TqatProModel {
 
     public class Tracker {
@@ -79,10 +81,7 @@ namespace TqatProModel {
             get;
             set;
         }
-        public string Collections {
-            get;
-            set;
-        }
+    
         public DateTime DateTimeCreated {
             get;
             set;
@@ -116,6 +115,11 @@ namespace TqatProModel {
             set;
         }
         public string Note {
+            get;
+            set;
+        }
+
+        public List<Collection> Collections {
             get;
             set;
         }

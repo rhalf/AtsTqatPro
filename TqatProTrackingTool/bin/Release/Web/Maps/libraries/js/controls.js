@@ -38,6 +38,7 @@ function Parser() {
     this.getTracker = function () {
         tracker = new Tracker();
         tracker.Id = document.getElementById("trackerId").value;
+        tracker.Imei = document.getElementById("trackerImei").value;
         tracker.Latitude = document.getElementById("trackerLatitude").value;
         tracker.Longitude = document.getElementById("trackerLongitude").value;
         tracker.Label = document.getElementById("trackerLabel").value;
@@ -98,7 +99,7 @@ function MapTool() {
     this.addGeofence = function () {
         //alert(geofence.Coordinates);
 
-
+         
         var coordinates = JSON.parse(geofence.Coordinates);
         var polygonCoordinates = new Array();
         for (var index = 0; coordinates.length > index; index++) {
@@ -143,7 +144,12 @@ function MapTool() {
 
         if (tracker.IsEnabled != 1) {
             for (var index in trackers) {
-                if (trackers[index].trackerId == tracker.Id) {
+                //if (trackers[index].trackerId == tracker.Id) {
+                //    trackers[index].setMap(null);
+                //    delete trackers[index];
+                //    return;
+                //}
+                if (trackers[index].trackerImei == tracker.Imei) {
                     trackers[index].setMap(null);
                     delete trackers[index];
                     return;
@@ -162,7 +168,12 @@ function MapTool() {
         '</div>';
 
         for (var index in trackers) {
-            if (trackers[index].trackerId == tracker.Id) {
+            //if (trackers[index].trackerId == tracker.Id) {
+            //    trackers[index].setPosition(coordinate);
+            //    trackers[index].set('labelContent', markerTracker);
+            //    return;
+            //}
+            if (trackers[index].trackerImei == tracker.Imei) {
                 trackers[index].setPosition(coordinate);
                 trackers[index].set('labelContent', markerTracker);
                 return;
@@ -202,7 +213,9 @@ function MapTool() {
 
             labelClass: "markerTracker",
 
-            trackerId: tracker.Id
+            trackerId: tracker.Id,
+
+            trackerImei: tracker.Imei
         });
 
         trackers.push(markerTracker);
@@ -258,9 +271,9 @@ function MapTool() {
                 var infoWindow = new google.maps.InfoWindow({
                     position: coordinate
                 });
-               
 
-                
+
+
 
                 getAddress(coordinate.lat(), coordinate.lng(),
                     function (address) {

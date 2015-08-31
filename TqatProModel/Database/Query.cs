@@ -8,12 +8,15 @@ using System.Data;
 using System.Globalization;
 
 using MySql.Data.MySqlClient;
-
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using TqatProModel;
 using TqatProModel.Devices.Meitrack;
 using TqatProModel.Parser;
 using System.Collections.Concurrent;
+using System.Net;
+using System.IO;
 
 namespace TqatProModel.Database {
 
@@ -298,7 +301,7 @@ namespace TqatProModel.Database {
             }
         }
 
-        public List<User> getUsers(Company company, User user) {
+        public void fillUsers(Company company, User user) {
             List<User> users = new List<User>();
             try {
                 mysqlConnection = new MySqlConnection(database.getConnectionString());
@@ -363,8 +366,220 @@ namespace TqatProModel.Database {
             } finally {
                 mysqlConnection.Close();
             }
-            return users;
+            company.Users = users;
         }
+        public void fillCollection(Company company) {
+            foreach (User user in company.Users) {
+                List<Collection> collections = new List<Collection>();
+                try {
+                    mysqlConnection = new MySqlConnection(database.getConnectionString());
+
+                    mysqlConnection.Open();
+
+                    string sql =
+                        "SELECT * " +
+                        "FROM cmp_" + company.DatabaseName + ".coll_" + user.DatabaseName + ";";
+
+                    MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
+
+                    MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
+
+                    if (!mySqlDataReader.HasRows) {
+                        Collection collection = new Collection();
+                        collection.Id = 0;
+                        collection.Name = "All";
+                        collection.Description = "All";
+                        collections.Add(collection);
+                        user.Collections = collections;
+                        mySqlDataReader.Dispose();
+                    } else {
+                        Collection collection = new Collection();
+                        collection.Id = 0;
+                        collection.Name = "All";
+                        collection.Description = "All";
+                        collections.Add(collection);
+
+                        while (mySqlDataReader.Read()) {
+                            Collection collectionItem = new Collection();
+                            collectionItem.Id = mySqlDataReader.GetInt32("collid");
+                            collectionItem.Name = mySqlDataReader.GetString("collname");
+                            collectionItem.Description = mySqlDataReader.GetString("colldesc");
+                            collections.Add(collectionItem);
+                        }
+
+                        user.Collections = collections;
+                        mySqlDataReader.Dispose();
+                    }
+                } catch (MySqlException mySqlException) {
+                    throw new QueryException(1, mySqlException.Message);
+                } catch (QueryException queryException) {
+                    throw queryException;
+                } catch (Exception exception) {
+                    throw new QueryException(1, exception.Message);
+                } finally {
+                    mysqlConnection.Close();
+                }
+            }
+        }
+        public void fillPois(Company company) {
+            foreach (User user in company.Users) {
+                List<Poi> pois = new List<Poi>();
+                try {
+                    mysqlConnection = new MySqlConnection(database.getConnectionString());
+
+                    mysqlConnection.Open();
+
+                    string sql =
+                        "SELECT * " +
+                        "FROM cmp_" + company.DatabaseName + ".poi_" + user.DatabaseName + ";";
+
+                    MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
+
+                    MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
+
+                    if (!mySqlDataReader.HasRows) {
+                        mySqlDataReader.Dispose();
+                    } else {
+                        while (mySqlDataReader.Read()) {
+                            Poi poi = new Poi();
+                            poi.id = mySqlDataReader.GetInt32("poi_id");
+                            poi.name = mySqlDataReader.GetString("poi_name");
+                            poi.description = mySqlDataReader.GetString("poi_desc");
+                            poi.image = mySqlDataReader.GetString("poi_img");
+                            poi.location = new Coordinate(double.Parse(mySqlDataReader.GetString("poi_lat")),
+                                                        double.Parse(mySqlDataReader.GetString("poi_lon")));
+                            pois.Add(poi);
+                        }
+
+                        user.Pois = pois;
+                        mySqlDataReader.Dispose();
+                    }
+                } catch (MySqlException mySqlException) {
+                    throw new QueryException(1, mySqlException.Message);
+                } catch (QueryException queryException) {
+                    throw queryException;
+                } catch (Exception exception) {
+                    throw new QueryException(1, exception.Message);
+                } finally {
+                    mysqlConnection.Close();
+                }
+            }
+        }
+        public void fillTrackers(Company company) {
+            List<Tracker> trackers = new List<Tracker>();
+
+            try {
+                mysqlConnection.Open();
+
+                string sql =
+                    "SELECT * " +
+                    "FROM dbt_tracking_master.trks " +
+                    "WHERE dbt_tracking_master.trks.tcmp = @CompanyDatabaseName";
+
+                MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
+                mySqlCommand.Parameters.AddWithValue("@CompanyDatabaseName", company.DatabaseName);
+                MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
+
+
+                if (!mySqlDataReader.HasRows) {
+                    //throw new QueryException(1, "Tracker's Collection is empty.");
+                    mySqlDataReader.Dispose();
+                    mysqlConnection.Close();
+                } else {
+
+
+                    string dateTime;
+
+                    while (mySqlDataReader.Read()) {
+                        string[] trackerUser = mySqlDataReader.GetString("tusers").Split(',');
+                        List<User> trackerUsers = new List<User>();
+                        foreach (User user in company.Users) {
+                            for (int index = 0; index < trackerUser.ToList().Count; index++) {
+                                if (Int32.Parse(trackerUser[index]) == user.Id) {
+                                    trackerUsers.Add(user);
+                                }
+                            }
+                        }
+
+                        Tracker tracker = new Tracker();
+
+                        dynamic dynamicCollection = JsonConvert.DeserializeObject<dynamic>(mySqlDataReader.GetString("tcollections"));
+                        JArray arrayCollection = (JArray)dynamicCollection;
+                        List<Collection> collections = new List<Collection>();
+                        Collection collectionItem = new Collection();
+                        collectionItem.Id = 0;
+                        collectionItem.Name = "All";
+                        collectionItem.Description = "All";
+                        collections.Add(collectionItem);
+
+                        foreach (User user in company.Users) {
+                            if (user.Collections == null) {
+                                continue;
+                            }
+
+                            foreach (Collection collection in user.Collections) {
+
+                                for (int index = 0; index < arrayCollection.Count; index++) {
+                                    if (dynamicCollection[index].value == collection.Id) {
+                                        collections.Add(collection);
+                                    }
+                                }
+                            }
+                        }
+                        tracker.Collections = collections;
+
+
+                        //tracker.Collections = mySqlDataReader.GetString("tcollections");
+                        tracker.CompanyDatabaseName = (string)mySqlDataReader["tcmp"];
+                        tracker.DatabaseHost = int.Parse((string)mySqlDataReader["tdbhost"]);
+                        tracker.DatabaseName = (string)mySqlDataReader["tdbs"];
+
+                        dateTime = (string)mySqlDataReader["tcreatedate"];
+                        tracker.DateTimeCreated = SubStandard.dateTime(dateTime);
+                        dateTime = String.Empty;
+
+                        dateTime = (string)mySqlDataReader["ttrackerexpiry"];
+                        tracker.DateTimeExpired = SubStandard.dateTime(dateTime);
+                        dateTime = String.Empty;
+
+                        tracker.TrackerImei = (string)mySqlDataReader["tunit"];
+                        tracker.DevicePassword = (string)mySqlDataReader["tunitpassword"];
+                        tracker.DeviceType = int.Parse((string)mySqlDataReader["ttype"]);
+                        tracker.DriverName = (string)mySqlDataReader["tdrivername"];
+                        tracker.Emails = (string)mySqlDataReader["temails"];
+                        tracker.HttpHost = int.Parse((string)mySqlDataReader["thttphost"]);
+                        tracker.Id = (int)mySqlDataReader["tid"];
+                        tracker.IdlingTime = int.Parse((string)mySqlDataReader["tidlingtime"]);
+                        tracker.ImageNumber = int.Parse((string)mySqlDataReader["timg"]);
+                        tracker.Inputs = (string)mySqlDataReader["tinputs"];
+                        tracker.MileageInitial = int.Parse((string)mySqlDataReader["tmileageInit"]);
+                        tracker.MileageLimit = int.Parse((string)mySqlDataReader["tmileagelimit"]);
+                        tracker.MobileDataProvider = int.Parse((string)mySqlDataReader["tprovider"]);
+                        tracker.Note = (string)mySqlDataReader["tnote"];
+                        tracker.OwnerName = (string)mySqlDataReader["townername"];
+                        tracker.SimImei = (string)mySqlDataReader["tsimsr"];
+                        tracker.SimNumber = (string)mySqlDataReader["tsimno"];
+                        tracker.Users = trackerUsers;
+                        tracker.SpeedLimit = int.Parse((string)mySqlDataReader["tSpeedLimit"]);
+                        tracker.VehicleModel = (string)mySqlDataReader["tvehiclemodel"];
+                        tracker.VehicleRegistration = (string)mySqlDataReader["tvehiclereg"];
+
+                        trackers.Add(tracker);
+                    }
+                    company.Trackers = trackers;
+                    mySqlDataReader.Dispose();
+                }
+            } catch (QueryException queryException) {
+                throw queryException;
+            } catch (MySqlException mySqlException) {
+                throw new QueryException(1, mySqlException.Message);
+            } catch (Exception exception) {
+                throw new QueryException(1, exception.Message);
+            } finally {
+                mysqlConnection.Close();
+            }
+        }
+
 
         //public DataTable getAllCompanies() {
         //    DataTable dataTable = new DataTable();
@@ -396,95 +611,6 @@ namespace TqatProModel.Database {
         //    }
         //    return dataTable;
         //}
-        public List<Tracker> getTrackers(Company company, List<User> users) {
-            List<Tracker> trackers = new List<Tracker>();
-
-            try {
-                mysqlConnection.Open();
-
-                string sql =
-                    "SELECT * " +
-                    "FROM dbt_tracking_master.trks " +
-                    "WHERE dbt_tracking_master.trks.tcmp = @CompanyDatabaseName";
-
-                MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
-                mySqlCommand.Parameters.AddWithValue("@CompanyDatabaseName", company.DatabaseName);
-                MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
-
-
-                if (!mySqlDataReader.HasRows) {
-                    //throw new QueryException(1, "Tracker's Collection is empty.");
-                    mySqlDataReader.Dispose();
-                    mysqlConnection.Close();
-                    return trackers;
-                } else {
-
-
-                    string dateTime;
-
-                    while (mySqlDataReader.Read()) {
-                        string[] trackerUser = mySqlDataReader.GetString("tusers").Split(',');
-                        List<User> trackerUsers = new List<User>();
-                        foreach (User user in users) {
-                            for (int index = 0; index < trackerUser.ToList().Count; index++) {
-                                if (Int32.Parse(trackerUser[index]) == user.Id) {
-                                    trackerUsers.Add(user);
-                                }
-                            }
-                        }
-
-                        Tracker tracker = new Tracker();
-                        tracker.Collections = mySqlDataReader.GetString("tcollections");
-                        tracker.CompanyDatabaseName = (string)mySqlDataReader["tcmp"];
-                        tracker.DatabaseHost = int.Parse((string)mySqlDataReader["tdbhost"]);
-                        tracker.DatabaseName = (string)mySqlDataReader["tdbs"];
-
-                        dateTime = (string)mySqlDataReader["tcreatedate"];
-                        tracker.DateTimeCreated = SubStandard.dateTime(dateTime);
-                        dateTime = String.Empty;
-
-                        dateTime = (string)mySqlDataReader["ttrackerexpiry"];
-                        tracker.DateTimeExpired = SubStandard.dateTime(dateTime);
-                        dateTime = String.Empty;
-
-                        tracker.TrackerImei = (string)mySqlDataReader["tunit"];
-                        tracker.DevicePassword = (string)mySqlDataReader["tunitpassword"];
-                        tracker.DeviceType = int.Parse((string)mySqlDataReader["ttype"]);
-                        tracker.DriverName = (string)mySqlDataReader["tdrivername"];
-                        tracker.Emails = (string)mySqlDataReader["temails"];
-                        tracker.HttpHost = int.Parse((string)mySqlDataReader["thttphost"]);
-                        tracker.Id = (int)mySqlDataReader["tid"];
-                        tracker.IdlingTime = int.Parse((string)mySqlDataReader["tidlingtime"]);
-                        tracker.ImageNumber = int.Parse((string)mySqlDataReader["timg"]);
-                        tracker.Inputs = (string)mySqlDataReader["tinputs"];
-                        tracker.MileageInitial = int.Parse((string)mySqlDataReader["tmileageInit"]);
-                        tracker.MileageLimit = int.Parse((string)mySqlDataReader["tmileagelimit"]);
-                        tracker.MobileDataProvider = int.Parse((string)mySqlDataReader["tprovider"]);
-                        tracker.Note = (string)mySqlDataReader["tnote"];
-                        tracker.OwnerName = (string)mySqlDataReader["townername"];
-                        tracker.SimImei = (string)mySqlDataReader["tsimsr"];
-                        tracker.SimNumber = (string)mySqlDataReader["tsimno"];
-                        tracker.Users = trackerUsers;
-                        tracker.SpeedLimit = int.Parse((string)mySqlDataReader["tspeedlimit"]);
-                        tracker.VehicleModel = (string)mySqlDataReader["tvehiclemodel"];
-                        tracker.VehicleRegistration = (string)mySqlDataReader["tvehiclereg"];
-
-                        trackers.Add(tracker);
-                    }
-
-                    mySqlDataReader.Dispose();
-                }
-            } catch (QueryException queryException) {
-                throw queryException;
-            } catch (MySqlException mySqlException) {
-                throw new QueryException(1, mySqlException.Message);
-            } catch (Exception exception) {
-                throw new QueryException(1, exception.Message);
-            } finally {
-                mysqlConnection.Close();
-            }
-            return trackers;
-        }
 
         public TrackerData getTrackerLatestData(Company company, Tracker tracker) {
             TrackerData trackerData = new TrackerData();
@@ -597,6 +723,122 @@ namespace TqatProModel.Database {
 
         }
 
+        public TrackerData getTrackerLatestData(Company company, Tracker tracker, Server server) {
+            TrackerData trackerData = new TrackerData();
+            trackerData.Tracker = tracker;
+
+            try {
+                WebRequest request = WebRequest.Create("http://" + server.Ip + "/connect/get_realtime.php?url=http://" + server.Ip + ":" + server.PortHttp + "/?id=" + tracker.TrackerImei);
+                // If required by the server, set the credentials.
+                request.Credentials = CredentialCache.DefaultCredentials;
+                // Get the response.
+                WebResponse response = request.GetResponse();
+                // Display the status.
+                Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+                // Get the stream containing content returned by the server.
+                Stream dataStream = response.GetResponseStream();
+                // Open the stream using a StreamReader for easy access.
+                StreamReader reader = new StreamReader(dataStream);
+                // Read the content.
+                string responseFromServer = reader.ReadToEnd();
+                // Display the content.
+                Console.WriteLine(responseFromServer);
+                // Clean up the streams and the response.
+                reader.Close();
+                response.Close();
+                //===========================================
+
+                //===========================================
+                if (responseFromServer == "1") {
+                    trackerData.isDataEmpty = true;
+                    return trackerData;
+                } else {
+                    dynamic jsonData = (dynamic)JsonConvert.DeserializeObject<dynamic>(responseFromServer);
+
+                    trackerData.isDataEmpty = false;
+                    trackerData.Tracker.TrackerImei = (string)jsonData.gm_unit;
+                    double dateTime = double.Parse((string)jsonData.gm_time);
+                    trackerData.DateTime = Parser.UnixTime.toDateTime(dateTime);
+                    double latitude = double.Parse((string)jsonData.gm_lat);
+                    double longitude = double.Parse((string)jsonData.gm_lng);
+                    trackerData.Coordinate = new Coordinate(latitude, longitude);
+
+                    trackerData.Speed = int.Parse((string)jsonData.gm_speed);
+                    trackerData.Degrees = int.Parse((string)jsonData.gm_ori);
+                    trackerData.Direction = Direction.degreesToCardinalDetailed(double.Parse((string)jsonData.gm_ori));
+                    trackerData.Mileage = double.Parse((string)jsonData.gm_mileage);
+
+                    //1,			            //(0)
+                    //35,			            //Event code(Decimal)
+                    //11,			            //Number of satellites(Decimal)
+                    //26,			            //GSM signal status(Decimal)
+                    //17160691, 		        //Mileage(Decimal)unit: meter
+                    //0.7, 			            //hpos accuracy(Decimal)
+                    //18, 			            //Altitude(Decimal)unit: meter
+                    //18661240, 		        //Run time(Decimal)unit: second
+                    //427|2|0078|283F, 	        //Base station information(binary|binary|hex|hex)           (8)
+                    //==============================================0200
+                    //0,0,0,0,0,0,0,0,          //Io port lowbyte (low bit start from left)                 (9)
+                    //0,1,0,0,0,0,0,0,          //Io port lowbyte (low bit start from left)                 (17)
+                    //==============================================
+                    //000B,0000,0000,0A6E,0434, //Analog input value                                        (25)
+                    //00000001 		            //System mark
+
+                    string gmData = (string)jsonData.gm_data;
+                    string[] data = gmData.Split(',');
+                    trackerData.EventCode = (EventCode)int.Parse(data[1]);
+
+                    trackerData.GpsSatellites = int.Parse(data[2]);
+                    trackerData.GsmSignal = int.Parse(data[3]);
+                    trackerData.Altitude = int.Parse(data[6]);
+
+                    trackerData.ACC = (int.Parse(data[18]) == 1) ? true : false;
+                    trackerData.SOS = (int.Parse(data[17]) == 1) ? true : false;
+                    trackerData.OverSpeed = ((int)trackerData.Speed > tracker.SpeedLimit) ? true : false;
+                    //Geofence
+                    Coordinate coordinate = new Coordinate(latitude, longitude);
+
+                    foreach (Geofence geofence in company.Geofences) {
+                        if (Geofence.isPointInPolygon(geofence, coordinate)) {
+                            trackerData.Geofence = geofence;
+                        }
+                    };
+
+                    double batteryStrength = (double)int.Parse(data[28], System.Globalization.NumberStyles.AllowHexSpecifier);
+                    batteryStrength = ((batteryStrength - 2114f) * (100f / 492f));//*100.0;
+                    batteryStrength = Math.Round(batteryStrength, 2);
+                    if (batteryStrength > 100) {
+                        batteryStrength = 100f;
+                    } else if (batteryStrength < 0) {
+                        batteryStrength = 0;
+                    }
+
+                    double batteryVoltage = (double)int.Parse(data[28], System.Globalization.NumberStyles.AllowHexSpecifier);
+                    batteryVoltage = (batteryVoltage * 3 * 2) / 1024;
+                    batteryVoltage = Math.Round(batteryVoltage, 2);
+                    double externalVoltage = (double)int.Parse(data[29], System.Globalization.NumberStyles.AllowHexSpecifier);
+                    externalVoltage = (externalVoltage * 3 * 16) / 1024;
+                    externalVoltage = Math.Round(externalVoltage, 2);
+
+                    trackerData.Battery = batteryStrength;
+                    trackerData.BatteryVoltage = batteryVoltage;
+                    trackerData.ExternalVoltage = externalVoltage;
+
+                    return trackerData;
+                }
+
+                //} catch (QueryException queryException) {
+                //throw queryException;
+                //} catch (MySqlException mySqlException) {
+                //throw new QueryException(1, mySqlException.Message);
+            } catch (Exception exception) {
+                //throw new QueryException(1, exception.Message);
+                return trackerData;
+            } finally {
+                mysqlConnection.Close();
+            }
+
+        }
         public ConcurrentQueue<TrackerDatabaseSize> getDatabasesSize() {
 
             ConcurrentQueue<TrackerDatabaseSize> trackerDatabaseSizes = new ConcurrentQueue<TrackerDatabaseSize>();
@@ -666,7 +908,7 @@ namespace TqatProModel.Database {
                     "WHERE table_schema LIKE @databaseName;";
 
                 MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
-                mySqlCommand.Parameters.Add("@databaseName", databaseName);
+                mySqlCommand.Parameters.AddWithValue("@databaseName", databaseName);
                 MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
 
                 if (!mySqlDataReader.HasRows) {

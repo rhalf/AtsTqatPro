@@ -43,8 +43,6 @@ namespace TqatProTrackingTool {
         Query query;
         Company company;
         User user;
-        List<User> users;
-        List<Tracker> trackers;
 
         private void PanelLogin_OnSubmitEventHandler(object sender, RoutedEventArgs e) {
             //Validation
@@ -86,16 +84,28 @@ namespace TqatProTrackingTool {
                 query.getCompany(company);
                 query.getUser(company, user);
 
+                if (user.AccessLevel != 1) {
+                    if (!company.IsActive)
+                        throw new QueryException(1, "Company is deactivated.");
+                    if (company.DateTimeExpired.CompareTo(DateTime.Now) != -1)
+                        throw new QueryException(1, "Can't Login! This user is expired.");
+
+                    if (user.DateTimeExpired.CompareTo(DateTime.Now) != -1)
+                        throw new QueryException(1, "Can't Login! This user is expired.");
+                    if (!user.IsActive)
+                        throw new QueryException(1, "User is deactivated.");
+                }
+                //=============================Login successful
+
                 query.fillGeofences(company);
 
-                users = query.getUsers(company, user);
-                trackers = query.getTrackers(company, users);
+                query.fillUsers(company, user);
 
+                query.fillCollection(company);
 
+                query.fillTrackers(company);
 
-                foreach (User userItem in users) {
-                    query.fillPois(company, userItem);
-                }
+                query.fillPois(company);
 
                 Dispatcher.Invoke(new Action(() => {
                     Settings.Default.accountCompanyUsername = panelLogin.CompanyUsername;
@@ -103,7 +113,7 @@ namespace TqatProTrackingTool {
                     Settings.Default.accountPassword = panelLogin.Password;
                     Settings.Default.accountRememberMe = panelLogin.RememberMe;
                     Settings.Default.Save();
-                    FormMain formMain = new FormMain(company, user, users, trackers, database);
+                    FormMain formMain = new FormMain(company, user, database);
                     formMain.Show();
                     this.Close();
                 }));
@@ -134,15 +144,15 @@ namespace TqatProTrackingTool {
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e) {
 
-            //Settings.Default.databaseHost = "184.107.175.154";
-            //Settings.Default.databaseUsername = "reportapp";
-            //Settings.Default.databasePassword = "my5q1r3p0rt@pp!@#";
-            //Settings.Default.Save();
-
-            Settings.Default.databaseHost = "108.163.190.202";
-            Settings.Default.databaseUsername = "atstqatpro";
-            Settings.Default.databasePassword = "@t5tq@pr0!@#";
+            Settings.Default.databaseHost = "184.107.175.154";
+            Settings.Default.databaseUsername = "reportapp";
+            Settings.Default.databasePassword = "my5q1r3p0rt@pp!@#";
             Settings.Default.Save();
+
+            //Settings.Default.databaseHost = "108.163.190.202";
+            //Settings.Default.databaseUsername = "atstqatpro";
+            //Settings.Default.databasePassword = "@t5tq@pr0!@#";
+            //Settings.Default.Save();
 
             //Settings.Default.accountCompanyUsername = "mowasalat";
             //Settings.Default.accountUsername = "admin";
@@ -159,6 +169,10 @@ namespace TqatProTrackingTool {
         }
 
         private void panelLogin_Loaded(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void panelLogin_Loaded_1(object sender, RoutedEventArgs e) {
 
         }
 
