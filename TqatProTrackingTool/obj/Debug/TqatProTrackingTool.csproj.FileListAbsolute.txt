@@ -555,7 +555,6 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\TqatPro
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\TqatProTrackingTool.exe
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\TqatProTrackingTool.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\MahApps.Metro.dll
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\MySql.Data.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\System.Windows.Interactivity.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\TqatProModel.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\TqatProViewModel.dll

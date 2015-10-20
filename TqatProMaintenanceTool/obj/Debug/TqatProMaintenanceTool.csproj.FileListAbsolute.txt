@@ -27,3 +27,4 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\Tqat
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\TqatProMaintenanceTool.csproj.GenerateResource.Cache
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\TqatProMaintenanceTool.exe
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\TqatProMaintenanceTool.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\bin\Debug\MySql.Data.dll

@@ -91,8 +91,6 @@ namespace TqatProTrackingTool {
                 users = query.getUsers(company, user);
                 trackers = query.getTrackers(company, users);
 
-
-
                 foreach (User userItem in users) {
                     query.fillPois(company, userItem);
                 }
@@ -162,10 +160,8 @@ namespace TqatProTrackingTool {
 
         }
 
+        private void panelLogin_Loaded_1(object sender, RoutedEventArgs e) {
 
-
-
-
-
+        }
     }
 }

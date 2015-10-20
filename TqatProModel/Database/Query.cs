@@ -24,7 +24,7 @@ namespace TqatProModel.Database {
 
 
         public Query(Database database) {
-            if (database == null) {
+            if(database == null) {
                 throw new QueryException(1, "Database is null.");
             }
 
@@ -49,7 +49,7 @@ namespace TqatProModel.Database {
 
 
 
-                if (!mySqlDataReader.HasRows) {
+                if(!mySqlDataReader.HasRows) {
                     mySqlDataReader.Dispose();
                     throw new QueryException(1, "Company does not exist.");
                 } else {
@@ -69,11 +69,11 @@ namespace TqatProModel.Database {
 
                     mySqlDataReader.Dispose();
                 }
-            } catch (MySqlException mySqlException) {
+            } catch(MySqlException mySqlException) {
                 throw new QueryException(1, mySqlException.Message);
-            } catch (QueryException queryException) {
+            } catch(QueryException queryException) {
                 throw queryException;
-            } catch (Exception exception) {
+            } catch(Exception exception) {
                 throw new QueryException(1, exception.Message);
             } finally {
                 mysqlConnection.Close();
@@ -97,11 +97,11 @@ namespace TqatProModel.Database {
 
 
 
-                if (!mySqlDataReader.HasRows) {
+                if(!mySqlDataReader.HasRows) {
                     mySqlDataReader.Dispose();
                     throw new QueryException(1, "Company list is empty.");
                 } else {
-                    while (mySqlDataReader.Read()) {
+                    while(mySqlDataReader.Read()) {
                         Company company = new Company();
                         company.Id = mySqlDataReader.GetInt32("cmpid");
                         company.Username = mySqlDataReader.GetString("cmpname");
@@ -121,11 +121,11 @@ namespace TqatProModel.Database {
 
                     mySqlDataReader.Dispose();
                 }
-            } catch (MySqlException mySqlException) {
+            } catch(MySqlException mySqlException) {
                 throw new QueryException(1, mySqlException.Message);
-            } catch (QueryException queryException) {
+            } catch(QueryException queryException) {
                 throw queryException;
-            } catch (Exception exception) {
+            } catch(Exception exception) {
                 throw new QueryException(1, exception.Message);
             } finally {
                 mysqlConnection.Close();
@@ -147,10 +147,10 @@ namespace TqatProModel.Database {
                 MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
                 MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
 
-                if (!mySqlDataReader.HasRows) {
+                if(!mySqlDataReader.HasRows) {
                     mySqlDataReader.Dispose();
                 } else {
-                    while (mySqlDataReader.Read()) {
+                    while(mySqlDataReader.Read()) {
                         Geofence geofence = new Geofence();
                         geofence.Id = mySqlDataReader.GetInt32("gf_id");
                         geofence.Name = mySqlDataReader.GetString("gf_name");
@@ -164,7 +164,7 @@ namespace TqatProModel.Database {
 
 
                         List<string> points = geofenceData.Split('|').ToList();
-                        foreach (string point in points) {
+                        foreach(string point in points) {
                             string[] coordinates = point.Split(',');
                             double latitude = double.Parse(coordinates[0]);
                             double longitude = double.Parse(coordinates[1]);
@@ -176,11 +176,11 @@ namespace TqatProModel.Database {
                     company.Geofences = geofences;
                     mySqlDataReader.Dispose();
                 }
-            } catch (MySqlException mySqlException) {
+            } catch(MySqlException mySqlException) {
                 throw new QueryException(1, mySqlException.Message);
-            } catch (QueryException queryException) {
+            } catch(QueryException queryException) {
                 throw queryException;
-            } catch (Exception exception) {
+            } catch(Exception exception) {
                 throw new QueryException(1, exception.Message);
             } finally {
                 mysqlConnection.Close();
@@ -206,7 +206,7 @@ namespace TqatProModel.Database {
 
                 MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
 
-                if (!mySqlDataReader.HasRows) {
+                if(!mySqlDataReader.HasRows) {
                     mySqlDataReader.Dispose();
                     throw new QueryException(1, "Username or Password does not exist.");
                 } else {
@@ -222,9 +222,9 @@ namespace TqatProModel.Database {
                     user.IsActive = mySqlDataReader.GetString("uactive").Equals("1");
                     user.DatabaseName = mySqlDataReader.GetString("udbs");
 
-                    if (!String.IsNullOrEmpty(mySqlDataReader.GetString("uexpiredate"))) {
+                    if(!String.IsNullOrEmpty(mySqlDataReader.GetString("uexpiredate"))) {
                         string dateTime = (mySqlDataReader.GetString("uexpiredate"));
-                        if (!String.IsNullOrEmpty(dateTime)) {
+                        if(!String.IsNullOrEmpty(dateTime)) {
                             DateTime parsedDate = SubStandard.dateTime(dateTime);
                             user.DateTimeExpired = parsedDate;
                         }
@@ -232,9 +232,9 @@ namespace TqatProModel.Database {
                         user.DateTimeExpired = new DateTime(2050, 01, 01);
                     }
 
-                    if (!String.IsNullOrEmpty(mySqlDataReader.GetString("ucreatedate"))) {
+                    if(!String.IsNullOrEmpty(mySqlDataReader.GetString("ucreatedate"))) {
                         string dateTime = mySqlDataReader.GetString("ucreatedate");
-                        if (!String.IsNullOrEmpty(dateTime)) {
+                        if(!String.IsNullOrEmpty(dateTime)) {
                             DateTime parsedDate = SubStandard.dateTime(dateTime);
                             user.DateTimeCreated = parsedDate;
                         }
@@ -244,11 +244,11 @@ namespace TqatProModel.Database {
                     mySqlDataReader.Dispose();
                 }
 
-            } catch (MySqlException mySqlException) {
+            } catch(MySqlException mySqlException) {
                 throw new QueryException(1, mySqlException.Message);
-            } catch (QueryException queryException) {
+            } catch(QueryException queryException) {
                 throw queryException;
-            } catch (Exception exception) {
+            } catch(Exception exception) {
                 throw new QueryException(1, exception.Message);
             } finally {
                 mysqlConnection.Close();
@@ -270,28 +270,36 @@ namespace TqatProModel.Database {
 
                 MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
 
-                if (!mySqlDataReader.HasRows) {
+                if(!mySqlDataReader.HasRows) {
                     mySqlDataReader.Dispose();
                 } else {
-                    while (mySqlDataReader.Read()) {
+                    while(mySqlDataReader.Read()) {
                         Poi poi = new Poi();
                         poi.id = mySqlDataReader.GetInt32("poi_id");
                         poi.name = mySqlDataReader.GetString("poi_name");
                         poi.description = mySqlDataReader.GetString("poi_desc");
                         poi.image = mySqlDataReader.GetString("poi_img");
-                        poi.location = new Coordinate(double.Parse(mySqlDataReader.GetString("poi_lat")),
-                                                    double.Parse(mySqlDataReader.GetString("poi_lon")));
+
+                        string latitude = mySqlDataReader.GetString("poi_lat");
+                        string longitude = mySqlDataReader.GetString("poi_lon");
+
+                        if(String.IsNullOrEmpty(latitude) || String.IsNullOrEmpty(latitude)) {
+                            poi.location = new Coordinate(0.0f, 0.0f);
+                        } else {
+                            poi.location = new Coordinate(double.Parse(latitude), double.Parse(longitude));
+                        }
+
                         pois.Add(poi);
                     }
 
                     user.Pois = pois;
                     mySqlDataReader.Dispose();
                 }
-            } catch (MySqlException mySqlException) {
+            } catch(MySqlException mySqlException) {
                 throw new QueryException(1, mySqlException.Message);
-            } catch (QueryException queryException) {
+            } catch(QueryException queryException) {
                 throw queryException;
-            } catch (Exception exception) {
+            } catch(Exception exception) {
                 throw new QueryException(1, exception.Message);
             } finally {
                 mysqlConnection.Close();
@@ -314,11 +322,11 @@ namespace TqatProModel.Database {
 
                 MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
 
-                if (!mySqlDataReader.HasRows) {
+                if(!mySqlDataReader.HasRows) {
                     mySqlDataReader.Dispose();
                     throw new QueryException(1, "Users table is empty.");
                 } else {
-                    while (mySqlDataReader.Read()) {
+                    while(mySqlDataReader.Read()) {
                         User userSubordinate = new User();
                         userSubordinate.Id = mySqlDataReader.GetInt32("uid");
                         userSubordinate.Username = mySqlDataReader.GetString("uname");
@@ -330,9 +338,9 @@ namespace TqatProModel.Database {
                         userSubordinate.IsActive = mySqlDataReader.GetString("uactive").Equals("1");
                         userSubordinate.DatabaseName = mySqlDataReader.GetString("udbs");
 
-                        if (!String.IsNullOrEmpty(mySqlDataReader.GetString("uexpiredate"))) {
+                        if(!String.IsNullOrEmpty(mySqlDataReader.GetString("uexpiredate"))) {
                             string dateTime = (mySqlDataReader.GetString("uexpiredate"));
-                            if (!String.IsNullOrEmpty(dateTime)) {
+                            if(!String.IsNullOrEmpty(dateTime)) {
                                 DateTime parsedDate = SubStandard.dateTime(dateTime);
                                 userSubordinate.DateTimeExpired = parsedDate;
                             }
@@ -340,9 +348,9 @@ namespace TqatProModel.Database {
                             userSubordinate.DateTimeExpired = new DateTime(2050, 01, 01);
                         }
 
-                        if (!String.IsNullOrEmpty(mySqlDataReader.GetString("ucreatedate"))) {
+                        if(!String.IsNullOrEmpty(mySqlDataReader.GetString("ucreatedate"))) {
                             string dateTime = mySqlDataReader.GetString("ucreatedate");
-                            if (!String.IsNullOrEmpty(dateTime)) {
+                            if(!String.IsNullOrEmpty(dateTime)) {
                                 DateTime parsedDate = SubStandard.dateTime(dateTime);
                                 userSubordinate.DateTimeCreated = parsedDate;
                             }
@@ -354,11 +362,11 @@ namespace TqatProModel.Database {
                     mySqlDataReader.Dispose();
                 }
 
-            } catch (MySqlException mySqlException) {
+            } catch(MySqlException mySqlException) {
                 throw new QueryException(1, mySqlException.Message);
-            } catch (QueryException queryException) {
+            } catch(QueryException queryException) {
                 throw queryException;
-            } catch (Exception exception) {
+            } catch(Exception exception) {
                 throw new QueryException(1, exception.Message);
             } finally {
                 mysqlConnection.Close();
@@ -412,7 +420,7 @@ namespace TqatProModel.Database {
                 MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
 
 
-                if (!mySqlDataReader.HasRows) {
+                if(!mySqlDataReader.HasRows) {
                     //throw new QueryException(1, "Tracker's Collection is empty.");
                     mySqlDataReader.Dispose();
                     mysqlConnection.Close();
@@ -422,12 +430,12 @@ namespace TqatProModel.Database {
 
                     string dateTime;
 
-                    while (mySqlDataReader.Read()) {
+                    while(mySqlDataReader.Read()) {
                         string[] trackerUser = mySqlDataReader.GetString("tusers").Split(',');
                         List<User> trackerUsers = new List<User>();
-                        foreach (User user in users) {
-                            for (int index = 0; index < trackerUser.ToList().Count; index++) {
-                                if (Int32.Parse(trackerUser[index]) == user.Id) {
+                        foreach(User user in users) {
+                            for(int index = 0; index < trackerUser.ToList().Count; index++) {
+                                if(Int32.Parse(trackerUser[index]) == user.Id) {
                                     trackerUsers.Add(user);
                                 }
                             }
@@ -474,11 +482,11 @@ namespace TqatProModel.Database {
 
                     mySqlDataReader.Dispose();
                 }
-            } catch (QueryException queryException) {
+            } catch(QueryException queryException) {
                 throw queryException;
-            } catch (MySqlException mySqlException) {
+            } catch(MySqlException mySqlException) {
                 throw new QueryException(1, mySqlException.Message);
-            } catch (Exception exception) {
+            } catch(Exception exception) {
                 throw new QueryException(1, exception.Message);
             } finally {
                 mysqlConnection.Close();
@@ -507,7 +515,7 @@ namespace TqatProModel.Database {
                 MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
                 MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
 
-                if (!mySqlDataReader.HasRows) {
+                if(!mySqlDataReader.HasRows) {
                     trackerData.isDataEmpty = true;
                     return trackerData;
                 } else {
@@ -555,8 +563,8 @@ namespace TqatProModel.Database {
                     //Geofence
                     Coordinate coordinate = new Coordinate(latitude, longitude);
 
-                    foreach (Geofence geofence in company.Geofences) {
-                        if (Geofence.isPointInPolygon(geofence, coordinate)) {
+                    foreach(Geofence geofence in company.Geofences) {
+                        if(Geofence.isPointInPolygon(geofence, coordinate)) {
                             trackerData.Geofence = geofence;
                         }
                     };
@@ -564,9 +572,9 @@ namespace TqatProModel.Database {
                     double batteryStrength = (double)int.Parse(data[28], System.Globalization.NumberStyles.AllowHexSpecifier);
                     batteryStrength = ((batteryStrength - 2114f) * (100f / 492f));//*100.0;
                     batteryStrength = Math.Round(batteryStrength, 2);
-                    if (batteryStrength > 100) {
+                    if(batteryStrength > 100) {
                         batteryStrength = 100f;
-                    } else if (batteryStrength < 0) {
+                    } else if(batteryStrength < 0) {
                         batteryStrength = 0;
                     }
 
@@ -588,7 +596,7 @@ namespace TqatProModel.Database {
                 //throw queryException;
                 //} catch (MySqlException mySqlException) {
                 //throw new QueryException(1, mySqlException.Message);
-            } catch (Exception exception) {
+            } catch(Exception exception) {
                 //throw new QueryException(1, exception.Message);
                 return trackerData;
             } finally {
@@ -620,11 +628,11 @@ namespace TqatProModel.Database {
 
                 MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
 
-                if (!mySqlDataReader.HasRows) {
+                if(!mySqlDataReader.HasRows) {
                     mySqlDataReader.Dispose();
                     throw new QueryException(1, "No database.");
                 } else {
-                    while (mySqlDataReader.Read()) {
+                    while(mySqlDataReader.Read()) {
                         TrackerDatabaseSize trackerDatabaseSize = new TrackerDatabaseSize();
 
                         trackerDatabaseSize.Name = mySqlDataReader.GetString("databaseName");
@@ -635,11 +643,11 @@ namespace TqatProModel.Database {
                     }
                 }
 
-            } catch (MySqlException mySqlException) {
+            } catch(MySqlException mySqlException) {
                 throw new QueryException(1, mySqlException.Message);
-            } catch (QueryException queryException) {
+            } catch(QueryException queryException) {
                 throw queryException;
-            } catch (Exception exception) {
+            } catch(Exception exception) {
                 throw new QueryException(1, exception.Message);
             } finally {
                 mysqlConnection.Close();
@@ -669,7 +677,7 @@ namespace TqatProModel.Database {
                 mySqlCommand.Parameters.Add("@databaseName", databaseName);
                 MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
 
-                if (!mySqlDataReader.HasRows) {
+                if(!mySqlDataReader.HasRows) {
                     mySqlDataReader.Dispose();
                     throw new QueryException(1, "No database.");
                 } else {
@@ -679,11 +687,11 @@ namespace TqatProModel.Database {
                     trackerDatabaseSize.DatabaseFreeSpace = mySqlDataReader.GetDouble("databaseFreeSpace");
                 }
 
-            } catch (MySqlException mySqlException) {
+            } catch(MySqlException mySqlException) {
                 throw new QueryException(1, mySqlException.Message);
-            } catch (QueryException queryException) {
+            } catch(QueryException queryException) {
                 throw queryException;
-            } catch (Exception exception) {
+            } catch(Exception exception) {
                 throw new QueryException(1, exception.Message);
             } finally {
                 mysqlConnection.Close();

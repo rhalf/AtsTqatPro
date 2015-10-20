@@ -10,7 +10,7 @@
     
         x:Class="TqatProTrackingTool.FormMain"
         
-        Title="Tqat Pro Tracking Tool" Height="600" Width="400"
+        Title="Tqat Pro Tracking Tool" Height="783.333" Width="1243.444"
         GlowBrush="{DynamicResource AccentColorBrush}"
         ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"
@@ -25,6 +25,7 @@
         
         WindowButtonCommandsOverlayBehavior="Always"
         Icon="Resources/images/128/Ats/satellite_01.png"
+        Closing="MetroWindow_Closing"
     >
 
 

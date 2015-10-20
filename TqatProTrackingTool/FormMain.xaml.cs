@@ -432,7 +432,9 @@ namespace TqatProTrackingTool {
             Process.Start("http://www.ats-qatar.com/");
         }
 
-
+        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            Application.Current.Shutdown();
+        }
 
         private void findLabelInListViewTrackerItem(string value) {
             if (listViewTrackers == null)
