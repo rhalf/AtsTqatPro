@@ -6,11 +6,11 @@
         xmlns:viewModel="clr-namespace:TqatProViewModel;assembly=TqatProViewModel"
         
         xmlns:local="clr-namespace:TqatProTrackingTool"
-    
+        xmlns:userControls ="clr-namespace:Controls.UserControls"
     
         x:Class="TqatProTrackingTool.FormMain"
         
-        Title="Tqat Pro Tracking Tool" Height="783.333" Width="1243.444"
+        Title="Tqat Pro Tracking Tool" Height="600" Width="400"
         GlowBrush="{DynamicResource AccentColorBrush}"
         ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"
@@ -20,12 +20,14 @@
         Loaded="MetroWindow_Loaded"
         ShowIconOnTitleBar ="True"
       
-        ShowMinButton="False"
-        ShowMaxRestoreButton="False"
+        ShowMinButton="True"
+        ShowMaxRestoreButton="True"
         
         WindowButtonCommandsOverlayBehavior="Always"
         Icon="Resources/images/128/Ats/satellite_01.png"
-        Closing="MetroWindow_Closing"
+    
+    Closing="MetroWindow_Closing"
+    
     >
 
 
@@ -96,10 +98,10 @@
             </Ribbon.ApplicationMenu>
             <RibbonTab Header="Live Tracking">
                 <RibbonGroup Header="User">
-                    <RibbonMenuButton x:Name="RibbonMenuButtonUser" LargeImageSource="Resources/images/128/Animated/user_00.png" Label="User" ItemContainerStyle="{StaticResource StyleRibbonMenuButtonUser}"/>
+                    <RibbonMenuButton x:Name="ribbonMenuButtonUser" LargeImageSource="Resources/images/128/Animated/user_00.png" Label="User" ItemContainerStyle="{StaticResource StyleRibbonMenuButtonUser}"/>
                 </RibbonGroup>
                 <RibbonGroup Header="Display">
-                    <RibbonMenuButton  x:Name="ribbonMenuButtonDisplayMember" LargeImageSource="Resources/images/128/Animated/monitor_01.png" Label="Display Member" ItemContainerStyle="{StaticResource StyleRibbonMenuButtonUser}">
+                    <RibbonMenuButton  x:Name="ribbonMenuButtonDisplayMember" LargeImageSource="Resources/images/128/Animated/monitor_01.png" Label="VehicleRegistration" ItemContainerStyle="{StaticResource StyleRibbonMenuButtonUser}">
                         <RibbonGallery x:Name="ribbonGalleryComboBoxDisplayMember" SelectedValue="VehicleRegistration"
 							SelectedValuePath="Content"
 							MaxColumnCount="1" SelectionChanged="RibbonComboBoxDisplayMember_SelectionChanged">
@@ -138,39 +140,32 @@
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
+
+                        <Grid Grid.Row="0" VerticalAlignment="Top" Margin="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="Collection : "/>
+                            <ComboBox Grid.Column="1" x:Name="comboBoxCollection" SelectionChanged="comboBoxCollection_SelectionChanged"/>
+                        </Grid>
+                        <Grid Grid.Row="1" VerticalAlignment="Top" Margin="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0" Content="Search : "/>
                             <TextBox Grid.Column="1" x:Name="textBoxSearchTrackerData" KeyUp="textBoxSearchTrackerData_KeyUp"/>
-                        </Grid>
-                        <ListView x:Name="listViewTrackers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2" SelectionChanged="listViewTrackers_SelectionChanged" Grid.Row="1 ">
-                            <ListView.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="Check All" Padding="3" Margin="3" Click="MenuItemlistViewTrackers_checkAll_Click">
-                                        <MenuItem.Icon>
-                                            <Image Source="Resources/images/16/checkAll.png" />
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-                                    <MenuItem Header="Uncheck All" Padding="3" Margin="3" Click="MenuItemlistViewTrackers_uncheckAll_Click">
-                                        <MenuItem.Icon>
-                                            <Image Source="Resources/images/16/uncheckAll.png" />
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-                                </ContextMenu>
-                            </ListView.ContextMenu>
-                        </ListView>
+                        </Grid> 
+                        <userControls:ListViewTrackers x:Name="listViewTrackers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Checked="listViewTrackers_Checked"/>
                     </Grid>
                 </GroupBox>
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
                     <Label Content="Trackers : "/>
                     <Label Content="{Binding Items.Count, ElementName=listViewTrackers, Mode=OneWay}"/>
-                    <!--<Label Content="Checked : "/>
-                    <Label x:Name="labelCheckedTrackerItems"/>-->
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="1" >
@@ -186,10 +181,18 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0"   HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <GroupBox  Header="Trackers Data" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <ListView x:Name="listViewTrackersData" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2" SelectionChanged="listViewTrackersData_SelectionChanged" >
+                            <ListView x:Name="listViewTrackersData" 
+                                      HorizontalAlignment="Stretch" 
+                                      VerticalAlignment="Stretch" 
+                                      Margin="2" 
+                                      SelectionChanged="listViewTrackersData_SelectionChanged" 
+                                      IsSynchronizedWithCurrentItem="True"
+                                      GridViewColumnHeader.Click="listViewTrackersData_Click"
+
+                                      >
                                 <!--ItemTemplate="{StaticResource listViewTrackersData}"-->
                                 <ListView.View>
-                                    <GridView AllowsColumnReorder="false">
+                                    <GridView AllowsColumnReorder="True">
                                         <!--<GridViewColumn Header="Id" Width="Auto" DisplayMemberBinding="{Binding Tracker.Id}"/>-->
                                         <GridViewColumn Header="Label" Width="Auto" DisplayMemberBinding="{Binding Tracker.VehicleRegistration}"/>
                                         <GridViewColumn Header="Date" Width="Auto" DisplayMemberBinding="{Binding DateTime}" />

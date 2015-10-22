@@ -2,6 +2,7 @@
 
 function Tracker() {
     this.Id = "";
+    this.Imei = "";
     this.Label = "";
     this.Latitude = "";
     this.Longitude = "";

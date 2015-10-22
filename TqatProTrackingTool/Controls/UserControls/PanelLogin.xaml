@@ -7,33 +7,32 @@
     mc:Ignorable="d" 
              
     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
-    
-    <Grid>
-        <StackPanel 
+
+    <StackPanel 
                 Orientation="Vertical"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
                         >
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Name="textBlockCompany" TextWrapping="Wrap" Text="Company" Width="100" VerticalAlignment="Center" Padding="20,0" IsEnabled="False"/>
-                <TextBox   Name="textBoxCompany"  TextWrapping="Wrap" Text="" Width="200" Margin="3,3,3,3" Controls:TextBoxHelper.Watermark="Company Username"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Name="textBlockUsername" TextWrapping="Wrap" Text="Username" Width="100" VerticalAlignment="Center" Padding="20,0" IsEnabled="False" />
-                <TextBox   Name="textBoxUsername"  TextWrapping="Wrap" Text="" Width="200" Margin="3,3,3,3" Controls:TextBoxHelper.Watermark="Username"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Name="textBlockPassword" TextWrapping="Wrap" Text="Password" Width="100" Padding="20,0" VerticalAlignment="Center" />
-                <PasswordBox Name="textBoxPassword" Width="200" Margin="3,3,3,3" Controls:TextBoxHelper.Watermark="Password"/>
-            </StackPanel>
-
-            <CheckBox Name="checkBoxRememberMe" Content="Remember me" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="3,3,3,3"/>
-
-            <StackPanel Orientation="Horizontal">
-                <Button  Name="buttonCancel" Click="buttonCancel_Click" Content="Cancel"  Width="150" Margin="3,3,3,3" Height="30"/>
-                <Button Name="buttonSubmit" Click="buttonSubmit_Click" Content="Login"  Width="150" Margin="3,3,3,3" Height="30"/>
-            </StackPanel>
-            <TextBlock Name="textBlockErrorNote" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextAlignment="Center" Width="300" Margin="3,3,3,3"></TextBlock>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Name="textBlockCompany" TextWrapping="Wrap" Text="Company" Width="100" VerticalAlignment="Center" Padding="20,0" IsEnabled="False"/>
+            <TextBox   Name="textBoxCompany"  TextWrapping="Wrap" Text="" Width="200" Margin="3,3,3,3" Controls:TextBoxHelper.Watermark="Company Username"/>
         </StackPanel>
-    </Grid>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Name="textBlockUsername" TextWrapping="Wrap" Text="Username" Width="100" VerticalAlignment="Center" Padding="20,0" IsEnabled="False" />
+            <TextBox   Name="textBoxUsername"  TextWrapping="Wrap" Text="" Width="200" Margin="3,3,3,3" Controls:TextBoxHelper.Watermark="Username"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Name="textBlockPassword" TextWrapping="Wrap" Text="Password" Width="100" Padding="20,0" VerticalAlignment="Center" />
+            <PasswordBox Name="textBoxPassword" Width="200" Margin="3,3,3,3" Controls:TextBoxHelper.Watermark="Password"/>
+        </StackPanel>
+
+        <CheckBox Name="checkBoxRememberMe" Content="Remember me" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="3,3,3,3"/>
+
+        <StackPanel Orientation="Horizontal">
+            <Button  Name="buttonCancel" Click="buttonCancel_Click" Content="Cancel"  Width="150" Margin="3,3,3,3" Height="30"/>
+            <Button Name="buttonSubmit" Click="buttonSubmit_Click" Content="Login"  Width="150" Margin="3,3,3,3" Height="30"/>
+        </StackPanel>
+        <TextBlock Name="textBlockErrorNote" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextAlignment="Center" Width="300" Margin="3,3,3,3"></TextBlock>
+    </StackPanel>
+
 </UserControl>

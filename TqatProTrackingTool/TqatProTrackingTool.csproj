@@ -102,6 +102,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\UserControls\ListViewTrackers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\UserControls\PanelLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -113,6 +117,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\UserControls\ListViewTrackers.xaml.cs">
+      <DependentUpon>ListViewTrackers.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\UserControls\PanelLogin.xaml.cs">
       <DependentUpon>PanelLogin.xaml</DependentUpon>
@@ -190,6 +197,7 @@
     <Resource Include="Resources\images\48\user_01.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Controls\Utilities\" />
     <Folder Include="Resources\images\128\Plain\" />
   </ItemGroup>
   <ItemGroup>
@@ -235,7 +243,9 @@
     <Resource Include="Resources\images\128\Flat\user_01.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Web\Maps\images\alarm\breakdown.png" />
+    <Content Include="Web\Maps\images\alarm\alarmBreakDown.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Web\Maps\images\alarm\CRExpired.png" />
     <Resource Include="Web\Maps\images\alarm\emergency.png" />
     <Resource Include="Resources\images\16\checkAll.png" />
@@ -251,7 +261,7 @@
     <Content Include="Web\Maps\images\alarm\alarmGeofence.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Web\Maps\images\alarm\alarmLostSignal.png">
+    <Content Include="Web\Maps\images\alarm\alarmLostSignalGps.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Web\Maps\images\alarm\alarmMileageLimit.png" />
@@ -263,6 +273,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\Maps\images\alarm\alarmOk.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Maps\images\alarm\alarmLostSignalGsm.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\Maps\images\tracker\icon_0_alarm.gif">

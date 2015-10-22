@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TqatProModel;
+
 
 namespace TqatProModel {
     public class User {
@@ -54,7 +57,11 @@ namespace TqatProModel {
             get;
             set;
         }
-        public List<Poi> Pois {
+        public ConcurrentQueue<Poi> Pois {
+            get;
+            set;
+        }
+        public ConcurrentQueue<Collection> Collections {
             get;
             set;
         }

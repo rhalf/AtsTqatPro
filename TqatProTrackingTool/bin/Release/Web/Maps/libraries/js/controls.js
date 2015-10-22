@@ -38,6 +38,7 @@ function Parser() {
     this.getTracker = function () {
         tracker = new Tracker();
         tracker.Id = document.getElementById("trackerId").value;
+        tracker.Imei = document.getElementById("trackerImei").value;
         tracker.Latitude = document.getElementById("trackerLatitude").value;
         tracker.Longitude = document.getElementById("trackerLongitude").value;
         tracker.Label = document.getElementById("trackerLabel").value;
@@ -68,34 +69,37 @@ function Parser() {
 
 function MapTool() {
     this.addPoi = function (poi) {
-        var coordinate = new google.maps.LatLng(poi.Latitude, poi.Longitude);
+        //setTimeout(function () {
 
-        var image = {
-            //url: 'images/poi/building_01.png',
-            url: 'images/poi/' + poi.Icon + '.png',
-            size: new google.maps.Size(32, 32),
-            scaledSize: new google.maps.Size(32, 32),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(16, 32),
-            scale: .25,
-            rotation: 0
-        }
+            var coordinate = new google.maps.LatLng(poi.Latitude, poi.Longitude);
 
-        var markerPoi = new MarkerWithLabel({
-            position: coordinate,
-            map: map,
-            icon: image,
-            labelContent: poi.Name,
-            labelAnchor: new google.maps.Point(32, 0),
-            draggable: false,
-            labelClass: "markerPoi",
-        });
+            var image = {
+                //url: 'images/poi/building_01.png',
+                url: 'images/poi/' + poi.Icon + '.png',
+                size: new google.maps.Size(32, 32),
+                scaledSize: new google.maps.Size(32, 32),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(16, 32),
+                scale: .25,
+                rotation: 0
+            }
 
-        pois.push(markerPoi);
+            var markerPoi = new MarkerWithLabel({
+                position: coordinate,
+                map: map,
+                icon: image,
+                labelContent: poi.Name,
+                labelAnchor: new google.maps.Point(32, 0),
+                draggable: false,
+                labelClass: "markerPoi",
+            });
 
+            pois.push(markerPoi);
+        //},1);
     }
 
     this.addGeofence = function () {
+        //setTimeout(function () {
         //alert(geofence.Coordinates);
 
 
@@ -135,77 +139,59 @@ function MapTool() {
 
         geofences.push(markerGeofence);
         geofencesLabels.push(labelGeofence);
+        //}, 1);
     }
     this.addTracker = function () {
-        //alert(tracker.IconAlert);
+        setTimeout(function () {
+            if (tracker.IsEnabled != 1) {
+                for (var index in trackers) {
+                    if (trackers[index].trackerImei == tracker.Imei) {
+                        trackers[index].setMap(null);
+                        delete trackers[index];
+                        return;
+                    }
+                }
+                return;
+            }
 
 
+            var coordinate = new google.maps.LatLng(tracker.Latitude, tracker.Longitude);
+            var markerTracker =
+           '<div class="divTracker">' +
+               '<img class="imgTrackerAlarm" src="images/alarm/' + tracker.IconAlert + '.png" alt="" onError="this.style.display = \'none\';"/>' +
+               '<img class="imgTrackerVehicle" src="images/tracker/icon_' + tracker.Icon + '_' + tracker.IconStatus + '.gif" style="display:block;transform:rotate(' + tracker.Degrees + 'deg)";/>' +
+               '<label class="labelTracker">' + tracker.Label + '</label>' +
+            '</div>';
 
-        if (tracker.IsEnabled != 1) {
             for (var index in trackers) {
-                if (trackers[index].trackerId == tracker.Id) {
-                    trackers[index].setMap(null);
-                    delete trackers[index];
+                if (trackers[index].trackerImei == tracker.Imei) {
+                    trackers[index].setPosition(coordinate);
+                    trackers[index].set('labelContent', markerTracker);
                     return;
                 }
             }
-            return;
-        }
-
-
-        var coordinate = new google.maps.LatLng(tracker.Latitude, tracker.Longitude);
-        var markerTracker =
-       '<div class="divTracker">' +
-           '<img class="imgTrackerAlarm" src="images/alarm/' + tracker.IconAlert + '.png" alt="" onError="this.style.display = \'none\';"/>' +
-           '<img class="imgTrackerVehicle" src="images/tracker/icon_' + tracker.Icon + '_' + tracker.IconStatus + '.gif" style="display:block;transform:rotate(' + tracker.Degrees + 'deg)";/>' +
-           '<label class="labelTracker">' + tracker.Label + '</label>' +
-        '</div>';
-
-        for (var index in trackers) {
-            if (trackers[index].trackerId == tracker.Id) {
-                trackers[index].setPosition(coordinate);
-                trackers[index].set('labelContent', markerTracker);
-                return;
-            }
-        }
 
 
 
-        //var div = document.createElement('div');
-        //div.className = "divTracker";
+            var markerTracker = new MarkerWithLabel({
+                position: coordinate,
+                map: map,
+                icon: {
+                    url: ""
+                },
+                labelContent: markerTracker,
+                labelAnchor: new google.maps.Point(32, 0),
+                draggable: false,
 
-        //var imgAlarm = document.createElement('img');
-        //imgAlarm.className = "imgTrackerAlarm";
+                labelClass: "markerTracker",
 
-        //var imgTracker = document.createElement('img');
-        //imgTracker.src = "images/tracker/icon_0_driver.gif";
-        //imgTracker.className = "imgTracker";
+                trackerId: tracker.Id,
 
-        //var labelTracker = document.createElement('label');
-        //labelTracker.textContent = tracker.Label;
-        //labelTracker.className = "labelTracker";
+                trackerImei: tracker.Imei
+            });
 
-        //div.appendChild(imgAlarm);
-        //div.appendChild(imgTracker);
-        //div.appendChild(labelTracker);
-
-
-        var markerTracker = new MarkerWithLabel({
-            position: coordinate,
-            map: map,
-            icon: {
-                url: ""
-            },
-            labelContent: markerTracker,
-            labelAnchor: new google.maps.Point(32, 0),
-            draggable: false,
-
-            labelClass: "markerTracker",
-
-            trackerId: tracker.Id
-        });
-
-        trackers.push(markerTracker);
+            trackers.push(markerTracker);
+        }, 1);
     }
     this.processCommand = function (command) {
 
@@ -258,9 +244,9 @@ function MapTool() {
                 var infoWindow = new google.maps.InfoWindow({
                     position: coordinate
                 });
-               
 
-                
+
+
 
                 getAddress(coordinate.lat(), coordinate.lng(),
                     function (address) {

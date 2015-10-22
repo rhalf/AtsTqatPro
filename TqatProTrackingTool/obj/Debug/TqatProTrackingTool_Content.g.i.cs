@@ -8,12 +8,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("web/maps/images/alarm/alarmbreakdown.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("web/maps/images/alarm/alarmexpiry.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("web/maps/images/alarm/alarmgeofence.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("web/maps/images/alarm/alarmlostsignal.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("web/maps/images/alarm/alarmlostsignalgps.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("web/maps/images/alarm/alarmlosttracker.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("web/maps/images/alarm/alarmoverspeed.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("web/maps/images/alarm/alarmok.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("web/maps/images/alarm/alarmlostsignalgsm.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("web/maps/images/tracker/icon_0_alarm.gif")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("web/maps/images/tracker/icon_0_driver.gif")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("web/maps/images/tracker/icon_0_idle.gif")]

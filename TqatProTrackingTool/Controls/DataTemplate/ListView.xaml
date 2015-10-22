@@ -6,17 +6,9 @@
 
     <DataTemplate x:Key="listViewVehicleRegistration" DataType="{x:Type viewModel:TrackerItem}">
         <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
-            <CheckBox IsChecked="{Binding IsChecked}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="" CommandParameter="{Binding}">
-
-                        </i:InvokeCommandAction>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </CheckBox>
+            <CheckBox IsChecked="{Binding IsChecked}"/>
             <Label Content="{Binding VehicleRegistration}"/>
-        </StackPanel>
+        </StackPanel> 
     </DataTemplate>
     <DataTemplate x:Key="listViewDriverName">
         <StackPanel Orientation="Horizontal" Margin="5,0,0,0">

@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "TqatProTrackingTool"
-#define MyAppVersion "1.3"
+#define MyAppVersion "1.2"
 #define MyAppPublisher "Advance Technologies and Solutions"
 #define MyAppURL "http://www.ats-qatar.com/"
 #define MyAppExeName "TqatProTrackingTool.exe"
@@ -22,8 +22,8 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
-LicenseFile=C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\license\gpl.txt
-OutputDir=C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\inno
+LicenseFile=C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\license\gpl.txt
+OutputDir=C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\inno
 OutputBaseFilename=setup
 Compression=lzma
 SolidCompression=yes
@@ -61,8 +61,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\TqatProTrackingTool.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\TqatProTrackingTool.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -75,3 +75,11 @@ Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Fil
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
+[Code]
+function InitializeUninstall(): Boolean;
+  var ErrorCode: Integer;
+begin
+  ShellExec('open','taskkill.exe','/f /im {#MyAppExeName}','',SW_HIDE,ewNoWait,ErrorCode);
+  ShellExec('open','tskill.exe',' {#MyAppName}','',SW_HIDE,ewNoWait,ErrorCode);
+  result := True;
+end;

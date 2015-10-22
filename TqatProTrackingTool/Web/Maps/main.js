@@ -11,7 +11,7 @@ var mapLabels = new Array();
 
 
 function initialize() {
-    var coordinate = new google.maps.LatLng(25.2606, 51.4431);
+    var coordinate = new google.maps.LatLng(25.260610, 51.493537);
 
     var mapProp = {
         center: coordinate,

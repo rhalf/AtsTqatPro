@@ -24,26 +24,26 @@ namespace TqatProTrackingTool.Control {
                 foreach (mshtml.HTMLInputElement element in collection.item(name: "formPoi")) {
 
                     if (element.id == "poiId") {
-                        element.value = poi.id.ToString();
+                        element.value = poi.Id.ToString();
                     }
 
                     if (element.id == "poiLatitude") {
-                        element.value = poi.location.latitude.ToString();
+                        element.value = poi.Coordinate.latitude.ToString();
                     }
                     if (element.id == "poiLongitude") {
-                        element.value = poi.location.longitude.ToString();
+                        element.value = poi.Coordinate.longitude.ToString();
                     }
 
                     if (element.id == "poiName") {
-                        element.value = poi.name;
+                        element.value = poi.Name;
                     }
 
                     if (element.id == "poiDescription") {
-                        element.value = poi.description;
+                        element.value = poi.Description;
                     }
 
                     if (element.id == "poiIcon") {
-                        element.value = poi.image;
+                        element.value = poi.Image;
                     }
 
                     if (element.id == "poiSubmit") {
@@ -112,6 +112,9 @@ namespace TqatProTrackingTool.Control {
                     if (element.id == "trackerId") {
                         element.value = trackerData.Tracker.Id.ToString();
                     }
+                    if (element.id == "trackerImei") {
+                        element.value = trackerData.Tracker.TrackerImei;
+                    }
                     if (element.id == "trackerLabel") {
                         if (displayMember == "VehicleRegistration") {
                             element.value = trackerData.Tracker.VehicleRegistration;
@@ -127,7 +130,7 @@ namespace TqatProTrackingTool.Control {
                             element.value = trackerData.Tracker.SimNumber;
                         }
                     }
-                    if (trackerData.isDataEmpty == false) {
+                    if (trackerData.IsDataEmpty == false) {
                         if (element.id == "trackerLatitude") {
                             element.value = trackerData.Coordinate.latitude.ToString();
                         }
@@ -156,10 +159,16 @@ namespace TqatProTrackingTool.Control {
                         if (element.id == "trackerIconAlert") {
                             if (trackerData.Tracker.DateTimeExpired.CompareTo(DateTime.Now) <= 0 /*|| trackerItem.Tracker.VehicleRegistrationExpiry.CompareTo(DateTime.Now) <= 0*/) {
                                 element.value = "alarmExpiry";
+                            } else if (trackerData.DateTime.Subtract(DateTime.Now).Hours > 1) {
+                                element.value = "alarmLostTracker";
+                            } else if (trackerData.Speed > 0 && trackerData.ACC == false) {
+                                element.value = "alarmBreakDown";
                             } else if (trackerData.OverSpeed == true) {
                                 element.value = "alarmOverSpeed";
-                            } else if (trackerData.GpsSatellites > 4 || trackerData.GsmSignal == 0) {
-                                element.value = "alarmLostSignal";
+                            } else if (trackerData.GpsSatellites < 3) {
+                                element.value = "alarmLostSignalGps";
+                            } else if (trackerData.GsmSignal < 5) {
+                                element.value = "alarmLostSignalGsm";
                                 //} else if (trackerData.DateTime.Subtract(DateTime.Now) > (new TimeSpan(01, 00, 00))) {
                                 //    element.value = "alarmLostTracker";
                             } else if ((trackerData.Mileage - trackerData.Tracker.MileageInitial) > trackerData.Tracker.MileageLimit) {
@@ -177,6 +186,7 @@ namespace TqatProTrackingTool.Control {
                     }
                     if (element.id == "trackerSubmit") {
                         mshtml.HTMLInputElement buttonSubmit = element;
+                        
                         buttonSubmit.click();
                     }
                 }
@@ -190,6 +200,9 @@ namespace TqatProTrackingTool.Control {
                 htmlDocument = (mshtml.IHTMLDocument3)webBrowser.Document;
 
                 mshtml.IHTMLElementCollection collection = htmlDocument.getElementsByName("formCommand");
+
+                if (collection.item(name: "formCommand") == null)
+                    return;
 
                 foreach (mshtml.HTMLInputElement element in collection.item(name: "formCommand")) {
 

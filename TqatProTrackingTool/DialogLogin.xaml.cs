@@ -43,8 +43,6 @@ namespace TqatProTrackingTool {
         Query query;
         Company company;
         User user;
-        List<User> users;
-        List<Tracker> trackers;
 
         private void PanelLogin_OnSubmitEventHandler(object sender, RoutedEventArgs e) {
             //Validation
@@ -84,16 +82,44 @@ namespace TqatProTrackingTool {
                 query = new Query(database);
 
                 query.getCompany(company);
+                displayMessage("Checking Company...");
+
                 query.getUser(company, user);
+                displayMessage("Checking User...");
+
+
+                if (user.AccessLevel != 1) {
+
+                    int isExpired = company.DateTimeExpired.CompareTo(DateTime.Now);
+
+                    if (isExpired == -1)
+                        throw new QueryException(1, "This company is expired.");
+                    if (!company.IsActive)
+                        throw new QueryException(1, "Company is deactivated.");
+
+                    isExpired = user.DateTimeExpired.CompareTo(DateTime.Now);
+
+                    if (isExpired == -1)
+                        throw new QueryException(1, "This user is expired.");
+                    if (!user.IsActive)
+                        throw new QueryException(1, "User is deactivated.");
+                }
+                //=============================Login successful
+                query.fillUsers(company, user);
+                displayMessage("Loading Users...");
+
+                query.fillPois(company);
+                displayMessage("Loading Pois...");
 
                 query.fillGeofences(company);
+                displayMessage("Loading Geofences...");
 
-                users = query.getUsers(company, user);
-                trackers = query.getTrackers(company, users);
+                query.fillCollection(company);
+                displayMessage("Loading Collections...");
 
-                foreach (User userItem in users) {
-                    query.fillPois(company, userItem);
-                }
+                query.fillTrackers(company);
+                displayMessage("Loading Trackers...");
+
 
                 Dispatcher.Invoke(new Action(() => {
                     Settings.Default.accountCompanyUsername = panelLogin.CompanyUsername;
@@ -101,23 +127,19 @@ namespace TqatProTrackingTool {
                     Settings.Default.accountPassword = panelLogin.Password;
                     Settings.Default.accountRememberMe = panelLogin.RememberMe;
                     Settings.Default.Save();
-                    FormMain formMain = new FormMain(company, user, users, trackers, database);
+                    FormMain formMain = new FormMain(company, user, database);
                     formMain.Show();
                     this.Close();
                 }));
 
             } catch (DatabaseException databaseException) {
                 Debug.Print(databaseException.Message);
-                Dispatcher.Invoke(new Action(() => {
-                    panelLogin.ErrorNote = databaseException.Message;
-                    Log.write(databaseException);
-                }));
+                displayMessage(databaseException.Message);
+                Log.write(databaseException);
             } catch (Exception exception) {
                 Debug.Print(exception.Message);
-                Dispatcher.Invoke(new Action(() => {
-                    panelLogin.ErrorNote = exception.Message;
-                    Log.write(exception);
-                }));
+                displayMessage(exception.Message);
+                Log.write(exception);
             } finally {
                 Dispatcher.Invoke(new Action(() => {
                     panelLogin.IsEnabled = true;
@@ -156,12 +178,14 @@ namespace TqatProTrackingTool {
             }
         }
 
-        private void panelLogin_Loaded(object sender, RoutedEventArgs e) {
 
+
+        private void displayMessage(string message) {
+            Dispatcher.Invoke(new Action(() => {
+                panelLogin.ErrorNote = message;
+            }));
         }
 
-        private void panelLogin_Loaded_1(object sender, RoutedEventArgs e) {
 
-        }
     }
 }

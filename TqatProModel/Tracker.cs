@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TqatProModel;
 
 namespace TqatProModel {
 
@@ -75,14 +77,11 @@ namespace TqatProModel {
             get;
             set;
         }
-        public List<User> Users {
+        public ConcurrentQueue<User> Users {
             get;
             set;
         }
-        public string Collections {
-            get;
-            set;
-        }
+    
         public DateTime DateTimeCreated {
             get;
             set;
@@ -116,6 +115,11 @@ namespace TqatProModel {
             set;
         }
         public string Note {
+            get;
+            set;
+        }
+
+        public ConcurrentQueue<Collection> Collections {
             get;
             set;
         }

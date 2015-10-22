@@ -31,11 +31,11 @@
                 Visibility="Hidden"
             />
         <Grid DockPanel.Dock="Bottom">
-            <UserControls:PanelLogin 
+            <UserControls:PanelLogin
                 x:Name="panelLogin" 
                 VerticalAlignment="Bottom" 
                 OnSubmitEventHandler="PanelLogin_OnSubmitEventHandler" 
-                OnCancelEventHandler="PanelLogin_OnCancelEventHandler" Loaded="panelLogin_Loaded_1" />
+                OnCancelEventHandler="PanelLogin_OnCancelEventHandler" />
         </Grid>
 
     </DockPanel>

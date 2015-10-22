@@ -14,7 +14,7 @@
     color: white;
     background-color: green;
     font-family: "Calibri"; /*"Lucida Grande", "Arial", sans-serif;*/
-    font-size: 10px;
+    font-size: 12px;
     text-align: center;
     margin: 0px 2px 2px 2px;
     padding: 0px 2px 2px 2px;
@@ -33,7 +33,7 @@
     color: white;
     background-color: blue;
     font-family: "Calibri"; /*"Lucida Grande", "Arial", sans-serif;*/
-    font-size: 10px;
+    font-size: 12px;
     text-align: center;
     margin: 0px 2px 2px 2px;
     padding: 0px 2px 2px 2px;
@@ -56,7 +56,7 @@
         color: white;
         background-color: black;
         font-family: "Calibri"; /*"Lucida Grande", "Arial", sans-serif;*/
-        font-size: 10px;
+        font-size: 12px;
         text-align: center;
         margin: 0px 2px 2px 2px;
         padding: 0px 2px 2px 2px;
@@ -73,13 +73,13 @@
     .divTracker .imgTrackerAlarm {
         background-color: transparent;
         position: absolute;
-        width: 16px;
-        height: 16px;
+        width: 24px;
+        height: 24px;
         z-index: 1;
     }
 
     .divTracker .imgTrackerVehicle {
         display: block;
-        width: 32px;
-        height: 32px;
+        width: 48px;
+        height: 48px;
     }

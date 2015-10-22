@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using TqatProModel;
 
 namespace TqatProModel {
@@ -68,17 +68,17 @@ namespace TqatProModel {
             set;
         }
 
-        public List<Geofence> Geofences {
+        public ConcurrentQueue<Geofence> Geofences {
             get;
             set;
         }
 
-        public List<Tracker> Trackers {
+        public ConcurrentQueue<Tracker> Trackers {
             get;
             set;
         }
 
-        public List<User> Users {
+        public ConcurrentQueue<User> Users {
             get;
             set;
         }

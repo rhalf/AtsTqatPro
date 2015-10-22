@@ -93,8 +93,8 @@ namespace TqatProMaintenanceTool {
                 int count = 0;
                 foreach (Company companyItem in companies) {
                     query.getUser(companyItem, user);
-                    users = query.getUsers(companyItem, user);
-                    companyItem.Trackers = query.getTrackers(companyItem, users);
+                    //users = query.fillUsers(companyItem, user);
+                    //companyItem.Trackers = query.getTrackers(companyItem, users);
                     Dispatcher.Invoke(new Action(() => {
                         panelLogin.ErrorNote = "Loading companies... " + (++count).ToString() + "/" + companies.Count.ToString();
                     }));
@@ -138,15 +138,15 @@ namespace TqatProMaintenanceTool {
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e) {
 
-            Settings.Default.databaseHost = "184.107.175.154";
-            Settings.Default.databaseUsername = "reportapp";
-            Settings.Default.databasePassword = "my5q1r3p0rt@pp!@#";
-            Settings.Default.Save();
-
-            //Settings.Default.databaseHost = "108.163.190.202";
-            //Settings.Default.databaseUsername = "atstqatpro";
-            //Settings.Default.databasePassword = "@t5tq@pr0!@#";
+            //Settings.Default.databaseHost = "184.107.175.154";
+            //Settings.Default.databaseUsername = "reportapp";
+            //Settings.Default.databasePassword = "my5q1r3p0rt@pp!@#";
             //Settings.Default.Save();
+
+            Settings.Default.databaseHost = "108.163.190.202";
+            Settings.Default.databaseUsername = "atstqatpro";
+            Settings.Default.databasePassword = "@t5tq@pr0!@#";
+            Settings.Default.Save();
 
             Settings.Default.accountCompanyUsername = "ats";
             Settings.Default.accountUsername = "master";
