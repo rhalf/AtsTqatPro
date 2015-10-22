@@ -1289,9 +1289,6 @@ C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProTracki
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProTrackingTool\obj\Release\TqatProTrackingTool.g.resources
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProTrackingTool\obj\Release\TqatProTrackingTool.Properties.Resources.resources
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProTrackingTool\obj\Release\TqatProTrackingTool.csproj.GenerateResource.Cache
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\TqatProTrackingTool.exe.config
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\obj\Release\TqatProTrackingTool.exe
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\obj\Release\TqatProTrackingTool.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\Web\Maps\images\alarm\alarmBreakDown.png
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\Web\Maps\images\alarm\alarmExpiry.png
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\Web\Maps\images\alarm\alarmGeofence.png
@@ -1464,6 +1461,7 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\Web\M
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\Web\Maps\libraries\css\style.css
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\Web\Maps\index.html
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\Web\Maps\html.html
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\TqatProTrackingTool.exe.config
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\TqatProTrackingTool.exe
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\TqatProTrackingTool.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Release\MahApps.Metro.dll
@@ -1505,3 +1503,5 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\obj\Release\FormM
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\obj\Release\TqatProTrackingTool.g.resources
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\obj\Release\TqatProTrackingTool.Properties.Resources.resources
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\obj\Release\TqatProTrackingTool.csproj.GenerateResource.Cache
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\obj\Release\TqatProTrackingTool.exe
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\obj\Release\TqatProTrackingTool.pdb

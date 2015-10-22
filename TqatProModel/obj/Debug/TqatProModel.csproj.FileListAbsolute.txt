@@ -12,12 +12,6 @@ C:\Users\Rhalf\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTracking
 C:\Users\Rhalf\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProModel\bin\Debug\MySql.Data.dll
 C:\Users\Rhalf\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProModel\obj\Debug\TqatProModel.dll
 C:\Users\Rhalf\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProModel\obj\Debug\TqatProModel.pdb
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\TqatProModel.dll
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\TqatProModel.pdb
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\MySql.Data.dll
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Debug\TqatProModel.dll
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Debug\TqatProModel.pdb
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Debug\TqatProModel.csprojResolveAssemblyReference.cache
 C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\TqatProModel.dll
 C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\TqatProModel.pdb
 C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\MySql.Data.dll
@@ -33,3 +27,9 @@ C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProModel\
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProModel\obj\Debug\TqatProModel.csprojResolveAssemblyReference.cache
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProModel\obj\Debug\TqatProModel.dll
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProModel\obj\Debug\TqatProModel.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\TqatProModel.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\TqatProModel.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Debug\TqatProModel.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Debug\TqatProModel.pdb

@@ -258,57 +258,57 @@ namespace TqatProModel.Database {
             }
         }
 
-        public void fillPois(Company company, User user) {
-            ConcurrentQueue<Poi> pois = new ConcurrentQueue<Poi>();
-            try {
-                mysqlConnection = new MySqlConnection(database.getConnectionString());
+        //public void fillPois(Company company, User user) {
+        //    ConcurrentQueue<Poi> pois = new ConcurrentQueue<Poi>();
+        //    try {
+        //        mysqlConnection = new MySqlConnection(database.getConnectionString());
 
-                mysqlConnection.Open();
+        //        mysqlConnection.Open();
 
-                string sql =
-                    "SELECT * " +
-                    "FROM cmp_" + company.DatabaseName + ".poi_" + user.DatabaseName + ";";
+        //        string sql =
+        //            "SELECT * " +
+        //            "FROM cmp_" + company.DatabaseName + ".poi_" + user.DatabaseName + ";";
 
-                MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
+        //        MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
 
-                MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
+        //        MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
 
-                if (!mySqlDataReader.HasRows) {
-                    mySqlDataReader.Dispose();
-                } else {
-                    while (mySqlDataReader.Read()) {
-                        Poi poi = new Poi();
-                        poi.Id = mySqlDataReader.GetInt32("poi_id");
-                        poi.Name = mySqlDataReader.GetString("poi_name");
-                        poi.Description = mySqlDataReader.GetString("poi_desc");
-                        poi.Image = mySqlDataReader.GetString("poi_img");
+        //        if (!mySqlDataReader.HasRows) {
+        //            mySqlDataReader.Dispose();
+        //        } else {
+        //            while (mySqlDataReader.Read()) {
+        //                Poi poi = new Poi();
+        //                poi.Id = mySqlDataReader.GetInt32("poi_id");
+        //                poi.Name = mySqlDataReader.GetString("poi_name");
+        //                poi.Description = mySqlDataReader.GetString("poi_desc");
+        //                poi.Image = mySqlDataReader.GetString("poi_img");
 
 
-                        string latitude = mySqlDataReader.GetString("poi_lat");
-                        string longitude = mySqlDataReader.GetString("poi_lon");
+        //                string latitude = mySqlDataReader.GetString("poi_lat");
+        //                string longitude = mySqlDataReader.GetString("poi_lon");
 
-                        if(String.IsNullOrEmpty(latitude) || String.IsNullOrEmpty(latitude)) {
-                            poi.Coordinate = new Coordinate(0.0f, 0.0f);
-                        } else {
-                            poi.Coordinate = new Coordinate(double.Parse(latitude), double.Parse(longitude));
-                        }
+        //                if(String.IsNullOrEmpty(latitude) || String.IsNullOrEmpty(longitude)) {
+        //                    poi.Coordinate = new Coordinate(0.0f, 0.0f);
+        //                } else {
+        //                    poi.Coordinate = new Coordinate(double.Parse(latitude), double.Parse(longitude));
+        //                }
 
-                        pois.Enqueue(poi);
-                    }
+        //                pois.Enqueue(poi);
+        //            }
 
-                    user.Pois = pois;
-                    mySqlDataReader.Dispose();
-                }
-            } catch (MySqlException mySqlException) {
-                throw new QueryException(1, mySqlException.Message);
-            } catch (QueryException queryException) {
-                throw queryException;
-            } catch (Exception exception) {
-                throw new QueryException(1, exception.Message);
-            } finally {
-                mysqlConnection.Close();
-            }
-        }
+        //            user.Pois = pois;
+        //            mySqlDataReader.Dispose();
+        //        }
+        //    } catch (MySqlException mySqlException) {
+        //        throw new QueryException(1, mySqlException.Message);
+        //    } catch (QueryException queryException) {
+        //        throw queryException;
+        //    } catch (Exception exception) {
+        //        throw new QueryException(1, exception.Message);
+        //    } finally {
+        //        mysqlConnection.Close();
+        //    }
+        //}
 
         public void fillUsers(Company company, User user) {
             ConcurrentQueue<User> users = new ConcurrentQueue<User>();
@@ -459,12 +459,19 @@ namespace TqatProModel.Database {
                             string poiLatitude = mySqlDataReader.GetString("poi_lat");
                             string potLongitude = mySqlDataReader.GetString("poi_lon");
 
-                            if (!String.IsNullOrEmpty(poiLatitude) || !String.IsNullOrEmpty(potLongitude)) {
-                                poi.Coordinate = new Coordinate(
-                                        double.Parse(poiLatitude),
-                                        double.Parse(potLongitude)
-                                        );
+
+                            if (String.IsNullOrEmpty(poiLatitude) || String.IsNullOrEmpty(potLongitude)) {
+                                poi.Coordinate = new Coordinate(0.0f, 0.0f);
+                            } else {
+                                poi.Coordinate = new Coordinate(double.Parse(poiLatitude), double.Parse(potLongitude));
                             }
+
+                            //if (!String.IsNullOrEmpty(poiLatitude) || !String.IsNullOrEmpty(potLongitude)) {
+                            //    poi.Coordinate = new Coordinate(
+                            //            double.Parse(poiLatitude),
+                            //            double.Parse(potLongitude)
+                            //            );
+                            //}
 
 
                             pois.Enqueue(poi);

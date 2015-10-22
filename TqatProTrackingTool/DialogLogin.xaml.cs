@@ -186,6 +186,8 @@ namespace TqatProTrackingTool {
             }));
         }
 
+        private void panelLogin_Loaded (object sender, RoutedEventArgs e) {
 
+        }
     }
 }

@@ -101,7 +101,7 @@ namespace TqatProTrackingTool {
                     }
 
                     if (listViewTrackers.ItemsCheckedCount == listViewTrackersData.Items.Count) {
-                        for (int count = 0; count < 10; count++) {
+                        for (int count = 0; count < 20; count++) {
                             if (listViewTrackers.ItemsCheckedCount != listViewTrackersData.Items.Count) {
                                 break;
                             }
@@ -161,6 +161,7 @@ namespace TqatProTrackingTool {
                     while (!webBrowserMap.IsLoaded) {
                         ;
                     }
+                   
                     map.loadPoi(webBrowserMap, poi);
                 }));
             }
@@ -171,7 +172,7 @@ namespace TqatProTrackingTool {
                 lock (threadProperties) {
                     threadProperties.CurrentThreadCount++;
                 }
-                TrackerItem trackerItem = (TrackerItem)state;
+               TrackerItem trackerItem = (TrackerItem)state;
                 Query query = new Query(database);
                 TrackerData trackerData;
 

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProTrackingTool\obj\Debug\
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\obj\Debug\
 TqatProTrackingTool
 none
 false
 DEBUG;TRACE
-C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProTrackingTool\App.xaml
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\App.xaml
 6-175559878
 172-1946424697
 13-870791343
-25-1417330992
+25447338313
 Controls\DataTemplate\ListView.xaml;Controls\Style\GridSplitter.xaml;Controls\UserControls\ListViewTrackers.xaml;Controls\UserControls\PanelLogin.xaml;DialogLogin.xaml;FormMain.xaml;
 
-False
+True
 

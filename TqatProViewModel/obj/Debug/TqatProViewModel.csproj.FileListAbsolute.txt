@@ -19,13 +19,6 @@ C:\Users\Rhalf\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTracking
 C:\Users\Rhalf\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProViewModel\obj\Debug\TqatProViewModel.csprojResolveAssemblyReference.cache
 C:\Users\Rhalf\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProViewModel\obj\Debug\TqatProViewModel.dll
 C:\Users\Rhalf\Documents\GitHub\Ats_services_TqatProTrackingTool\TqatProTrackingTool\TqatProViewModel\obj\Debug\TqatProViewModel.pdb
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\TqatProViewModel.dll
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\TqatProViewModel.pdb
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\TqatProModel.dll
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\TqatProModel.pdb
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\obj\Debug\TqatProViewModel.csprojResolveAssemblyReference.cache
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\obj\Debug\TqatProViewModel.dll
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\obj\Debug\TqatProViewModel.pdb
 C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\TqatProViewModel.dll
 C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\TqatProViewModel.pdb
 C:\Users\Ralph\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\TqatProModel.dll
@@ -45,3 +38,13 @@ C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProViewMo
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProViewModel\obj\Debug\TqatProViewModel.csprojResolveAssemblyReference.cache
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProViewModel\obj\Debug\TqatProViewModel.dll
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProViewModel\obj\Debug\TqatProViewModel.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\TqatProViewModel.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\TqatProViewModel.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\TqatProModel.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\MySql.Data.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\TqatProModel.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\obj\Debug\TqatProViewModel.csprojResolveAssemblyReference.cache
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\obj\Debug\TqatProViewModel.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\obj\Debug\TqatProViewModel.pdb
