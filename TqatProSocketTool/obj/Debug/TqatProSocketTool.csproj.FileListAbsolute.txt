@@ -1,0 +1,15 @@
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Debug\TqatProSocketTool.exe.config
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Debug\TqatProSocketTool.exe
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Debug\TqatProSocketTool.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Debug\AtsGps.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Debug\AtsGps.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Debug\MainWindow.g.cs
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Debug\App.g.cs
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Debug\TqatProSocketTool_MarkupCompile.cache
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Debug\TqatProSocketTool_MarkupCompile.lref
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Debug\MainWindow.baml
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Debug\TqatProSocketTool.g.resources
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Debug\TqatProSocketTool.Properties.Resources.resources
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Debug\TqatProSocketTool.csproj.GenerateResource.Cache
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Debug\TqatProSocketTool.exe
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Debug\TqatProSocketTool.pdb

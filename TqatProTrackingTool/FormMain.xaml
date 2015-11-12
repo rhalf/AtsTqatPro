@@ -10,7 +10,7 @@
     
         x:Class="TqatProTrackingTool.FormMain"
         
-        Title="Tqat Pro Tracking Tool" Height="600" Width="400"
+         Height="600" Width="400"
         GlowBrush="{DynamicResource AccentColorBrush}"
         ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"

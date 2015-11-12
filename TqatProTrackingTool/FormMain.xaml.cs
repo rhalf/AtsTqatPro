@@ -82,32 +82,46 @@ namespace TqatProTrackingTool {
                         }));
 
                         if (listViewTrackers.Items.Count == listViewTrackersData.Items.Count)
-                            Thread.Sleep(60);
+                            Thread.Sleep(90);
                         else
-                            Thread.Sleep(30);
+                            Thread.Sleep(45);
                     }
 
-                    bool isChecked = false;
-                    foreach (TrackerItem trackerItem in listViewTrackers.Items) {
-                        if (trackerItem.IsChecked) {
-                            isChecked = true;
-                            break;
-                        }
-
-                        if (isChecked) {
-                            Thread.Sleep(2000);
-                        }
-
-                    }
-
-                    if (listViewTrackers.ItemsCheckedCount == listViewTrackersData.Items.Count) {
-                        for (int count = 0; count < 20; count++) {
-                            if (listViewTrackers.ItemsCheckedCount != listViewTrackersData.Items.Count) {
+                    while (true) {
+                        bool isChecked = false;
+                        foreach (TrackerItem trackerItem in listViewTrackers.Items) {
+                            if (trackerItem.IsChecked) {
+                                isChecked = true;
                                 break;
                             }
-                            Thread.Sleep(1000);
+
+                            if (isChecked) {
+                                Thread.Sleep(2000);
+                            }
+
+                        }
+
+                        if (listViewTrackers.ItemsCheckedCount == listViewTrackersData.Items.Count) {
+                            for (int count = 0; count < 20; count++) {
+                                if (listViewTrackers.ItemsCheckedCount != listViewTrackersData.Items.Count) {
+                                    break;
+                                }
+                                Thread.Sleep(1000);
+                            }
+                        }
+                        foreach (TrackerItem trackerItem in listViewTrackers.Items) {
+                            ThreadPool.QueueUserWorkItem(new WaitCallback(threadFunctionTrackerUpdate), trackerItem);
+                            Dispatcher.BeginInvoke(new Action(() => {
+                                threadCount.Content = threadProperties.CurrentThreadCount.ToString();
+                            }));
+
+                            if (listViewTrackers.Items.Count == listViewTrackersData.Items.Count)
+                                Thread.Sleep(90);
+                            else
+                                Thread.Sleep(45);
                         }
                     }
+
                 } catch (Exception exception) {
                     Debug.Print(exception.Message);
                 }
@@ -277,6 +291,8 @@ namespace TqatProTrackingTool {
 
 
         private void MetroWindow_Loaded (object sender, RoutedEventArgs e) {
+            //Initialized
+            this.Title = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + " - " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
             List<UserItem> userItems = new List<UserItem>();
             foreach (User user in company.Users) {

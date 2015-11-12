@@ -31,5 +31,6 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\TqatProModel.d
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\TqatProModel.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Debug\TqatProModel.csprojResolveAssemblyReference.cache
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Debug\TqatProModel.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Debug\TqatProModel.pdb

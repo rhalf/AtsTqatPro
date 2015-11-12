@@ -6,10 +6,10 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     
         xmlns:UserControls="clr-namespace:Controls.UserControls"
-   
-        Title="Tracking Tool" 
+ 
         Height="240" 
         Width="400"
+        ResizeMode="NoResize"
         ShowMinButton="False"
         ShowMaxRestoreButton="False"
         WindowStartupLocation="CenterScreen"
