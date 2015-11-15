@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:TqatProSocketTool"
         mc:Ignorable="d"
 
-        
-        Title="MainWindow" Height="400" Width="600"
+        xmlns:sys="clr-namespace:Microsoft.CSharp;assembly=System"
+       
+        Title="MainWindow" Height="400" Width="685"
         
         Loaded="Window_Loaded"
         >
@@ -17,57 +18,177 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
+
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="75"></ColumnDefinition>
                 <ColumnDefinition Width="75"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Margin="5" Content="Start"></Button>
+            <Button Margin="5" Content="Start" Click="Button_Click"></Button>
         </Grid>
         <Grid Grid.Row="1">
-            <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <TabItem Header="Dashboard" >
-                    <Grid >
+            <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                <TabItem Header="Dashboard" Name="tabItemDashBoard">
+                    <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="30"></RowDefinition>
-                            <RowDefinition Height="30"></RowDefinition>
-                            <RowDefinition Height="30"></RowDefinition>
-                            <RowDefinition Height="30"></RowDefinition>
-                            <RowDefinition Height="30"></RowDefinition>
-                            <RowDefinition Height="30"></RowDefinition>
-                            <RowDefinition Height="30"></RowDefinition>
-                            <RowDefinition Height="30"></RowDefinition>
-                            <RowDefinition Height="30"></RowDefinition>
-                            <RowDefinition Height="30"></RowDefinition>
-                            <RowDefinition Height="30"></RowDefinition>
-                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="100"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Name="textBlockDashBoard">
-                        <Label Content="Operating System" Grid.Row="0" Grid.Column="0"></Label>
-                        <TextBox Text="{Binding MachineOperatingSystem, Mode=OneWay}" Grid.Row="0" Grid.Column="1" Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
-                        <!--<Label Content="Machine Name" Grid.Row="1" Grid.Column="0"></Label>
-                        <TextBox Text="{Binding Name}" Grid.Row="1" Grid.Column="1" Margin="5"></TextBox>
-                        <Label Content="Machine Ip" Grid.Row="2" Grid.Column="0"></Label>
-                        <TextBox Text="{Binding Ip}" Grid.Row="2" Grid.Column="1" Margin="5"></TextBox>-->
-                        </TextBlock>
+                        <GroupBox Header="Machine" Grid.Row="0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="25"></RowDefinition>
+                                    <RowDefinition Height="25"></RowDefinition>
+                                    <RowDefinition Height="25"></RowDefinition>
+                                    <RowDefinition Height="25"></RowDefinition>
+
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="90"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="OperatingSystem" Grid.Row="0" Grid.Column="0"></Label>
+                                <Label Name="labelOperatingSystem" Content="{Binding OperatingSystem, Mode=OneWay}" Grid.Row="0" Grid.Column="1" Margin="0"></Label>
+                                <Label Content="MachineName" Grid.Row="0" Grid.Column="2"></Label>
+                                <Label Name="labelName" Content="{Binding Name, Mode=OneWay}" Grid.Row="0" Grid.Column="3" Margin="0" ></Label>
+                                <Label Content="IP Addresses" Grid.Row="1" Grid.Column="2"></Label>
+                                <ComboBox Name="comboBoxIps" ItemsSource="{Binding IpAddresses,  Mode=OneWay}" Grid.Row="1" Grid.Column="3" Margin="0"></ComboBox>
+
+                                <Label Content="Processor" Grid.Row="1" Grid.Column="0"></Label>
+                                <Label Name="labelCore" Content="{Binding Processor, Mode=OneWay}" Grid.Row="1" Grid.Column="1" Margin="0" ></Label>
+                                <Label Content="LocalTime" Grid.Row="2" Grid.Column="0"></Label>
+                                <Label Name="labelLocalDateTime" Content="{Binding LocalDateTime, Mode=OneWay}" Grid.Row="2" Grid.Column="1" Margin="0" ></Label>
+                                <Label Content="UtcTime" Grid.Row="2" Grid.Column="2"></Label>
+                                <Label Name="labelUtcDateTime" Content="{Binding UtcDateTime, Mode=OneWay}" Grid.Row="2" Grid.Column="3" Margin="0" ></Label>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="Status"  Grid.Row="1">
+                            <ListView Name="listViewServerProfileStatus" HorizontalAlignment="Stretch">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Brand" Width="100" DisplayMemberBinding="{Binding Brand, Mode=OneWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Model" Width="100" DisplayMemberBinding="{Binding Model, Mode=OneWay}"></GridViewColumn>
+                                        <!--<GridViewColumn Header="Enabled" Width="50" DisplayMemberBinding="{Binding IsEnabled, Mode=OneWay}"></GridViewColumn>-->
+                                        <GridViewColumn Header="IpAddress" Width="100" DisplayMemberBinding="{Binding IpAddress, Mode=OneWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Port" Width="100" DisplayMemberBinding="{Binding Port, Mode=OneWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Connected" Width="80" DisplayMemberBinding="{Binding TcpClient, Mode=OneWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Send(mb)" Width="80" DisplayMemberBinding="{Binding TcpClientSentPacket, Mode=OneWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Receive(mb)" Width="80" DisplayMemberBinding="{Binding TcpClientReceivePacket, Mode=OneWay}"></GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+
+                            </ListView>
+                        </GroupBox>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Settings">
-
+                <TabItem Header="Mysql">
+                    <GroupBox Header="Mysql Database" Grid.Column="2">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" Margin="3">
+                                <Label Content="Ip Address" Width="100"></Label>
+                                <TextBox Text="127.0.0.1"  Width="100"></TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="3">
+                                <Label Content="Port"  Width="100"></Label>
+                                <TextBox Text="3306"  Width="100"></TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="3">
+                                <Label Content="Database"  Width="100"></Label>
+                                <TextBox Text=""  Width="100"></TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="3">
+                                <Label Content="Username"  Width="100"></Label>
+                                <TextBox Text=""  Width="100"></TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="3">
+                                <Label Content="Password"  Width="100"></Label>
+                                <TextBox Text=""  Width="100"></TextBox>
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
                 </TabItem>
                 <TabItem Header="Servers">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <GroupBox Header="Server Profile" Name="groupServerProfiles" Grid.Column="0">
+                            <ListView Name="listViewServerProfile" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Brand" Width="100">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Label Content="{Binding Brand}"></Label>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Model" Width="100">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Label Content="{Binding Model}"></Label>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Enabled" Width="50">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox IsChecked="{Binding IsEnabled, UpdateSourceTrigger=PropertyChanged}" ></CheckBox>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Ip Address" Width="180">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <ComboBox SelectedItem="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding IpAddresses}" Width="160"></ComboBox>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Port" Width="100">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBox Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}"  Width="80"></TextBox>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </GroupBox>
+                        <!--<GridSplitter  Grid.Column="1" Width="5" Padding="3" HorizontalAlignment="Stretch"></GridSplitter>-->
+                        
+                    </Grid>
 
                 </TabItem>
                 <TabItem Header="Logs">
-
+                    <DataGrid Name="dataGridLog" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn  Header="DateTime" Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding DateTime}"></Label>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Description" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Description}"></Label>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="LogType" Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding LogType}"></Label>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </TabItem>
             </TabControl>
         </Grid>
