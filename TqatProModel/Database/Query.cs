@@ -790,14 +790,15 @@ namespace TqatProModel.Database {
 
                     double dateTime = double.Parse((string)jsonData.gm_time);
 
-                    DateTime dateTime1 = Parser.UnixTime.toDateTime(dateTime);
-                    TimeSpan timeSpan = dateTime1.Subtract(DateTime.Now);
+                    trackerData.DateTime = Parser.UnixTime.toDateTime(dateTime);
+                    //DateTime dateTime1 = Parser.UnixTime.toDateTime(dateTime);
+                    //TimeSpan timeSpan = dateTime1.Subtract(DateTime.Now);
 
-                    if (timeSpan.Hours > 6) {
-                        trackerData.DateTime = dateTime1;
-                    } else {
-                        trackerData.DateTime = DateTime.Now;
-                    }
+                    //if (timeSpan.Hours > 6) {
+                    //    trackerData.DateTime = dateTime1;
+                    //} else {
+                    //    trackerData.DateTime = DateTime.Now;
+                    //}
                     double latitude = double.Parse((string)jsonData.gm_lat);
                     double longitude = double.Parse((string)jsonData.gm_lng);
                     trackerData.Coordinate = new Coordinate(latitude, longitude);

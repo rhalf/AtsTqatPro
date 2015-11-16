@@ -15,6 +15,9 @@ using System.Windows.Shapes;
 using TqatProSocketTool.ViewModel;
 using AtsGps;
 using AtsGps.Meitrack;
+using TqatProSocketTool.Model;
+using System.Collections.Concurrent;
+using System.Threading;
 
 namespace TqatProSocketTool {
     /// <summary>
@@ -27,7 +30,8 @@ namespace TqatProSocketTool {
 
         List<TcpManager> tcpManagers = new List<TcpManager>();
         List<ServerProfile> serverProfiles = new List<ServerProfile>();
-
+        ConcurrentBag<Byte[]> mvt100Bag = new ConcurrentBag<Byte[]>();
+        Thread threadManager;
 
 
         private void Window_Loaded (object sender, RoutedEventArgs e) {
@@ -81,6 +85,9 @@ namespace TqatProSocketTool {
                             meitractTcpManagerMvt100.DataReceived += MeitractTcpManagerMvt100_DataReceived;
                             meitractTcpManagerMvt100.Start();
                             tcpManagers.Add(meitractTcpManagerMvt100);
+
+                            threadManager = new Thread(threadManagerFunc);
+                            threadManager.Start();
                         }
                         //T1
                         if (sp.IsEnabled == true && sp.Brand == "Meitrack" && sp.Model == "T1") {
@@ -90,10 +97,10 @@ namespace TqatProSocketTool {
                             meitractTcpManagerT1.DataReceived += MeitractTcpManagerT1_DataReceived;
                             meitractTcpManagerT1.Start();
                             tcpManagers.Add(meitractTcpManagerT1);
+                            threadManager.Abort();
+                            GC.Collect();
                         }
-
                     }
-
                     button.Content = "Stop";
                     groupServerProfiles.IsEnabled = false;
                 } else {
@@ -110,8 +117,27 @@ namespace TqatProSocketTool {
             }
         }
 
-        private void MeitractTcpManagerT1_DataReceived (byte[] data) {
+        private void threadManagerFunc () {
+           while(true) {
+                Byte[] bytes;
+                mvt100Bag.TryTake(out bytes);
+                ThreadPool.QueueUserWorkItem(new WaitCallback(threadProcessBytes), bytes);
+            }
+        }
 
+        private void threadProcessBytes (object state) {
+            Byte[] data = (Byte[])state;
+
+            if (data == null)
+                return;
+
+            Gm gm = new Gm(data);
+
+        }
+
+        private void MeitractTcpManagerT1_DataReceived (byte[] data) {
+            if (data == null)
+                return;
         }
 
         private void MeitractTcpManagerT1_Event (ServerLog serverLog) {
@@ -122,7 +148,12 @@ namespace TqatProSocketTool {
         }
 
         private void MeitractTcpManagerMvt100_DataReceived (byte[] data) {
-      
+            if (data == null)
+                return;
+
+            Gm gm = new Gm(data);
+
+            //mvt100Bag.Add(data);
         }
 
         private void MeitractTcpManagerMvt100_Event (ServerLog serverLog) {

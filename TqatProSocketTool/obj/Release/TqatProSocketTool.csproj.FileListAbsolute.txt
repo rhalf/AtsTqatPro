@@ -1,16 +1,1 @@
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Release\TqatProSocketTool.exe.config
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Release\TqatProSocketTool.exe
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Release\TqatProSocketTool.pdb
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Release\AtsGps.dll
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Release\AtsGps.pdb
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\TqatProSocketTool.csprojResolveAssemblyReference.cache
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\MainWindow.g.cs
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\App.g.cs
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\TqatProSocketTool_MarkupCompile.cache
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\TqatProSocketTool_MarkupCompile.lref
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\MainWindow.baml
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\TqatProSocketTool.g.resources
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\TqatProSocketTool.Properties.Resources.resources
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\TqatProSocketTool.csproj.GenerateResource.Cache
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\TqatProSocketTool.exe
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\TqatProSocketTool.pdb

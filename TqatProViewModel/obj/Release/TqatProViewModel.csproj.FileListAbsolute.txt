@@ -41,13 +41,3 @@ C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProViewMo
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProViewModel\obj\Release\TqatProViewModel.csprojResolveAssemblyReference.cache
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProViewModel\obj\Release\TqatProViewModel.dll
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProViewModel\obj\Release\TqatProViewModel.pdb
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Release\TqatProViewModel.dll
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Release\TqatProViewModel.pdb
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Release\TqatProModel.dll
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Release\MySql.Data.dll
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Release\Newtonsoft.Json.dll
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Release\TqatProModel.pdb
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Release\Newtonsoft.Json.xml
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\obj\Release\TqatProViewModel.csprojResolveAssemblyReference.cache
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\obj\Release\TqatProViewModel.dll
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\obj\Release\TqatProViewModel.pdb

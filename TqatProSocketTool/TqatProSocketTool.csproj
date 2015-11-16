@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Gm.cs" />
     <Compile Include="ViewModel\Machine.cs" />
     <Compile Include="ViewModel\ServerProfile.cs" />
     <Page Include="MainWindow.xaml">
