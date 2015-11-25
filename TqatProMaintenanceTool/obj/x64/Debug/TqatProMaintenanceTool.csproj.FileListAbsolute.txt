@@ -1,0 +1,11 @@
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\x64\Debug\Controls\Style\GridSplitter.baml
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\x64\Debug\Controls\UserControls\PanelLogin.baml
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\x64\Debug\FormMain.baml
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\x64\Debug\App.baml
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\x64\Debug\Controls\UserControls\PanelLogin.g.cs
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\x64\Debug\DialogLogin.g.cs
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\x64\Debug\FormMain.g.cs
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\x64\Debug\App.g.cs
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\x64\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\x64\Debug\TqatProMaintenanceTool_MarkupCompile.cache
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\x64\Debug\TqatProMaintenanceTool_MarkupCompile.lref

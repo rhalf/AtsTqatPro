@@ -88,7 +88,45 @@ namespace TqatProModel.Devices.Meitrack {
     }
     class Meitrack {
 
-        public static Mvt100 parseMvt100(string rawData) {
+        public static Boolean CheckSum (String raw) {
+            try {
+                String[] tempData = raw.Split('*');
+
+                String checkSumData = raw.Substring(0, raw.Length - 4);
+                Byte[] checkSumBytes = ASCIIEncoding.UTF8.GetBytes(checkSumData);
+                Int32 result = 0;
+                foreach (Byte byte1 in checkSumBytes) {
+                    result += (Int32)byte1;
+                }
+
+
+                String checkCode = tempData[1].Trim();
+                String checkSum = result.ToString("X2").Substring((result.ToString().Length - 2), 2);
+                if (checkCode.Equals(checkSum)) {
+                    return true;
+                }
+                return false;
+            } catch {
+                return false;
+            }
+        }
+
+        public static Boolean CheckDataLength (String raw) {
+            try {
+                Int32 dataLength = Int32.Parse(raw.Substring(3, 3));
+                String data = raw.Substring(6);
+                Int32 actualLength = data.Length;
+                if (dataLength == actualLength) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch {
+                return false;
+            }
+        }
+
+        public static Mvt100 parseMvt100 (string rawData) {
             //$$d140,865734029500608,AAA,35,0.000000,0.000999,000101030330,V,0,31,0,0,0.0,0,0,11003,427|2|008E|53C1,0000,0000|0000|0000|0A51|0393,00000031,*BA
             //$$d140,865734029500608,AAA,35,0.000000,0.000999,000101030330,V,0,31,0,0,(12)0.0,0,0,11003,427|2|008E|53C1,(17)0000,0000|0000|0000|0A51|0393,00000031,*BA
             Mvt100 mvt100 = new Mvt100();
@@ -96,7 +134,7 @@ namespace TqatProModel.Devices.Meitrack {
             mvt100.rawData = rawData;
 
             List<string> listData = mvt100.rawData.Split(',').ToList();
-           
+
 
             //Validate
             if (String.IsNullOrEmpty(rawData))
@@ -104,11 +142,11 @@ namespace TqatProModel.Devices.Meitrack {
 
             if (listData.Count != 21)
                 throw new MeitrackException(1, "rawData does not have enough comma.");
-            
+
 
             if (!(listData[0].Substring(0, 2) == "@@" || listData[0].Substring(0, 2) == "$$"))
                 throw new MeitrackException(1, "rawData has wrong format.");
-            
+
 
 
 

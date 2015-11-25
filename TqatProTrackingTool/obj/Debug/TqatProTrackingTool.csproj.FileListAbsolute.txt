@@ -812,7 +812,6 @@ C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProTracki
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProTrackingTool\obj\Debug\TqatProTrackingTool.csproj.GenerateResource.Cache
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProTrackingTool\obj\Debug\TqatProTrackingTool.exe
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProTrackingTool\obj\Debug\TqatProTrackingTool.pdb
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\TqatProTrackingTool.exe.config
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\Web\Maps\images\alarm\alarmBreakDown.png
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\Web\Maps\images\alarm\alarmExpiry.png
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\Web\Maps\images\alarm\alarmGeofence.png
@@ -985,6 +984,7 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\Web\Map
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\Web\Maps\libraries\css\style.css
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\Web\Maps\index.html
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\Web\Maps\html.html
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\TqatProTrackingTool.exe.config
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\TqatProTrackingTool.exe
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\TqatProTrackingTool.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\MahApps.Metro.dll

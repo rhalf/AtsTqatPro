@@ -16,7 +16,7 @@ namespace TqatProSocketTool.ViewModel {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        public Machine() {
+        public Machine () {
             DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Interval = TimeSpan.FromMilliseconds(1000);
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);

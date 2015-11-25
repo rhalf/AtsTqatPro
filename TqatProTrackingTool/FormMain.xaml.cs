@@ -278,8 +278,8 @@ namespace TqatProTrackingTool {
             this.company = company;
 
             server = new Server();
-            server.Name = "67.205.85.177";
-            server.Ip = "67.205.85.177";
+            server.Name = "Realtime";
+            server.Ip = database.IpAddress;
             server.PortCommand = 8001;
             server.PortHttp = 8000;
 
@@ -303,7 +303,7 @@ namespace TqatProTrackingTool {
             ribbonMenuButtonUser.ItemsSource = userItems;
             labelCompany.Content = this.company.DisplayName;
             labelUser.Content = this.user.Username;
-            labelDatabaseHost.Content = this.database.Host;
+            labelDatabaseHost.Content = this.database.IpAddress.ToString();
         }
         #endregion
 

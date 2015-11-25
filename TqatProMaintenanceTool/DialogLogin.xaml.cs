@@ -29,7 +29,7 @@ using Controls.UserControls;
 using TqatProModel;
 using TqatProModel.Database;
 using TqatProModel.Parser;
-
+using System.Net;
 
 namespace TqatProMaintenanceTool {
     /// <summary>
@@ -46,8 +46,8 @@ namespace TqatProMaintenanceTool {
         User user;
 
         List<Company> companies;
-        List<User> users;
-        List<Tracker> trackers;
+        //List<User> users;
+        //List<Tracker> trackers;
 
         private void PanelLogin_OnSubmitEventHandler(object sender, RoutedEventArgs e) {
             //Validation
@@ -82,8 +82,8 @@ namespace TqatProMaintenanceTool {
                     panelLogin.IsEnabled = false;
                     progressBarLoading.Visibility = Visibility.Visible;
                 }));
-
-                Database database = new Database(Settings.Default.databaseHost, Settings.Default.databaseUsername, Settings.Default.databasePassword);
+           
+                Database database = new Database { IpAddress = Settings.Default.databaseHost, Username = Settings.Default.databaseUsername, Password = Settings.Default.databasePassword };
                 query = new Query(database);
 
 

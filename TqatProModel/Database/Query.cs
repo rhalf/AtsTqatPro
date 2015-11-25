@@ -12,11 +12,13 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using TqatProModel;
+using TqatProModel.Database;
 using TqatProModel.Devices.Meitrack;
 using TqatProModel.Parser;
 using System.Collections.Concurrent;
 using System.Net;
 using System.IO;
+using System.Diagnostics;
 
 namespace TqatProModel.Database {
 
@@ -26,7 +28,7 @@ namespace TqatProModel.Database {
         Database database;
 
 
-        public Query(Database database) {
+        public Query (Database database) {
             if (database == null) {
                 throw new QueryException(1, "Database is null.");
             }
@@ -36,7 +38,129 @@ namespace TqatProModel.Database {
             mysqlConnection = new MySqlConnection(this.database.getConnectionString());
         }
 
-        public void getCompany(Company company) {
+
+
+        public void checkConnection () {
+            MySqlConnection mysqlConnection = new MySqlConnection(database.getConnectionString());
+
+            try {
+                mysqlConnection.Open();
+            } catch (MySqlException mySqlException) {
+                throw new Exception(mySqlException.Message);
+            } catch (Exception exception) {
+                throw exception;
+            } finally {
+                mysqlConnection.Close();
+            }
+        }
+
+        #region Socket
+        public Tracker getTracker (String imei) {
+            try {
+                mysqlConnection.Open();
+
+                string sql =
+                    "SELECT * " +
+                    "FROM dbt_tracking_master.trks " +
+                    "WHERE dbt_tracking_master.trks.tunit = @imei;";
+
+                MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
+                mySqlCommand.Parameters.AddWithValue("@imei", imei);
+
+                MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
+
+                if (!mySqlDataReader.HasRows) {
+                    mySqlDataReader.Dispose();
+                    throw new QueryException(1, "Tracker " + imei + " is not registered.");
+                } else {
+                    mySqlDataReader.Read();
+                    Tracker tracker = new Tracker();
+                    tracker.CompanyDatabaseName = (string)mySqlDataReader["tcmp"];
+                    tracker.DatabaseHost = int.Parse((string)mySqlDataReader["tdbhost"]);
+                    tracker.DatabaseName = (string)mySqlDataReader["tdbs"];
+
+                    String dateTime = (string)mySqlDataReader["tcreatedate"];
+                    tracker.DateTimeCreated = SubStandard.dateTime(dateTime);
+                    dateTime = String.Empty;
+
+                    dateTime = (string)mySqlDataReader["ttrackerexpiry"];
+                    tracker.DateTimeExpired = SubStandard.dateTime(dateTime);
+                    dateTime = String.Empty;
+
+                    tracker.TrackerImei = (string)mySqlDataReader["tunit"];
+                    tracker.DevicePassword = (string)mySqlDataReader["tunitpassword"];
+                    tracker.DeviceType = int.Parse((string)mySqlDataReader["ttype"]);
+                    tracker.DriverName = (string)mySqlDataReader["tdrivername"];
+                    tracker.Emails = (string)mySqlDataReader["temails"];
+                    tracker.HttpHost = int.Parse((string)mySqlDataReader["thttphost"]);
+                    tracker.Id = (int)mySqlDataReader["tid"];
+                    tracker.IdlingTime = int.Parse((string)mySqlDataReader["tidlingtime"]);
+                    tracker.ImageNumber = int.Parse((string)mySqlDataReader["timg"]);
+                    tracker.Inputs = (string)mySqlDataReader["tinputs"];
+                    tracker.MileageInitial = int.Parse((string)mySqlDataReader["tmileageInit"]);
+                    tracker.MileageLimit = int.Parse((string)mySqlDataReader["tmileagelimit"]);
+                    tracker.MobileDataProvider = int.Parse((string)mySqlDataReader["tprovider"]);
+                    tracker.Note = (string)mySqlDataReader["tnote"];
+                    tracker.OwnerName = (string)mySqlDataReader["townername"];
+                    tracker.SimImei = (string)mySqlDataReader["tsimsr"];
+                    tracker.SimNumber = (string)mySqlDataReader["tsimno"];
+
+                    tracker.SpeedLimit = int.Parse((string)mySqlDataReader["tSpeedLimit"]);
+                    tracker.VehicleModel = (string)mySqlDataReader["tvehiclemodel"];
+                    tracker.VehicleRegistration = (string)mySqlDataReader["tvehiclereg"];
+
+                    mySqlDataReader.Dispose();
+
+                    return tracker;
+                }
+            } catch (MySqlException mySqlException) {
+                throw new QueryException(1, mySqlException.Message);
+            } catch (QueryException queryException) {
+                throw queryException;
+            } catch (Exception exception) {
+                throw new QueryException(1, exception.Message);
+            } finally {
+                mysqlConnection.Close();
+            }
+        }
+        public void insertTrackerData (Tracker tracker, Gm gm) {
+            try {
+                mysqlConnection.Open();
+
+                string sql =
+                    "INSERT INTO " +
+                    "trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + 
+                    "(gm_time,gm_lat,gm_lng,gm_speed,gm_ori,gm_mileage,gm_data,gm_lasttime) " +
+                    "VALUES(@TimeStamp,@Latitude,@Longitude,@Speed,@Orientation,@Mileage,@Data,@LastTime)";
+
+                MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
+                mySqlCommand.Parameters.AddWithValue("@TimeStamp", gm.TimeStamp);
+                mySqlCommand.Parameters.AddWithValue("@Latitude", gm.Latitude);
+                mySqlCommand.Parameters.AddWithValue("@Longitude", gm.Longitude);
+                mySqlCommand.Parameters.AddWithValue("@Speed", gm.Speed);
+                mySqlCommand.Parameters.AddWithValue("@Orientation", gm.Orientation);
+                mySqlCommand.Parameters.AddWithValue("@Mileage", gm.Mileage);
+                mySqlCommand.Parameters.AddWithValue("@Data", gm.Data);
+                mySqlCommand.Parameters.AddWithValue("@LastTime", gm.LastTime);
+
+                if (mySqlCommand.ExecuteNonQuery() != 1) {
+                    throw new Exception("Error on Insert..");
+                }
+              
+            } catch (MySqlException mySqlException) {
+                throw new QueryException(1, mySqlException.Message);
+            } catch (QueryException queryException) {
+                throw queryException;
+            } catch (Exception exception) {
+                throw new QueryException(1, exception.Message);
+            } finally {
+                mysqlConnection.Close();
+            }
+        }
+
+        #endregion
+        #region Tracking and Reporting
+        public void getCompany (Company company) {
             try {
                 mysqlConnection.Open();
 
@@ -84,7 +208,7 @@ namespace TqatProModel.Database {
 
         }
 
-        public List<Company> getCompanies() {
+        public List<Company> getCompanies () {
             List<Company> companies = new List<Company>();
 
             try {
@@ -136,7 +260,7 @@ namespace TqatProModel.Database {
             return companies;
         }
 
-        public void fillGeofences(Company company) {
+        public void fillGeofences (Company company) {
             ConcurrentQueue<Geofence> geofences = new ConcurrentQueue<Geofence>();
 
             try {
@@ -190,7 +314,7 @@ namespace TqatProModel.Database {
             }
         }
 
-        public void getUser(Company company, User user) {
+        public void getUser (Company company, User user) {
             try {
                 mysqlConnection = new MySqlConnection(database.getConnectionString());
 
@@ -310,7 +434,7 @@ namespace TqatProModel.Database {
         //    }
         //}
 
-        public void fillUsers(Company company, User user) {
+        public void fillUsers (Company company, User user) {
             ConcurrentQueue<User> users = new ConcurrentQueue<User>();
             try {
                 mysqlConnection = new MySqlConnection(database.getConnectionString());
@@ -377,7 +501,7 @@ namespace TqatProModel.Database {
             }
             company.Users = users;
         }
-        public void fillCollection(Company company) {
+        public void fillCollection (Company company) {
             foreach (User user in company.Users) {
                 ConcurrentQueue<Collection> collections = new ConcurrentQueue<Collection>();
                 try {
@@ -430,7 +554,7 @@ namespace TqatProModel.Database {
                 }
             }
         }
-        public void fillPois(Company company) {
+        public void fillPois (Company company) {
             foreach (User user in company.Users) {
                 ConcurrentQueue<Poi> pois = new ConcurrentQueue<Poi>();
                 try {
@@ -491,7 +615,7 @@ namespace TqatProModel.Database {
                 }
             }
         }
-        public void fillTrackers(Company company) {
+        public void fillTrackers (Company company) {
             ConcurrentQueue<Tracker> trackers = new ConcurrentQueue<Tracker>();
 
             try {
@@ -638,122 +762,123 @@ namespace TqatProModel.Database {
         //    return dataTable;
         //}
 
-        public TrackerData getTrackerLatestData(Company company, Tracker tracker) {
-            TrackerData trackerData = new TrackerData();
-            trackerData.Tracker = tracker;
-            try {
-                mysqlConnection.Open();
+        //public TrackerData getTrackerLatestData (Company company, Tracker tracker) {
+        //    TrackerData trackerData = new TrackerData();
+        //    trackerData.Tracker = tracker;
+        //    try {
+        //        mysqlConnection.Open();
 
-                string sql =
-                     "SELECT * " +
-                     "FROM trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + " " +
-                     "ORDER BY " +
-                     "trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + ".gm_time " +
-                     "DESC limit 1;";
-                //"SELECT * " +
-                // "FROM trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + " " +
-                // "ORDER BY " +
-                // "trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + ".gm_id " +
-                // "DESC limit 1;";
+        //        string sql =
+        //             "SELECT * " +
+        //             "FROM trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + " " +
+        //             "ORDER BY " +
+        //             "trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + ".gm_time " +
+        //             "DESC limit 1;";
+        //        //"SELECT * " +
+        //        // "FROM trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + " " +
+        //        // "ORDER BY " +
+        //        // "trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + ".gm_id " +
+        //        // "DESC limit 1;";
 
-                MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
-                MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
+        //        MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
+        //        MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
 
-                if (!mySqlDataReader.HasRows) {
-                    trackerData.IsDataEmpty = true;
-                    return trackerData;
-                } else {
-                    mySqlDataReader.Read();
-                    trackerData.IsDataEmpty = false;
-                    trackerData.Id = mySqlDataReader.GetInt32("gm_id");
-                    double dateTime = double.Parse(mySqlDataReader.GetString("gm_time"));
-                    trackerData.DateTime = Parser.UnixTime.toDateTime(dateTime);
-                    double latitude = double.Parse(mySqlDataReader.GetString("gm_lat"));
-                    double longitude = double.Parse(mySqlDataReader.GetString("gm_lng"));
-                    trackerData.Coordinate = new Coordinate(latitude, longitude);
+        //        if (!mySqlDataReader.HasRows) {
+        //            trackerData.IsDataEmpty = true;
+        //            return trackerData;
+        //        } else {
+        //            mySqlDataReader.Read();
+        //            trackerData.IsDataEmpty = false;
+        //            trackerData.Id = mySqlDataReader.GetInt32("gm_id");
+        //            double dateTime = double.Parse(mySqlDataReader.GetString("gm_time"));
+        //            trackerData.DateTime = Parser.UnixTime.toDateTime(dateTime);
+        //            double latitude = double.Parse(mySqlDataReader.GetString("gm_lat"));
+        //            double longitude = double.Parse(mySqlDataReader.GetString("gm_lng"));
+        //            trackerData.Coordinate = new Coordinate(latitude, longitude);
 
-                    trackerData.Speed = int.Parse(mySqlDataReader.GetString("gm_speed"));
-                    trackerData.Degrees = int.Parse(mySqlDataReader.GetString("gm_ori"));
-                    trackerData.Direction = Direction.degreesToCardinalDetailed(double.Parse(mySqlDataReader.GetString("gm_ori")));
-                    //trackerData.Mileage = double.Parse(mySqlDataReader.GetString("gm_mileage"));
+        //            trackerData.Speed = int.Parse(mySqlDataReader.GetString("gm_speed"));
+        //            trackerData.Degrees = int.Parse(mySqlDataReader.GetString("gm_ori"));
+        //            trackerData.Direction = Direction.degreesToCardinalDetailed(double.Parse(mySqlDataReader.GetString("gm_ori")));
+        //            //trackerData.Mileage = double.Parse(mySqlDataReader.GetString("gm_mileage"));
 
-                    double deviceMileage = double.Parse(mySqlDataReader.GetString("gm_mileage"));
-                    double carMileage = (tracker.MileageInitial);
-                    trackerData.Mileage = deviceMileage + carMileage;
+        //            double deviceMileage = double.Parse(mySqlDataReader.GetString("gm_mileage"));
+        //            double carMileage = (tracker.MileageInitial);
+        //            trackerData.Mileage = deviceMileage + carMileage;
 
-                    //1,			            //                                                          (0)
-                    //35,			            //Event code(Decimal)
-                    //11,			            //Number of satellites(Decimal)
-                    //26,			            //GSM signal status(Decimal)
-                    //17160691, 		        //Mileage(Decimal)unit: meter
-                    //0.7, 			            //hpos accuracy(Decimal)
-                    //18, 			            //Altitude(Decimal)unit: meter
-                    //18661240, 		        //Run time(Decimal)unit: second
-                    //427|2|0078|283F, 	        //Base station information(binary|binary|hex|hex)           (8)
-                    //==============================================0200
-                    //0,0,0,0,0,0,0,0,          //Io port lowbyte (low bit start from left)                 (9)
-                    //0,1,0,0,0,0,0,0,          //Io port lowbyte (low bit start from left)                 (17)
-                    //==============================================
-                    //000B,0000,0000,0A6E,0434, //Analog input value                                        (25)
-                    //00000001 		            //System mark
+        //            //1,			            //                                                          (0)
+        //            //35,			            //Event code(Decimal)
+        //            //11,			            //Number of satellites(Decimal)
+        //            //26,			            //GSM signal status(Decimal)
+        //            //17160691, 		        //Mileage(Decimal)unit: meter
+        //            //0.7, 			            //hpos accuracy(Decimal)
+        //            //18, 			            //Altitude(Decimal)unit: meter
+        //            //18661240, 		        //Run time(Decimal)unit: second
+        //            //427|2|0078|283F, 	        //Base station information(binary|binary|hex|hex)           (8)
+        //            //==============================================0200
+        //            //0,0,0,0,0,0,0,0,          //Io port lowbyte (low bit start from left)                 (9)
+        //            //0,1,0,0,0,0,0,0,          //Io port lowbyte (low bit start from left)                 (17)
+        //            //==============================================
+        //            //000B,0000,0000,0A6E,0434, //Analog input value                                        (25)
+        //            //00000001 		            //System mark
 
-                    string gmData = (string)mySqlDataReader["gm_data"];
-                    string[] data = gmData.Split(',');
-                    trackerData.EventCode = (EventCode)int.Parse(data[1]);
+        //            string gmData = (string)mySqlDataReader["gm_data"];
+        //            string[] data = gmData.Split(',');
+        //            trackerData.EventCode = (EventCode)int.Parse(data[1]);
 
-                    trackerData.GpsSatellites = int.Parse(data[2]);
-                    trackerData.GsmSignal = int.Parse(data[3]);
-                    trackerData.Altitude = int.Parse(data[6]);
+        //            trackerData.GpsSatellites = int.Parse(data[2]);
+        //            trackerData.GsmSignal = int.Parse(data[3]);
+        //            trackerData.Altitude = int.Parse(data[6]);
 
-                    trackerData.ACC = (int.Parse(data[18]) == 1) ? true : false;
-                    trackerData.SOS = (int.Parse(data[17]) == 1) ? true : false;
-                    trackerData.OverSpeed = ((int)trackerData.Speed > tracker.SpeedLimit) ? true : false;
-                    //Geofence
-                    Coordinate coordinate = new Coordinate(latitude, longitude);
+        //            trackerData.ACC = (int.Parse(data[18]) == 1) ? true : false;
+        //            trackerData.SOS = (int.Parse(data[17]) == 1) ? true : false;
+        //            trackerData.OverSpeed = ((int)trackerData.Speed > tracker.SpeedLimit) ? true : false;
+        //            //Geofence
+        //            Coordinate coordinate = new Coordinate(latitude, longitude);
 
-                    foreach (Geofence geofence in company.Geofences) {
-                        if (Geofence.isPointInPolygon(geofence, coordinate)) {
-                            trackerData.Geofence = geofence;
-                        }
-                    };
+        //            foreach (Geofence geofence in company.Geofences) {
+        //                if (Geofence.isPointInPolygon(geofence, coordinate)) {
+        //                    trackerData.Geofence = geofence;
+        //                }
+        //            };
 
-                    double batteryStrength = (double)int.Parse(data[28], System.Globalization.NumberStyles.AllowHexSpecifier);
-                    batteryStrength = ((batteryStrength - 2114f) * (100f / 492f));//*100.0;
-                    batteryStrength = Math.Round(batteryStrength, 2);
-                    if (batteryStrength > 100) {
-                        batteryStrength = 100f;
-                    } else if (batteryStrength < 0) {
-                        batteryStrength = 0;
-                    }
+        //            double batteryStrength = (double)int.Parse(data[28], System.Globalization.NumberStyles.AllowHexSpecifier);
+        //            batteryStrength = ((batteryStrength - 2114f) * (100f / 492f));//*100.0;
+        //            batteryStrength = Math.Round(batteryStrength, 2);
+        //            if (batteryStrength > 100) {
+        //                batteryStrength = 100f;
+        //            } else if (batteryStrength < 0) {
+        //                batteryStrength = 0;
+        //            }
 
-                    double batteryVoltage = (double)int.Parse(data[28], System.Globalization.NumberStyles.AllowHexSpecifier);
-                    batteryVoltage = (batteryVoltage * 3 * 2) / 1024;
-                    batteryVoltage = Math.Round(batteryVoltage, 2);
-                    double externalVoltage = (double)int.Parse(data[29], System.Globalization.NumberStyles.AllowHexSpecifier);
-                    externalVoltage = (externalVoltage * 3 * 16) / 1024;
-                    externalVoltage = Math.Round(externalVoltage, 2);
+        //            double batteryVoltage = (double)int.Parse(data[28], System.Globalization.NumberStyles.AllowHexSpecifier);
+        //            batteryVoltage = (batteryVoltage * 3 * 2) / 1024;
+        //            batteryVoltage = Math.Round(batteryVoltage, 2);
+        //            double externalVoltage = (double)int.Parse(data[29], System.Globalization.NumberStyles.AllowHexSpecifier);
+        //            externalVoltage = (externalVoltage * 3 * 16) / 1024;
+        //            externalVoltage = Math.Round(externalVoltage, 2);
 
-                    trackerData.Battery = batteryStrength;
-                    trackerData.BatteryVoltage = batteryVoltage;
-                    trackerData.ExternalVoltage = externalVoltage;
+        //            trackerData.Battery = batteryStrength;
+        //            trackerData.BatteryVoltage = batteryVoltage;
+        //            trackerData.ExternalVoltage = externalVoltage;
 
-                    return trackerData;
-                }
+        //            return trackerData;
+        //        }
 
-                //} catch (QueryException queryException) {
-                //throw queryException;
-                //} catch (MySqlException mySqlException) {
-                //throw new QueryException(1, mySqlException.Message);
-            } catch (Exception exception) {
-                //throw new QueryException(1, exception.Message);
-                return trackerData;
-            } finally {
-                mysqlConnection.Close();
-            }
+        //        //} catch (QueryException queryException) {
+        //        //throw queryException;
+        //        //} catch (MySqlException mySqlException) {
+        //        //throw new QueryException(1, mySqlException.Message);
+        //    } catch (Exception exception) {
+        //        Debug.Write(exception);
+        //        //throw new QueryException(1, exception.Message);
+        //        return trackerData;
+        //    } finally {
+        //        mysqlConnection.Close();
+        //    }
 
-        }
+        //}
 
-        public TrackerData getTrackerLatestData(Company company, Tracker tracker, Server server) {
+        public TrackerData getTrackerLatestData (Company company, Tracker tracker, Server server) {
             TrackerData trackerData = new TrackerData();
             trackerData.Tracker = tracker;
 
@@ -874,6 +999,7 @@ namespace TqatProModel.Database {
                 //} catch (MySqlException mySqlException) {
                 //throw new QueryException(1, mySqlException.Message);
             } catch (Exception exception) {
+                Debug.Write(exception);
                 //throw new QueryException(1, exception.Message);
                 return trackerData;
             } finally {
@@ -881,7 +1007,9 @@ namespace TqatProModel.Database {
             }
 
         }
-        public ConcurrentQueue<TrackerDatabaseSize> getDatabasesSize() {
+        #endregion
+
+        public ConcurrentQueue<TrackerDatabaseSize> getDatabasesSize () {
 
             ConcurrentQueue<TrackerDatabaseSize> trackerDatabaseSizes = new ConcurrentQueue<TrackerDatabaseSize>();
 
@@ -931,7 +1059,7 @@ namespace TqatProModel.Database {
             return trackerDatabaseSizes;
         }
 
-        public TrackerDatabaseSize getDatabaseSize(string databaseName) {
+        public TrackerDatabaseSize getDatabaseSize (string databaseName) {
 
             TrackerDatabaseSize trackerDatabaseSize = new TrackerDatabaseSize();
 

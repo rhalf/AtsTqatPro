@@ -1,0 +1,4 @@
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\MainWindow.g.cs
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\App.g.cs
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\TqatProSocketTool_MarkupCompile.cache
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\TqatProSocketTool_MarkupCompile.lref

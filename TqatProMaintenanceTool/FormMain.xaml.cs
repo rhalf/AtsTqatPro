@@ -29,7 +29,6 @@ using System.Threading;
 using System.Data;
 using System.Collections.Concurrent;
 
-
 namespace TqatProMaintenanceTool {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

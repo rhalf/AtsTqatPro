@@ -28,7 +28,7 @@ using Controls.UserControls;
 using TqatProModel;
 using TqatProModel.Database;
 using TqatProModel.Parser;
-
+using System.Net;
 
 namespace TqatProTrackingTool {
     /// <summary>
@@ -78,7 +78,7 @@ namespace TqatProTrackingTool {
                     progressBarLoading.Visibility = Visibility.Visible;
                 }));
 
-                Database database = new Database(Settings.Default.databaseHost, Settings.Default.databaseUsername, Settings.Default.databasePassword);
+                Database database = new Database { IpAddress = Settings.Default.databaseHost, Port = 3306, Username = Settings.Default.databaseUsername, Password = Settings.Default.databasePassword };
                 query = new Query(database);
 
                 query.getCompany(company);
@@ -158,11 +158,14 @@ namespace TqatProTrackingTool {
             //Settings.Default.databasePassword = "my5q1r3p0rt@pp!@#";
             //Settings.Default.Save();
 
-            Settings.Default.databaseHost = "108.163.190.202";
-            Settings.Default.databaseUsername = "atstqatpro";
-            Settings.Default.databasePassword = "@t5tq@pr0!@#";
+            //Settings.Default.databaseHost = "108.163.190.202";
+            //Settings.Default.databaseUsername = "atstqatpro";
+            //Settings.Default.databasePassword = "@t5tq@pr0!@#";
+            //Settings.Default.Save();
+            Settings.Default.databaseHost = "184.107.179.178";
+            Settings.Default.databaseUsername = "rhalf";
+            Settings.Default.databasePassword = "trivalassasin8";
             Settings.Default.Save();
-
             //Settings.Default.accountCompanyUsername = "mowasalat";
             //Settings.Default.accountUsername = "admin";
             //Settings.Default.accountPassword = "admin";

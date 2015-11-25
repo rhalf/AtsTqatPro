@@ -2,7 +2,12 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Debug\TqatProSo
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Debug\TqatProSocketTool.exe
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Debug\TqatProSocketTool.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Debug\AtsGps.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Debug\TqatProModel.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Debug\MySql.Data.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Debug\TqatProModel.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Debug\AtsGps.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Debug\TqatProSocketTool.csprojResolveAssemblyReference.cache
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Debug\MainWindow.g.cs
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Debug\App.g.cs

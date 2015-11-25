@@ -15,9 +15,14 @@ using System.Windows.Shapes;
 using TqatProSocketTool.ViewModel;
 using AtsGps;
 using AtsGps.Meitrack;
-using TqatProSocketTool.Model;
 using System.Collections.Concurrent;
 using System.Threading;
+using System.Net;
+using TqatProModel.Database;
+using TqatProSocketTool.Properties;
+using System.Diagnostics;
+using TqatProModel;
+using System.Collections.ObjectModel;
 
 namespace TqatProSocketTool {
     /// <summary>
@@ -28,139 +33,276 @@ namespace TqatProSocketTool {
             InitializeComponent();
         }
 
-        List<TcpManager> tcpManagers = new List<TcpManager>();
-        List<ServerProfile> serverProfiles = new List<ServerProfile>();
-        ConcurrentBag<Byte[]> mvt100Bag = new ConcurrentBag<Byte[]>();
-        Thread threadManager;
+        ObservableCollection<TcpManager> tcpManagers;
 
+        #region BufferStart
+        Thread threadUploaderManager;
+        private void threadUploaderManagerFunc (Object state) {
+            while (true) {
+                ObservableCollection<TcpManager> tcpManagers = (ObservableCollection<TcpManager>)state;
+                if (tcpManagers.Count <= 0)
+                    continue;
+
+
+                for (Int32 index = 0; index < tcpManagers.Count; index++) {
+                    TcpManager tcpManager = (TcpManager)tcpManagers[index];
+                    if (tcpManager == null)
+                        continue;
+
+                    lock (tcpManager) {
+                        tcpManager.Refresh();
+                        if (tcpManager.BufferIn == null)
+                            continue;
+                        if (tcpManager.BufferIn.IsEmpty)
+                            continue;
+
+                        try {
+                            Database database = new Database {
+                                IpAddress = Settings.Default.DatabaseIp,
+                                Port = Int32.Parse(Settings.Default.DatabasePort),
+                                DatabaseName = Settings.Default.DatabaseName,
+                                Username = Settings.Default.DatabaseUsername,
+                                Password = Settings.Default.DatabasePassword
+                            };
+
+                            Query query = new Query(database);
+                            query.checkConnection();
+                        } catch {
+                            continue;
+                        }
+
+                        if (tcpManager.Manufacturer.Name == "Meitrack") {
+                            ThreadPool.QueueUserWorkItem(new WaitCallback(threadMeitrackInPacketFunc), tcpManager.BufferIn);
+                        }
+                    }
+                }
+                //Thread.Sleep(3000);
+            }
+        }
+        private void threadMeitrackInPacketFunc (Object state) {
+            ConcurrentQueue<Object> queue = (ConcurrentQueue<Object>)state;
+            Object obj;
+
+            if (queue == null)
+                return;
+            if (queue.IsEmpty)
+                return;
+
+            try {
+                Database database = new Database {
+                    IpAddress = Settings.Default.DatabaseIp,
+                    Port = Int32.Parse(Settings.Default.DatabasePort),
+                    DatabaseName = Settings.Default.DatabaseName,
+                    Username = Settings.Default.DatabaseUsername,
+                    Password = Settings.Default.DatabasePassword
+                };
+                Query query = new Query(database);
+
+                queue.TryDequeue(out obj);
+
+                Byte[] data = (Byte[])obj;
+                Gm gm = new Gm(data);
+
+                Tracker tracker = query.getTracker(gm.Unit);
+                query.insertTrackerData(tracker, gm);
+
+            } catch (Exception exception) {
+                Dispatcher.BeginInvoke(new Action(() => {
+                    var log = new AtsGps.Log(exception.Message, AtsGps.LogType.CLIENT);
+                    dataGridLog.Items.Add(log);
+                }));
+            }
+        }
+        #endregion BufferEnd
 
         private void Window_Loaded (object sender, RoutedEventArgs e) {
             this.Title = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + " - " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
             Machine machine = new Machine();
 
-            labelOperatingSystem.DataContext = machine;
-            labelName.DataContext = machine;
-            comboBoxIps.DataContext = machine;
-            labelLocalDateTime.DataContext = machine;
-            labelUtcDateTime.DataContext = machine;
-            labelCore.DataContext = machine;
+            groupMachine.DataContext = machine;
 
+            Database database = new Database {
+                IpAddress = Settings.Default.DatabaseIp,
+                Port = Int32.Parse(Settings.Default.DatabasePort),
+                DatabaseName = Settings.Default.DatabaseName,
+                Username = Settings.Default.DatabaseUsername,
+                Password = Settings.Default.DatabasePassword
+            };
 
-
-            ServerProfile spMeitrackMvt100 = new ServerProfile();
-            spMeitrackMvt100.IpAddresses = machine.IpAddresses;
-            spMeitrackMvt100.Brand = "Meitrack";
-            spMeitrackMvt100.Model = "Mvt100";
-            spMeitrackMvt100.Port = 8887;
-            spMeitrackMvt100.IsEnabled = true;
-            serverProfiles.Add(spMeitrackMvt100);
-
-            ServerProfile spMeitrackT1 = new ServerProfile();
-            spMeitrackT1.IpAddresses = machine.IpAddresses;
-            spMeitrackT1.Brand = "Meitrack";
-            spMeitrackT1.Model = "T1";
-            spMeitrackT1.Port = 4000;
-            spMeitrackT1.IsEnabled = true;
-            serverProfiles.Add(spMeitrackT1);
-
-
-
-            foreach (ServerProfile sp in serverProfiles) {
-                listViewServerProfile.Items.Add(sp);
+            if (database != null) {
+                mysqlCredential.DataContext = database;
             }
+
+            initializedTcpManagers();
+
+            threadUploaderManager = new Thread(threadUploaderManagerFunc);
+            threadUploaderManager.Start(tcpManagers);
         }
 
-        private void Button_Click (object sender, RoutedEventArgs e) {
-            try {
-                Button button = (Button)sender;
-                if ((String)button.Content == "Start") {
-                   
-                    foreach (ServerProfile sp in serverProfiles) {
-                        //Mvt100
-                        if (sp.IsEnabled == true && sp.Brand == "Meitrack" && sp.Model == "Mvt100") {
-                            listViewServerProfileStatus.Items.Add(sp);
-                            MeitractTcpManager meitractTcpManagerMvt100 = new MeitractTcpManager(sp.IpAddress, sp.Port);
-                            meitractTcpManagerMvt100.Event += MeitractTcpManagerMvt100_Event;
-                            meitractTcpManagerMvt100.DataReceived += MeitractTcpManagerMvt100_DataReceived;
-                            meitractTcpManagerMvt100.Start();
-                            tcpManagers.Add(meitractTcpManagerMvt100);
+        private void initializedTcpManagers () {
+            tcpManagers = new ObservableCollection<TcpManager>();
+            MeitrackTcpManager meitractkcpManagerMvt100 = new MeitrackTcpManager();
+            meitractkcpManagerMvt100.Manufacturer = new Manufacturer { Name = "Meitrack", Device = "Mvt100" };
+            meitractkcpManagerMvt100.Port = 8887;
+            listViewTcpManagersSetup.Items.Add(meitractkcpManagerMvt100);
 
-                            threadManager = new Thread(threadManagerFunc);
-                            threadManager.Start();
-                        }
-                        //T1
-                        if (sp.IsEnabled == true && sp.Brand == "Meitrack" && sp.Model == "T1") {
-                            listViewServerProfileStatus.Items.Add(sp);
-                            MeitractTcpManager meitractTcpManagerT1 = new MeitractTcpManager(sp.IpAddress, sp.Port);
-                            meitractTcpManagerT1.Event += MeitractTcpManagerT1_Event;
-                            meitractTcpManagerT1.DataReceived += MeitractTcpManagerT1_DataReceived;
-                            meitractTcpManagerT1.Start();
-                            tcpManagers.Add(meitractTcpManagerT1);
-                            threadManager.Abort();
-                            GC.Collect();
-                        }
+            MeitrackTcpManager meitractTcpManagerT1 = new MeitrackTcpManager();
+            meitractTcpManagerT1.Manufacturer = new Manufacturer { Name = "Meitrack", Device = "T1" };
+            meitractTcpManagerT1.Port = 4000;
+            listViewTcpManagersSetup.Items.Add(meitractTcpManagerT1);
+
+            listViewTcpManagers.ItemsSource = tcpManagers;
+        }
+
+        private void ButtonServersStart_Click (object sender, RoutedEventArgs e) {
+            try {
+
+                foreach (MeitrackTcpManager meitrackTcpManager in listViewTcpManagersSetup.Items.OfType<MeitrackTcpManager>()) {
+                    if (meitrackTcpManager.IsEnabled == false)
+                        continue;
+                    //Mvt100
+                    if (meitrackTcpManager.Manufacturer.Device == "Mvt100" && meitrackTcpManager.Manufacturer.Name == "Meitrack") {
+                        tcpManagers.Add(meitrackTcpManager);
                     }
-                    button.Content = "Stop";
-                    groupServerProfiles.IsEnabled = false;
-                } else {
-                    button.Content = "Start";
-                    groupServerProfiles.IsEnabled = true;
-                    listViewServerProfileStatus.Items.Clear();
-                    foreach (TcpManager tcpManager in tcpManagers) {
-                        tcpManager.Stop();
+                    //T1
+                    if (meitrackTcpManager.Manufacturer.Device == "T1" && meitrackTcpManager.Manufacturer.Name == "Meitrack") {
+                        tcpManagers.Add(meitrackTcpManager);
                     }
-                    tcpManagers.Clear();
                 }
+
+
+                foreach (TcpManager tcpManager in tcpManagers) {
+                    if (tcpManager.Manufacturer.Device == "Mvt100" && tcpManager.Manufacturer.Name == "Meitrack") {
+                        tcpManager.Event += MeitracKMvt100_Event;
+                        tcpManager.DataReceived += MeitrackMvt100_DataReceived;
+                        tcpManager.Start();
+                    }
+                    if (tcpManager.Manufacturer.Device == "T1" && tcpManager.Manufacturer.Name == "Meitrack") {
+                        tcpManager.Event += MeitrackT1_Event;
+                        tcpManager.DataReceived += MeitrackT1_DataReceived;
+                        tcpManager.Start();
+                    }
+                }
+
+                groupTcpManagersSetup.IsEnabled = false;
+                buttonServersStart.IsEnabled = false;
+                buttonServersStop.IsEnabled = true;
+
             } catch (Exception exception) {
+                groupTcpManagersSetup.IsEnabled = true;
+                foreach (TcpManager tcpManager1 in tcpManagers) {
+                    try {
+                        tcpManager1.Stop();
+                    } catch {
+                        continue;
+                    }
+                }
+                tcpManagers.Clear();
+                GC.Collect();
                 MessageBox.Show(exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void ButtonServersStop_Click (object sender, RoutedEventArgs e) {
+            groupTcpManagersSetup.IsEnabled = true;
+            foreach (TcpManager tcpManager in tcpManagers) {
+                tcpManager.Stop();
+            }
+            tcpManagers.Clear();
+            GC.Collect();
 
-        private void threadManagerFunc () {
-           while(true) {
-                Byte[] bytes;
-                mvt100Bag.TryTake(out bytes);
-                ThreadPool.QueueUserWorkItem(new WaitCallback(threadProcessBytes), bytes);
+            buttonServersStart.IsEnabled = true;
+            buttonServersStop.IsEnabled = false;
+        }
+
+        private void MeitrackT1_DataReceived (Object sender, byte[] data) {
+            if (data == null)
+                return;
+        }
+
+        private void MeitrackT1_Event (Object sender, AtsGps.Log serverLog) {
+            TcpManager tcpManager = (TcpManager)sender;
+            serverLog.Description = tcpManager.Manufacturer.ToString() + " : " + serverLog.Description;
+            Dispatcher.BeginInvoke(new Action(() => {
+                dataGridLog.Items.Add(serverLog);
+            }));
+        }
+
+        private void MeitrackMvt100_DataReceived (Object sender, byte[] data) {
+            MeitrackTcpManager meitrackTcpManager = (MeitrackTcpManager)sender;
+
+            if (data == null)
+                return;
+
+            try {
+                Gm gm = new Gm(data);
+                meitrackTcpManager.BufferIn.Enqueue(data);
+            } catch (Exception exception) {
+                AtsGps.Log log = new AtsGps.Log(exception.Message, AtsGps.LogType.ERROR);
+                Dispatcher.BeginInvoke(new Action(() => {
+                    dataGridLog.Items.Add(log);
+                }));
+            } 
+        }
+
+        private void MeitracKMvt100_Event (Object sender, AtsGps.Log serverLog) {
+            TcpManager tcpManager = (TcpManager)sender;
+            serverLog.Description = tcpManager.Manufacturer.ToString() + " : " + serverLog.Description;
+            Dispatcher.BeginInvoke(new Action(() => {
+                dataGridLog.Items.Add(serverLog);
+            }));
+        }
+
+        private void buttonMysqlTest_Click (object sender, RoutedEventArgs e) {
+            Database database = (Database)mysqlCredential.DataContext;
+
+            Settings.Default.DatabaseIp = database.IpAddress;
+            Settings.Default.DatabasePort = database.Port.ToString();
+            Settings.Default.DatabaseName = database.DatabaseName;
+            Settings.Default.DatabaseUsername = database.Username;
+            Settings.Default.DatabasePassword = database.Password;
+
+            Settings.Default.Save();
+
+            Thread threadMysqlTest = new Thread(threadMysqlTestFunc);
+            threadMysqlTest.Start();
+        }
+
+        private void threadMysqlTestFunc () {
+            try {
+                Database database = new Database {
+                    IpAddress = Settings.Default.DatabaseIp,
+                    Port = Int32.Parse(Settings.Default.DatabasePort),
+                    DatabaseName = Settings.Default.DatabaseName,
+                    Username = Settings.Default.DatabaseUsername,
+                    Password = Settings.Default.DatabasePassword
+                };
+
+                Query query = new Query(database);
+                query.checkConnection();
+                Dispatcher.Invoke(new Action(() => {
+                    MessageBox.Show("Successful...", "Successful", MessageBoxButton.OK, MessageBoxImage.Information);
+                }));
+            } catch (Exception exception) {
+                Dispatcher.Invoke(new Action(() => {
+                    MessageBox.Show(exception.Message, "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                }));
             }
         }
 
-        private void threadProcessBytes (object state) {
-            Byte[] data = (Byte[])state;
-
-            if (data == null)
-                return;
-
-            Gm gm = new Gm(data);
-
+        private void Window_Closing (object sender, System.ComponentModel.CancelEventArgs e) {
+            if (tcpManagers.Count > 0) {
+                foreach (TcpManager tcpManager in tcpManagers) {
+                    tcpManager.Stop();
+                }
+                tcpManagers.Clear();
+            }
+            Application.Current.Shutdown();
+            Environment.Exit(0);
         }
 
-        private void MeitractTcpManagerT1_DataReceived (byte[] data) {
-            if (data == null)
-                return;
-        }
+        private void dataGridLog_SelectionChanged (object sender, SelectionChangedEventArgs e) {
 
-        private void MeitractTcpManagerT1_Event (ServerLog serverLog) {
-            serverLog.Description = "T1 - " + serverLog.Description;
-            Dispatcher.BeginInvoke(new Action(() => {
-                dataGridLog.Items.Add(serverLog);
-            }));
-        }
-
-        private void MeitractTcpManagerMvt100_DataReceived (byte[] data) {
-            if (data == null)
-                return;
-
-            Gm gm = new Gm(data);
-
-            //mvt100Bag.Add(data);
-        }
-
-        private void MeitractTcpManagerMvt100_Event (ServerLog serverLog) {
-            serverLog.Description = "Mvt100 - " + serverLog.Description;
-            Dispatcher.BeginInvoke(new Action(() => {
-                dataGridLog.Items.Add(serverLog);
-            }));
         }
     }
 }
