@@ -80,7 +80,7 @@
                                         <GridViewColumn Header="Model" Width="70" DisplayMemberBinding="{Binding Manufacturer.Device, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="IpAddress" Width="100" DisplayMemberBinding="{Binding IpAddress, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="Port" Width="50" DisplayMemberBinding="{Binding Port, Mode=OneWay}"></GridViewColumn>
-                                        <GridViewColumn Header="Connections" Width="60" DisplayMemberBinding="{Binding Connections, Mode=OneWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Packets" Width="60" DisplayMemberBinding="{Binding Packets, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="BufferIn" Width="75" DisplayMemberBinding="{Binding BufferIn.Count, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="BufferOut" Width="75" DisplayMemberBinding="{Binding BufferOut.Count, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="SendBytes" Width="75" DisplayMemberBinding="{Binding SendBytes, Mode=OneWay}"></GridViewColumn>
