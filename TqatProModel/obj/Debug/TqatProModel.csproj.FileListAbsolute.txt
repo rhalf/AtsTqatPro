@@ -30,7 +30,10 @@ C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProModel\
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\TqatProModel.dll.config
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\TqatProModel.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\TqatProModel.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\AtsGps.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\AtsGps.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Debug\TqatProModel.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Debug\TqatProModel.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Debug\TqatProModel.csprojResolveAssemblyReference.cache

@@ -58,6 +58,14 @@
     <Reference Include="AtsGps">
       <HintPath>..\..\AtsGpsSocket\AtsGps\bin\Debug\AtsGps.dll</HintPath>
     </Reference>
+    <Reference Include="Community.CsharpSqlite, Version=3.7.7.1, Culture=neutral, PublicKeyToken=fef4dbb895105d0c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Csharp-Sqlite.3.7.7.1\lib\net40\Community.CsharpSqlite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Community.CsharpSqlite.SQLiteClient, Version=3.7.7.1, Culture=neutral, PublicKeyToken=fef4dbb895105d0c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Csharp-Sqlite.3.7.7.1\lib\net40\Community.CsharpSqlite.SQLiteClient.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -110,6 +118,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

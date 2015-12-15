@@ -53,7 +53,7 @@
         </DataTemplate>
     </UserControl.Resources>
 
-    <ListView Name="listViewTrackers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <ListView Name="listViewTrackers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0">
         <ListView.ContextMenu>
             <ContextMenu>
                 <MenuItem Header="Check All" Padding="3" Margin="3" Click="MenuItemlistViewTrackers_checkAll_Click">

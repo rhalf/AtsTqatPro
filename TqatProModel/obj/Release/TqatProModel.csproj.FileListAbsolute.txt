@@ -29,3 +29,12 @@ C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProModel\
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProModel\obj\Release\TqatProModel.csprojResolveAssemblyReference.cache
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProModel\obj\Release\TqatProModel.dll
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProModel\obj\Release\TqatProModel.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Release\TqatProModel.dll.config
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Release\TqatProModel.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Release\TqatProModel.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Release\AtsGps.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Release\Newtonsoft.Json.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Release\AtsGps.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Release\Newtonsoft.Json.xml
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Release\TqatProModel.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Release\TqatProModel.pdb

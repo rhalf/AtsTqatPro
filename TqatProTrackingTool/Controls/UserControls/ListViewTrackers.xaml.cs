@@ -49,7 +49,9 @@ namespace Controls.UserControls {
             }
         }
 
-        public string ItemsDisplayMember{
+        public String ItemsDisplayMember{
+            private get { return "";  }
+      
             set {
                 string property = (string)value;
                 DataTemplate dataTemplate = (DataTemplate)Application.Current.Resources["listView" + property];

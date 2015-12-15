@@ -25,9 +25,8 @@
         
         WindowButtonCommandsOverlayBehavior="Always"
         Icon="Resources/images/128/Ats/satellite_01.png"
-    
-    Closing="MetroWindow_Closing"
-    
+
+    SizeChanged="MetroWindow_SizeChanged"
     >
 
 
@@ -160,7 +159,7 @@
                             <Label Grid.Column="0" Content="Search : "/>
                             <TextBox Grid.Column="1" x:Name="textBoxSearchTrackerData" KeyUp="textBoxSearchTrackerData_KeyUp"/>
                         </Grid> 
-                        <userControls:ListViewTrackers x:Name="listViewTrackers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Checked="listViewTrackers_Checked"/>
+                        <userControls:ListViewTrackers x:Name="listViewTrackers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Checked="listViewTrackers_Checked" ItemsDisplayMember=""/>
                     </Grid>
                 </GroupBox>
                 <StackPanel Grid.Row="1" Orientation="Horizontal">

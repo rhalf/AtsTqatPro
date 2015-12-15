@@ -29,13 +29,129 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="75"></ColumnDefinition>
                 <ColumnDefinition Width="75"></ColumnDefinition>
+                <ColumnDefinition Width="75"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Margin="5" Content="Start" Click="ButtonServersStart_Click" Grid.Column="0" Name="buttonServersStart"/>
-            <Button Margin="5" Content="Stop" Click="ButtonServersStop_Click" Grid.Column="1"  Name="buttonServersStop" IsEnabled="False"/>
+            <Button Margin="5" Content="Pause" Click="ButtonServersPause_Click" Grid.Column="1" Name="buttonServersPause" IsEnabled="False"/>
+            <Button Margin="5" Content="Stop" Click="ButtonServersStop_Click" Grid.Column="2"  Name="buttonServersStop" IsEnabled="False"/>
         </Grid>
         <Grid Grid.Row="1">
             <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                <TabItem Header="Servers">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <GroupBox Header="Tcp Manager" Name="groupTcpManagersSetup" Grid.Column="0">
+                            <ListView Name="listViewTcpManagersSetup" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Company" Width="100">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Label Content="{Binding Device.Company}"></Label>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Device" Width="100">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Label Content="{Binding Device.Name}"></Label>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Ip Address" Width="180">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <ComboBox
+                                                        SelectedItem="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}" 
+                                                        ItemsSource="{Binding ItemsSource, ElementName=comboBoxIps}"  
+                                                        Width="160"
+                                                         SelectedIndex="0">
+                                                    </ComboBox>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Port" Width="100">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBox Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}"  Width="80"></TextBox>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="IsEnabled" Width="100">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox IsChecked="{Binding IsEnabled}"></CheckBox>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </GroupBox>
+                    </Grid>
+
+                </TabItem>
+                <TabItem Header="Mysql" HorizontalAlignment="Left" Width="48" >
+                    <GroupBox Header="Mysql Database" Grid.Column="2">
+                        <StackPanel Orientation="Vertical" Name="mysqlCredential">
+                            <StackPanel Orientation="Horizontal" Margin="3">
+                                <Label Content="Ip Address" Width="100"></Label>
+                                <TextBox Text="{Binding IpAddress, TargetNullValue='0.0.0.0'}"  Width="100"></TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="3">
+                                <Label Content="Port"  Width="100"></Label>
+                                <TextBox Text="{Binding Port, TargetNullValue='0'}"  Width="100"></TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="3">
+                                <Label Content="Database"  Width="100"></Label>
+                                <TextBox Text="{Binding DatabaseName, TargetNullValue=' ' }"  Width="100"></TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="3">
+                                <Label Content="Username"  Width="100"></Label>
+                                <TextBox Text="{Binding Username, TargetNullValue=' ' }"  Width="100"></TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="3">
+                                <Label Content="Password"  Width="100"></Label>
+                                <TextBox Text="{Binding Password, TargetNullValue=' ' }" Width="100"></TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="3">
+                                <Label Content="Test Connection"  Width="100"></Label>
+                                <Button Name="buttonMysqlTest"  Content="Test"  Width="100" Click="buttonMysqlTest_Click" ></Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+                </TabItem>
+               
+                <TabItem Header="Logs">
+                    <DataGrid Name="dataGridLog" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  BorderThickness="0" BorderBrush="White">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn  Header="DateTime" Width="100" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding DateTime}"></Label>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Description" Width="*" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Description}"></Label>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="LogType" Width="100" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding LogType}"></Label>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
                 <TabItem Header="Dashboard" Name="tabItemDashBoard">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -76,11 +192,12 @@
                             <ListView Name="listViewTcpManagers" HorizontalAlignment="Stretch" ItemsSource="{Binding ItemsCollection}">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Brand" Width="70" DisplayMemberBinding="{Binding Manufacturer.Name, Mode=OneWay}"></GridViewColumn>
-                                        <GridViewColumn Header="Model" Width="70" DisplayMemberBinding="{Binding Manufacturer.Device, Mode=OneWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Company" Width="70" DisplayMemberBinding="{Binding Device.Company, Mode=OneWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Device" Width="70" DisplayMemberBinding="{Binding Device.Name, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="IpAddress" Width="100" DisplayMemberBinding="{Binding IpAddress, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="Port" Width="50" DisplayMemberBinding="{Binding Port, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="Packets" Width="60" DisplayMemberBinding="{Binding Packets, Mode=OneWay}"></GridViewColumn>
+                                        <GridViewColumn Header="TcpClients" Width="60" DisplayMemberBinding="{Binding TcpClient.Count, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="BufferIn" Width="75" DisplayMemberBinding="{Binding BufferIn.Count, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="BufferOut" Width="75" DisplayMemberBinding="{Binding BufferOut.Count, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="SendBytes" Width="75" DisplayMemberBinding="{Binding SendBytes, Mode=OneWay}"></GridViewColumn>
@@ -92,122 +209,7 @@
                         </GroupBox>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Mysql" HorizontalAlignment="Left" Width="48" >
-                    <GroupBox Header="Mysql Database" Grid.Column="2">
-                        <StackPanel Orientation="Vertical" Name="mysqlCredential">
-                            <StackPanel Orientation="Horizontal" Margin="3">
-                                <Label Content="Ip Address" Width="100"></Label>
-                                <TextBox Text="{Binding IpAddress, TargetNullValue='0.0.0.0'}"  Width="100"></TextBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="3">
-                                <Label Content="Port"  Width="100"></Label>
-                                <TextBox Text="{Binding Port, TargetNullValue='0'}"  Width="100"></TextBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="3">
-                                <Label Content="Database"  Width="100"></Label>
-                                <TextBox Text="{Binding DatabaseName, TargetNullValue=' ' }"  Width="100"></TextBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="3">
-                                <Label Content="Username"  Width="100"></Label>
-                                <TextBox Text="{Binding Username, TargetNullValue=' ' }"  Width="100"></TextBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="3">
-                                <Label Content="Password"  Width="100"></Label>
-                                <TextBox Text="{Binding Password, TargetNullValue=' ' }" Width="100"></TextBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="3">
-                                <Label Content="Test Connection"  Width="100"></Label>
-                                <Button Name="buttonMysqlTest"  Content="Test"  Width="100" Click="buttonMysqlTest_Click" ></Button>
-                            </StackPanel>
-                        </StackPanel>
-                    </GroupBox>
-                </TabItem>
-                <TabItem Header="Servers">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <GroupBox Header="Tcp Manager" Name="groupTcpManagersSetup" Grid.Column="0">
-                            <ListView Name="listViewTcpManagersSetup" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn Header="Brand" Width="100">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <Label Content="{Binding Manufacturer.Name}"></Label>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="Model" Width="100">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <Label Content="{Binding Manufacturer.Device}"></Label>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="Ip Address" Width="180">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <ComboBox  
-                                                        SelectedItem="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}" 
-                                                        ItemsSource="{Binding ItemsSource, ElementName=comboBoxIps}"  
-                                                        Width="160"
-                                                         SelectedIndex="0">
 
-                                                    </ComboBox>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="Port" Width="100">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <TextBox Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}"  Width="80"></TextBox>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="IsEnabled" Width="100">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <CheckBox IsChecked="{Binding IsEnabled}"></CheckBox>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
-                        </GroupBox>
-                        <!--<GridSplitter  Grid.Column="1" Width="5" Padding="3" HorizontalAlignment="Stretch"></GridSplitter>-->
-
-                    </Grid>
-
-                </TabItem>
-                <TabItem Header="Logs">
-                    <DataGrid Name="dataGridLog" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="dataGridLog_SelectionChanged" BorderThickness="0" BorderBrush="White">
-                        <DataGrid.Columns>
-                            <DataGridTemplateColumn  Header="DateTime" Width="100" IsReadOnly="True">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Label Content="{Binding DateTime}"></Label>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Description" Width="*" IsReadOnly="True">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Label Content="{Binding Description}"></Label>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="LogType" Width="100" IsReadOnly="True">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Label Content="{Binding LogType}"></Label>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </TabItem>
             </TabControl>
         </Grid>
     </Grid>

@@ -6,16 +6,16 @@ var geofences = new Array();
 var geofencesLabels = new Array();
 var pois = new Array();
 var mapLabels = new Array();
-
-
+var coordinateCenter = new google.maps.LatLng(25.260610, 51.493537);
+var zoomLevel = 11;
 
 
 function initialize() {
-    var coordinate = new google.maps.LatLng(25.260610, 51.493537);
+    
 
     var mapProp = {
-        center: coordinate,
-        zoom: 12,
+        center: coordinateCenter,
+        zoom: zoomLevel,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 

@@ -34,89 +34,93 @@ namespace TqatProSocketTool {
         }
 
         ObservableCollection<TcpManager> tcpManagers;
+        ConcurrentDictionary<String, String[]> bufferOut;
 
         #region BufferStart
         Thread threadUploaderManager;
+        Boolean debug = true;
+
         private void threadUploaderManagerFunc (Object state) {
             while (true) {
-                ObservableCollection<TcpManager> tcpManagers = (ObservableCollection<TcpManager>)state;
+                for (int interval = 0; interval < 5; interval++) {
+                    for (int count = 0; count < tcpManagers.Count; count++) {
+                        tcpManagers[count].Refresh();
+                    }
+                    Thread.Sleep(1000);
+                }
+
+
                 if (tcpManagers.Count <= 0)
                     continue;
 
-
                 for (Int32 index = 0; index < tcpManagers.Count; index++) {
-                    TcpManager tcpManager = (TcpManager)tcpManagers[index];
+                    TcpManager tcpManager = tcpManagers[index];
                     if (tcpManager == null)
                         continue;
+                    if (tcpManager.BufferIn == null)
+                        continue;
+                    if (tcpManager.BufferIn.IsEmpty)
+                        continue;
+                    if (tcpManager.Device.Company == "Meitrack") {
 
-                    lock (tcpManager) {
-                        tcpManager.Refresh();
-                        if (tcpManager.BufferIn == null)
-                            continue;
-                        if (tcpManager.BufferIn.IsEmpty)
-                            continue;
+                        processBufferIn(tcpManager.BufferIn);
 
-                        try {
-                            Database database = new Database {
-                                IpAddress = Settings.Default.DatabaseIp,
-                                Port = Int32.Parse(Settings.Default.DatabasePort),
-                                DatabaseName = Settings.Default.DatabaseName,
-                                Username = Settings.Default.DatabaseUsername,
-                                Password = Settings.Default.DatabasePassword
-                            };
-
-                            Query query = new Query(database);
-                            query.checkConnection();
-                        } catch {
-                            continue;
-                        }
-
-                        if (tcpManager.Manufacturer.Name == "Meitrack") {
-                            ThreadPool.QueueUserWorkItem(new WaitCallback(threadMeitrackInPacketFunc), tcpManager.BufferIn);
-                        }
                     }
                 }
-                //Thread.Sleep(3000);
+
             }
         }
-        private void threadMeitrackInPacketFunc (Object state) {
+
+        private void processBufferIn (Object state) {
             ConcurrentQueue<Object> queue = (ConcurrentQueue<Object>)state;
-            Object obj;
+            Object obj = null;
+            Gm gm = null;
 
-            if (queue == null)
-                return;
-            if (queue.IsEmpty)
-                return;
+            while (queue.IsEmpty == false) {
+                if (!queue.TryDequeue(out obj)) {
+                    return;
+                }
 
-            try {
-                Database database = new Database {
-                    IpAddress = Settings.Default.DatabaseIp,
-                    Port = Int32.Parse(Settings.Default.DatabasePort),
-                    DatabaseName = Settings.Default.DatabaseName,
-                    Username = Settings.Default.DatabaseUsername,
-                    Password = Settings.Default.DatabasePassword
-                };
-                Query query = new Query(database);
+                try {
+                    gm = (Gm)obj;
+                    if (gm == null) {
+                        return;
+                    }
+                } catch (Exception exception) {
+                    if (debug) {
+                        TextLog.Write(exception);
+                    }
+                    return;
+                }
 
-                queue.TryDequeue(out obj);
+                try {
+                    Database database = new Database {
+                        IpAddress = Settings.Default.DatabaseIp,
+                        Port = Int32.Parse(Settings.Default.DatabasePort),
+                        DatabaseName = Settings.Default.DatabaseName,
+                        Username = Settings.Default.DatabaseUsername,
+                        Password = Settings.Default.DatabasePassword
+                    };
 
-                Byte[] data = (Byte[])obj;
-                Gm gm = new Gm(data);
-
-                Tracker tracker = query.getTracker(gm.Unit);
-                query.insertTrackerData(tracker, gm);
-
-            } catch (Exception exception) {
-                Dispatcher.BeginInvoke(new Action(() => {
-                    var log = new AtsGps.Log(exception.Message, AtsGps.LogType.CLIENT);
-                    dataGridLog.Items.Add(log);
-                }));
+                    Query query = new Query(database);
+                    Tracker tracker = query.getTracker(gm.Unit);
+                    query.insertTrackerData(tracker, gm);
+                } catch (Exception exception) {
+                    lock (queue) {
+                        queue.Enqueue(obj);
+                    }
+                    if (debug) {
+                        TextLog.Write(exception);
+                    }
+                }
             }
         }
+
         #endregion BufferEnd
 
         private void Window_Loaded (object sender, RoutedEventArgs e) {
             this.Title = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + " - " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            TextLog.Name = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
 
             Machine machine = new Machine();
 
@@ -138,121 +142,142 @@ namespace TqatProSocketTool {
 
             threadUploaderManager = new Thread(threadUploaderManagerFunc);
             threadUploaderManager.Start(tcpManagers);
-        }
 
+            bufferOut = new ConcurrentDictionary<String, String[]>();
+
+        }
         private void initializedTcpManagers () {
             tcpManagers = new ObservableCollection<TcpManager>();
-            MeitrackTcpManager meitractkcpManagerMvt100 = new MeitrackTcpManager();
-            meitractkcpManagerMvt100.Manufacturer = new Manufacturer { Name = "Meitrack", Device = "Mvt100" };
-            meitractkcpManagerMvt100.Port = 8887;
-            listViewTcpManagersSetup.Items.Add(meitractkcpManagerMvt100);
+            MeitrackTcpManager meitrackMvt100 = new MeitrackTcpManager();
+            meitrackMvt100.Device = new Device { Company = "Meitrack", Name = "Mvt100" };
+            meitrackMvt100.Port = 8887;
+            meitrackMvt100.IsEnabled = true;
+            listViewTcpManagersSetup.Items.Add(meitrackMvt100);
+
+            TqatCommandTcpManager tqatCommandTcpManager = new TqatCommandTcpManager();
+            tqatCommandTcpManager.Device = new Device { Company = "Command", Name = "Listener" };
+            tqatCommandTcpManager.Port = 8001;
+            tqatCommandTcpManager.IsEnabled = true;
+            listViewTcpManagersSetup.Items.Add(tqatCommandTcpManager);
 
             MeitrackTcpManager meitractTcpManagerT1 = new MeitrackTcpManager();
-            meitractTcpManagerT1.Manufacturer = new Manufacturer { Name = "Meitrack", Device = "T1" };
+            meitractTcpManagerT1.Device = new Device { Company = "Meitrack", Name = "T1" };
             meitractTcpManagerT1.Port = 4000;
+            meitractTcpManagerT1.IsEnabled = false;
             listViewTcpManagersSetup.Items.Add(meitractTcpManagerT1);
 
             listViewTcpManagers.ItemsSource = tcpManagers;
         }
-
         private void ButtonServersStart_Click (object sender, RoutedEventArgs e) {
             try {
-
-                foreach (MeitrackTcpManager meitrackTcpManager in listViewTcpManagersSetup.Items.OfType<MeitrackTcpManager>()) {
-                    if (meitrackTcpManager.IsEnabled == false)
+                tcpManagers.Clear();
+                foreach (TcpManager tcpManager in listViewTcpManagersSetup.Items) {
+                    if (tcpManager.IsEnabled == false)
                         continue;
-                    //Mvt100
-                    if (meitrackTcpManager.Manufacturer.Device == "Mvt100" && meitrackTcpManager.Manufacturer.Name == "Meitrack") {
-                        tcpManagers.Add(meitrackTcpManager);
-                    }
-                    //T1
-                    if (meitrackTcpManager.Manufacturer.Device == "T1" && meitrackTcpManager.Manufacturer.Name == "Meitrack") {
-                        tcpManagers.Add(meitrackTcpManager);
-                    }
+                    tcpManagers.Add(tcpManager);
                 }
 
-
                 foreach (TcpManager tcpManager in tcpManagers) {
-                    if (tcpManager.Manufacturer.Device == "Mvt100" && tcpManager.Manufacturer.Name == "Meitrack") {
-                        tcpManager.Event += MeitracKMvt100_Event;
-                        tcpManager.DataReceived += MeitrackMvt100_DataReceived;
-                        tcpManager.Start();
-                    }
-                    if (tcpManager.Manufacturer.Device == "T1" && tcpManager.Manufacturer.Name == "Meitrack") {
-                        tcpManager.Event += MeitrackT1_Event;
-                        tcpManager.DataReceived += MeitrackT1_DataReceived;
-                        tcpManager.Start();
-                    }
+                    tcpManager.Event += TcpManager_Event;
+                    tcpManager.DataReceived += TcpManager_DataReceived;
+                    tcpManager.BufferOut = bufferOut;
+                    tcpManager.BufferIn = new ConcurrentQueue<object>();
+                    tcpManager.Refresh();
+                    tcpManager.Start();
                 }
 
                 groupTcpManagersSetup.IsEnabled = false;
                 buttonServersStart.IsEnabled = false;
                 buttonServersStop.IsEnabled = true;
+                buttonServersPause.IsEnabled = true;
 
             } catch (Exception exception) {
                 groupTcpManagersSetup.IsEnabled = true;
                 foreach (TcpManager tcpManager1 in tcpManagers) {
                     try {
                         tcpManager1.Stop();
+                        tcpManager1.Event -= TcpManager_Event;
+                        tcpManager1.DataReceived -= TcpManager_DataReceived;
                     } catch {
                         continue;
                     }
                 }
                 tcpManagers.Clear();
                 GC.Collect();
+                if (debug) {
+                    TextLog.Write(exception);
+                }
                 MessageBox.Show(exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void ButtonServersStop_Click (object sender, RoutedEventArgs e) {
             groupTcpManagersSetup.IsEnabled = true;
             foreach (TcpManager tcpManager in tcpManagers) {
+                tcpManager.Packets = 0;
+                tcpManager.ReceiveBytes = 0;
+                tcpManager.SendBytes = 0;
+
+
                 tcpManager.Stop();
+                tcpManager.Event -= TcpManager_Event;
+                tcpManager.DataReceived -= TcpManager_DataReceived;
             }
             tcpManagers.Clear();
             GC.Collect();
 
             buttonServersStart.IsEnabled = true;
+            buttonServersPause.IsEnabled = false;
             buttonServersStop.IsEnabled = false;
         }
-
-        private void MeitrackT1_DataReceived (Object sender, byte[] data) {
-            if (data == null)
-                return;
+        private void ButtonServersPause_Click (object sender, RoutedEventArgs e) {
+            foreach (TcpManager tcpManager in tcpManagers) {
+                tcpManager.Stop();
+                tcpManager.Event -= TcpManager_Event;
+                tcpManager.DataReceived -= TcpManager_DataReceived;
+            }
+            buttonServersPause.IsEnabled = false;
+            buttonServersStart.IsEnabled = true;
         }
-
-        private void MeitrackT1_Event (Object sender, AtsGps.Log serverLog) {
-            TcpManager tcpManager = (TcpManager)sender;
-            serverLog.Description = tcpManager.Manufacturer.ToString() + " : " + serverLog.Description;
-            Dispatcher.BeginInvoke(new Action(() => {
-                dataGridLog.Items.Add(serverLog);
-            }));
-        }
-
-        private void MeitrackMvt100_DataReceived (Object sender, byte[] data) {
-            MeitrackTcpManager meitrackTcpManager = (MeitrackTcpManager)sender;
+        private void TcpManager_DataReceived (object sender, object data) {
 
             if (data == null)
                 return;
 
-            try {
-                Gm gm = new Gm(data);
-                meitrackTcpManager.BufferIn.Enqueue(data);
-            } catch (Exception exception) {
-                AtsGps.Log log = new AtsGps.Log(exception.Message, AtsGps.LogType.ERROR);
-                Dispatcher.BeginInvoke(new Action(() => {
-                    dataGridLog.Items.Add(log);
-                }));
-            } 
-        }
-
-        private void MeitracKMvt100_Event (Object sender, AtsGps.Log serverLog) {
             TcpManager tcpManager = (TcpManager)sender;
-            serverLog.Description = tcpManager.Manufacturer.ToString() + " : " + serverLog.Description;
+
+
+            if (data.GetType() == typeof(String[])) {
+                String[] array = (String[])data;
+
+                if (array != null) {
+                    while (!bufferOut.TryAdd(array[0], array)) {
+                        ;
+                    }
+                    tcpManager.Refresh();
+                    return;
+                }
+            } else if (data.GetType() == typeof(Gm)) {
+                Gm gm = (Gm)data;
+                if (gm != null) {
+                    tcpManager.BufferIn.Enqueue(gm);
+                    tcpManager.Refresh();
+                    return;
+                }
+            }
+
+        }
+        private void TcpManager_Event (object sender, AtsGps.Log log) {
+            TcpManager tcpManager = (TcpManager)sender;
+            log.Description = tcpManager.Device.ToString() + " : " + log.Description;
+
+            if (debug) {
+                TextLog.Write(log.Description, TextLogType.EVENT, TextLogFileType.TXT);
+            }
+
             Dispatcher.BeginInvoke(new Action(() => {
-                dataGridLog.Items.Add(serverLog);
+                dataGridLog.Items.Add(log);
             }));
         }
-
         private void buttonMysqlTest_Click (object sender, RoutedEventArgs e) {
             Database database = (Database)mysqlCredential.DataContext;
 
@@ -267,7 +292,6 @@ namespace TqatProSocketTool {
             Thread threadMysqlTest = new Thread(threadMysqlTestFunc);
             threadMysqlTest.Start();
         }
-
         private void threadMysqlTestFunc () {
             try {
                 Database database = new Database {
@@ -289,7 +313,6 @@ namespace TqatProSocketTool {
                 }));
             }
         }
-
         private void Window_Closing (object sender, System.ComponentModel.CancelEventArgs e) {
             if (tcpManagers.Count > 0) {
                 foreach (TcpManager tcpManager in tcpManagers) {
@@ -301,8 +324,5 @@ namespace TqatProSocketTool {
             Environment.Exit(0);
         }
 
-        private void dataGridLog_SelectionChanged (object sender, SelectionChangedEventArgs e) {
-
-        }
     }
 }

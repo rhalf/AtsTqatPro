@@ -19,9 +19,9 @@
         Icon="Resources/images/128/Ats/satellite_01.png"
     
         Loaded="MetroWindow_Loaded">
-
-    <DockPanel LastChildFill="True">
-        <Controls:MetroProgressBar
+    <Grid>
+        <DockPanel LastChildFill="True">
+            <Controls:MetroProgressBar
                 x:Name="progressBarLoading"
                 DockPanel.Dock="Bottom"
                 IsIndeterminate="True"
@@ -30,13 +30,17 @@
                 Margin="5,5,5,5"
                 Visibility="Hidden"
             />
-        <Grid DockPanel.Dock="Bottom">
-            <UserControls:PanelLogin
+            <Grid DockPanel.Dock="Bottom">
+                <UserControls:PanelLogin
                 x:Name="panelLogin" 
                 VerticalAlignment="Bottom" 
                 OnSubmitEventHandler="PanelLogin_OnSubmitEventHandler" 
-                OnCancelEventHandler="PanelLogin_OnCancelEventHandler" Loaded="panelLogin_Loaded" />
-        </Grid>
+                OnCancelEventHandler="PanelLogin_OnCancelEventHandler" />
 
-    </DockPanel>
+            </Grid>
+        </DockPanel>
+        <Label Width="25" Height="25" Padding="0" Margin="350,0,0,170" Mouse.MouseUp="Label_MouseUp">
+            <Image Source="Resources/images/128/Animated/setting_01.png"></Image>
+        </Label>
+    </Grid>
 </Controls:MetroWindow>

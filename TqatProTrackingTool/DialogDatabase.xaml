@@ -1,0 +1,80 @@
+﻿<Controls:MetroWindow x:Class="TqatProTrackingTool.DialogDatabase"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TqatProTrackingTool"
+        mc:Ignorable="d"
+        Title="DialogDatabase" 
+        
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    
+ 
+        Height="240" 
+        Width="400"
+        ResizeMode="NoResize"
+        ShowMinButton="False"
+        ShowMaxRestoreButton="False"
+        WindowStartupLocation="CenterScreen"
+        
+        GlowBrush="{DynamicResource AccentColorBrush}"
+    
+        Icon="Resources/images/128/Ats/satellite_01.png"
+        
+                      Loaded="MetroWindow_Loaded"
+        Closing="MetroWindow_Closing"      
+    >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="Configuration" Grid.Column="0" Padding="4">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Vertical">
+                    <RadioButton Name="radioButtonServer1" GroupName="server" Checked="radioButtonServer_Checked">
+                        <Label Content="Ats Server 1"></Label>
+                    </RadioButton>
+                    <Label Content="108.163.190.202, 67.205.85.177"></Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <RadioButton Name="radioButtonServer2" GroupName="server" Checked="radioButtonServer_Checked">
+                        <Label Content="Ats Server 2"></Label>
+                    </RadioButton>
+                    <Label Content="184.107.175.154" ></Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <RadioButton Name="radioButtonServerX" GroupName="server" Checked="radioButtonServer_Checked">
+                        <Label Content="Other"></Label>
+                    </RadioButton>
+                    <Label Height="9" Content=""></Label>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Other" Grid.Column="1" Padding="4" IsEnabled="False" Name="groupBoxOther">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <Label Content="Ip" Width="70"></Label>
+                    <TextBox Width="100" Name="textBoxIp"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <Label Content="Port" Width="70"></Label>
+                    <TextBox Width="100" Name="textBoxPort"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <Label Content="Username" Width="70"></Label>
+                    <TextBox Width="100" Name="textBoxUsername"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <Label Content="Password" Width="70"></Label>
+                    <PasswordBox Width="100"  Name="textBoxPassword"></PasswordBox>
+                </StackPanel>
+
+              
+                <Label Height="10"></Label>
+                <Button Content="Test" Click="ButtonTry_Click"/>
+
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</Controls:MetroWindow>

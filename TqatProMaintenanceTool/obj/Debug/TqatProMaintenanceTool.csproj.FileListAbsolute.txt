@@ -69,10 +69,12 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\bin\Debug\Syst
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\bin\Debug\TqatProModel.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\bin\Debug\TqatProViewModel.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\bin\Debug\MySql.Data.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\bin\Debug\AtsGps.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\bin\Debug\TqatProModel.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\bin\Debug\TqatProViewModel.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\bin\Debug\MahApps.Metro.xml
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\bin\Debug\AtsGps.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\TqatProMaintenanceTool.csprojResolveAssemblyReference.cache
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProMaintenanceTool\obj\Debug\Controls\DataTemplate\ListView.baml

@@ -36,7 +36,7 @@ namespace TqatProTrackingTool {
     /// </summary>
     public partial class DialogLogin : MetroWindow {
 
-        public DialogLogin() {
+        public DialogLogin () {
             InitializeComponent();
         }
 
@@ -44,7 +44,7 @@ namespace TqatProTrackingTool {
         Company company;
         User user;
 
-        private void PanelLogin_OnSubmitEventHandler(object sender, RoutedEventArgs e) {
+        private void PanelLogin_OnSubmitEventHandler (object sender, RoutedEventArgs e) {
             //Validation
             panelLogin.ErrorNote = "";
             if (String.IsNullOrEmpty(panelLogin.CompanyUsername)) {
@@ -70,7 +70,7 @@ namespace TqatProTrackingTool {
             ThreadPool.QueueUserWorkItem(new WaitCallback(run));
         }
 
-        private void run(object state) {
+        private void run (object state) {
             try {
 
                 Dispatcher.Invoke(new Action(() => {
@@ -80,6 +80,8 @@ namespace TqatProTrackingTool {
 
                 Database database = new Database { IpAddress = Settings.Default.databaseHost, Port = 3306, Username = Settings.Default.databaseUsername, Password = Settings.Default.databasePassword };
                 query = new Query(database);
+
+                displayMessage("Connecting to " + database.IpAddress + "...");
 
                 query.getCompany(company);
                 displayMessage("Checking Company...");
@@ -125,7 +127,7 @@ namespace TqatProTrackingTool {
                     Settings.Default.accountCompanyUsername = panelLogin.CompanyUsername;
                     Settings.Default.accountUsername = panelLogin.Username;
                     Settings.Default.accountPassword = panelLogin.Password;
-                    Settings.Default.accountRememberMe = panelLogin.RememberMe;
+                    Settings.Default.accountRememberMe = (bool)panelLogin.RememberMe;
                     Settings.Default.Save();
                     FormMain formMain = new FormMain(company, user, database);
                     formMain.Show();
@@ -135,11 +137,11 @@ namespace TqatProTrackingTool {
             } catch (DatabaseException databaseException) {
                 Debug.Print(databaseException.Message);
                 displayMessage(databaseException.Message);
-                Log.write(databaseException);
+                TextLog.Write(databaseException);
             } catch (Exception exception) {
                 Debug.Print(exception.Message);
                 displayMessage(exception.Message);
-                Log.write(exception);
+                TextLog.Write(exception);
             } finally {
                 Dispatcher.Invoke(new Action(() => {
                     panelLogin.IsEnabled = true;
@@ -147,36 +149,13 @@ namespace TqatProTrackingTool {
                 }));
             }
         }
-       
-        private void PanelLogin_OnCancelEventHandler(object sender, RoutedEventArgs e) {
+
+        private void PanelLogin_OnCancelEventHandler (object sender, RoutedEventArgs e) {
             Application.Current.Shutdown();
         }
 
-        private void MetroWindow_Loaded(object sender, RoutedEventArgs e) {
-            //Settings.Default.databaseHost = "184.107.175.154";
-            //Settings.Default.databaseUsername = "reportapp";
-            //Settings.Default.databasePassword = "my5q1r3p0rt@pp!@#";
-            //Settings.Default.Save();
-
-            //Settings.Default.databaseHost = "108.163.190.202";
-            //Settings.Default.databaseUsername = "atstqatpro";
-            //Settings.Default.databasePassword = "@t5tq@pr0!@#";
-            //Settings.Default.Save();
-            Settings.Default.databaseHost = "184.107.179.178";
-            Settings.Default.databaseUsername = "rhalf";
-            Settings.Default.databasePassword = "trivalassasin8";
-            Settings.Default.Save();
-            //Settings.Default.accountCompanyUsername = "mowasalat";
-            //Settings.Default.accountUsername = "admin";
-            //Settings.Default.accountPassword = "admin";
-            //Settings.Default.accountRememberMe = true;
-            //Settings.Default.Save();
-
-            //Initialize
-            //this.Title = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + " - " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-            this.Title = Settings.Default.databaseHost;
-
-          
+        private void MetroWindow_Loaded (object sender, RoutedEventArgs e) {
+            this.Title = "TqatProTrackingTool";
 
             if (Settings.Default.accountRememberMe == true) {
                 panelLogin.CompanyUsername = Settings.Default.accountCompanyUsername;
@@ -186,15 +165,18 @@ namespace TqatProTrackingTool {
             }
         }
 
-
-
-        private void displayMessage(string message) {
+        private void displayMessage (string message) {
             Dispatcher.Invoke(new Action(() => {
                 panelLogin.ErrorNote = message;
             }));
         }
 
-        private void panelLogin_Loaded (object sender, RoutedEventArgs e) {
+       
+
+        private void Label_MouseUp (object sender, MouseButtonEventArgs e) {
+            DialogDatabase dialogDatabase = new DialogDatabase(this);
+            this.Hide();
+            dialogDatabase.ShowDialog();
 
         }
     }

@@ -19,6 +19,7 @@ using System.Collections.Concurrent;
 using System.Net;
 using System.IO;
 using System.Diagnostics;
+using AtsGps.Meitrack;
 
 namespace TqatProModel.Database {
 
@@ -45,12 +46,9 @@ namespace TqatProModel.Database {
 
             try {
                 mysqlConnection.Open();
-            } catch (MySqlException mySqlException) {
-                throw new Exception(mySqlException.Message);
+                mysqlConnection.Close();
             } catch (Exception exception) {
                 throw exception;
-            } finally {
-                mysqlConnection.Close();
             }
         }
 
@@ -113,12 +111,8 @@ namespace TqatProModel.Database {
 
                     return tracker;
                 }
-            } catch (MySqlException mySqlException) {
-                throw new QueryException(1, mySqlException.Message);
-            } catch (QueryException queryException) {
-                throw queryException;
             } catch (Exception exception) {
-                throw new QueryException(1, exception.Message);
+                throw exception;
             } finally {
                 mysqlConnection.Close();
             }
@@ -129,7 +123,7 @@ namespace TqatProModel.Database {
 
                 string sql =
                     "INSERT INTO " +
-                    "trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName + 
+                    "trk_" + tracker.DatabaseName + ".gps_" + tracker.DatabaseName +
                     "(gm_time,gm_lat,gm_lng,gm_speed,gm_ori,gm_mileage,gm_data,gm_lasttime) " +
                     "VALUES(@TimeStamp,@Latitude,@Longitude,@Speed,@Orientation,@Mileage,@Data,@LastTime)";
 
@@ -146,7 +140,7 @@ namespace TqatProModel.Database {
                 if (mySqlCommand.ExecuteNonQuery() != 1) {
                     throw new Exception("Error on Insert..");
                 }
-              
+
             } catch (MySqlException mySqlException) {
                 throw new QueryException(1, mySqlException.Message);
             } catch (QueryException queryException) {
@@ -953,7 +947,7 @@ namespace TqatProModel.Database {
 
                     string gmData = (string)jsonData.gm_data;
                     string[] data = gmData.Split(',');
-                    trackerData.EventCode = (EventCode)int.Parse(data[1]);
+                    trackerData.EventCode = (TqatProModel.Devices.Meitrack.EventCode)int.Parse(data[1]);
 
                     trackerData.GpsSatellites = int.Parse(data[2]);
                     trackerData.GsmSignal = int.Parse(data[3]);

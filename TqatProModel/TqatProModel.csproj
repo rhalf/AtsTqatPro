@@ -53,6 +53,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AtsGps">
+      <HintPath>..\..\AtsGpsSocket\AtsGps\bin\Debug\AtsGps.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -84,7 +87,8 @@
     <Compile Include="Geofence.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="Gm.cs" />
-    <Compile Include="Log.cs" />
+    <Compile Include="StorageFile.cs" />
+    <Compile Include="TextLog.cs" />
     <Compile Include="MapCommand.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

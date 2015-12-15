@@ -130,6 +130,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DialogDatabase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DialogLogin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -145,6 +149,9 @@
       <DependentUpon>PanelLogin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Control\Map.cs" />
+    <Compile Include="DialogDatabase.xaml.cs">
+      <DependentUpon>DialogDatabase.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DialogLogin.xaml.cs">
       <DependentUpon>DialogLogin.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -263,6 +270,7 @@
     <Resource Include="Resources\images\128\Flat\user_01.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\images\128\Animated\setting_01.png" />
     <Content Include="Web\Maps\images\alarm\alarmBreakDown.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

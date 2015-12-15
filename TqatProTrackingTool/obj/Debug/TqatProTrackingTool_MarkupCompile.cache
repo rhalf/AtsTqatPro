@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\App.xaml
-6-175559878
+7-1735738969
 172-1946424697
-9-1115169350
+10-1240968048
 25447338313
-Controls\DataTemplate\ListView.xaml;Controls\Style\GridSplitter.xaml;Controls\UserControls\ListViewTrackers.xaml;Controls\UserControls\PanelLogin.xaml;DialogLogin.xaml;FormMain.xaml;
+Controls\DataTemplate\ListView.xaml;Controls\Style\GridSplitter.xaml;Controls\UserControls\ListViewTrackers.xaml;Controls\UserControls\PanelLogin.xaml;DialogDatabase.xaml;DialogLogin.xaml;FormMain.xaml;
 
 False
 

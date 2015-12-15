@@ -25,12 +25,12 @@ namespace TqatProModel {
         PDF
     }
 
-    public enum LogFileType {
+    public enum TextLogFileType {
         TXT,
         CSV
     }
 
-    public enum LogType {
+    public enum TextLogType {
         NONE,
         EVENT,
         EXCEPTION

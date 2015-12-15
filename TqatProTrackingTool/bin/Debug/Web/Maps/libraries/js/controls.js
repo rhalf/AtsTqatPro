@@ -71,30 +71,30 @@ function MapTool() {
     this.addPoi = function (poi) {
         //setTimeout(function () {
 
-            var coordinate = new google.maps.LatLng(poi.Latitude, poi.Longitude);
+        var coordinate = new google.maps.LatLng(poi.Latitude, poi.Longitude);
 
-            var image = {
-                //url: 'images/poi/building_01.png',
-                url: 'images/poi/' + poi.Icon + '.png',
-                size: new google.maps.Size(32, 32),
-                scaledSize: new google.maps.Size(32, 32),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(16, 32),
-                scale: .25,
-                rotation: 0
-            }
+        var image = {
+            //url: 'images/poi/building_01.png',
+            url: 'images/poi/' + poi.Icon + '.png',
+            size: new google.maps.Size(32, 32),
+            scaledSize: new google.maps.Size(32, 32),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(16, 32),
+            scale: .25,
+            rotation: 0
+        }
 
-            var markerPoi = new MarkerWithLabel({
-                position: coordinate,
-                map: map,
-                icon: image,
-                labelContent: poi.Name,
-                labelAnchor: new google.maps.Point(32, 0),
-                draggable: false,
-                labelClass: "markerPoi",
-            });
+        var markerPoi = new MarkerWithLabel({
+            position: coordinate,
+            map: map,
+            icon: image,
+            labelContent: poi.Name,
+            labelAnchor: new google.maps.Point(32, 0),
+            draggable: false,
+            labelClass: "markerPoi",
+        });
 
-            pois.push(markerPoi);
+        pois.push(markerPoi);
         //},1);
     }
 
@@ -225,8 +225,7 @@ function MapTool() {
                     }
                 }
                 break;
-            }
-            case "SetFocus": {
+            } case "SetFocus": {
                 var geocoder = new google.maps.Geocoder();
                 var trackerJson = JSON.parse(command.Value);
 
@@ -265,6 +264,9 @@ function MapTool() {
 
 
 
+                break;
+            } case "CenterMap" : {
+                map.setCenter(coordinateCenter);
                 break;
             }
         }

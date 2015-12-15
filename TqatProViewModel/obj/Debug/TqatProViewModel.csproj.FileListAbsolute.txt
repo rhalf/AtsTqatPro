@@ -42,8 +42,10 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\TqatProVie
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\TqatProViewModel.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\TqatProModel.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\MySql.Data.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\AtsGps.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\TqatProModel.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\AtsGps.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\obj\Debug\TqatProViewModel.csprojResolveAssemblyReference.cache
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProViewModel\obj\Debug\TqatProViewModel.dll

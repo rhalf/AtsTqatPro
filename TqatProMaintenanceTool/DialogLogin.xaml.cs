@@ -116,13 +116,13 @@ namespace TqatProMaintenanceTool {
                 Debug.Print(databaseException.Message);
                 Dispatcher.Invoke(new Action(() => {
                     panelLogin.ErrorNote = databaseException.Message;
-                    Log.write(databaseException);
+                    TextLog.Write(databaseException);
                 }));
             } catch (Exception exception) {
                 Debug.Print(exception.Message);
                 Dispatcher.Invoke(new Action(() => {
                     panelLogin.ErrorNote = exception.Message;
-                    Log.write(exception);
+                    TextLog.Write(exception);
                 }));
             } finally {
                 Dispatcher.Invoke(new Action(() => {

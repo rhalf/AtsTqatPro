@@ -14,7 +14,7 @@
     <Setting Name="databaseName" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="databasePort" Type="System.UInt32" Scope="User">
+    <Setting Name="databasePort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">3306</Value>
     </Setting>
     <Setting Name="fuelLiterToKilometer1" Type="System.Double" Scope="User">
@@ -34,6 +34,18 @@
     </Setting>
     <Setting Name="accountRememberMe" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="groupServersIndex" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="databaseOther" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="webServiceIp" Type="System.String" Scope="User">
+      <Value Profile="(Default)">67.205.85.177</Value>
+    </Setting>
+    <Setting Name="webServicePort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8000</Value>
     </Setting>
   </Settings>
 </SettingsFile>
