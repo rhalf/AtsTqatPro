@@ -812,7 +812,6 @@ C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProTracki
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProTrackingTool\obj\Debug\TqatProTrackingTool.csproj.GenerateResource.Cache
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProTrackingTool\obj\Debug\TqatProTrackingTool.exe
 C:\Users\Rhalf\Documents\GitHub\New folder\AtsTqatPro1\AtsTqatPro1\TqatProTrackingTool\obj\Debug\TqatProTrackingTool.pdb
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\MahApps.Metro.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\Web\Maps\images\alarm\alarmBreakDown.png
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\Web\Maps\images\alarm\alarmExpiry.png
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\Web\Maps\images\alarm\alarmGeofence.png
@@ -988,16 +987,17 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\Web\Map
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\TqatProTrackingTool.exe.config
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\TqatProTrackingTool.exe
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\TqatProTrackingTool.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\MahApps.Metro.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\System.Windows.Interactivity.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\TqatProModel.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\TqatProViewModel.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\AtsGps.dll
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\TqatProModel.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\TqatProViewModel.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\MahApps.Metro.xml
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\AtsGps.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\AtsGps.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\de\System.Windows.Interactivity.resources.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\en\System.Windows.Interactivity.resources.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProTrackingTool\bin\Debug\es\System.Windows.Interactivity.resources.dll

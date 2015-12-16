@@ -8,13 +8,12 @@
 
         xmlns:sys="clr-namespace:Microsoft.CSharp;assembly=System"
        
-        Title="MainWindow" Height="400" Width="685"
+        Title="MainWindow" Height="400" Width="700"
+        
         
         Loaded="Window_Loaded"
         Closing="Window_Closing"
-     
-    
-      
+        WindowStartupLocation="CenterScreen"
         >
 
 
@@ -44,6 +43,12 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <GroupBox Header="Tcp Manager" Name="groupTcpManagersSetup" Grid.Column="0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="30"></RowDefinition>
+                                </Grid.RowDefinitions>
+                        
                             <ListView Name="listViewTcpManagersSetup" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                 <ListView.View>
                                     <GridView>
@@ -61,22 +66,23 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="Ip Address" Width="180">
+                                        <GridViewColumn Header="Ip Address" Width="140">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <ComboBox
+                                                    <!--<ComboBox
                                                         SelectedItem="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}" 
                                                         ItemsSource="{Binding ItemsSource, ElementName=comboBoxIps}"  
                                                         Width="160"
                                                          SelectedIndex="0">
-                                                    </ComboBox>
+                                                    </ComboBox>-->
+                                                    <TextBox Text="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}"  Width="120"></TextBox>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="Port" Width="100">
+                                        <GridViewColumn Header="Port" Width="80">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBox Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}"  Width="80"></TextBox>
+                                                    <TextBox Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}"  Width="60"></TextBox>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -89,7 +95,12 @@
                                         </GridViewColumn>
                                     </GridView>
                                 </ListView.View>
-                            </ListView>
+                                </ListView>
+
+                                <StackPanel Grid.Row="1" Orientation="Vertical" Margin="1">
+                                    <Button Content="Save" Click="ButtonTcpManagerSetupSave_Click"></Button>
+                                </StackPanel>
+                            </Grid>
                         </GroupBox>
                     </Grid>
 
@@ -124,7 +135,6 @@
                         </StackPanel>
                     </GroupBox>
                 </TabItem>
-               
                 <TabItem Header="Logs">
                     <DataGrid Name="dataGridLog" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  BorderThickness="0" BorderBrush="White">
                         <DataGrid.Columns>
@@ -165,7 +175,6 @@
                                     <RowDefinition Height="25"></RowDefinition>
                                     <RowDefinition Height="25"></RowDefinition>
                                     <RowDefinition Height="25"></RowDefinition>
-
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="100"></ColumnDefinition>
@@ -178,12 +187,13 @@
                                 <Label Content="MachineName" Grid.Row="0" Grid.Column="2"></Label>
                                 <Label Name="labelName" Content="{Binding Name, Mode=OneWay}" Grid.Row="0" Grid.Column="3" Margin="0" ></Label>
                                 <Label Content="IP Addresses" Grid.Row="1" Grid.Column="2"></Label>
-                                <ComboBox Name="comboBoxIps" ItemsSource="{Binding IpAddresses,  Mode=OneWay}" Grid.Row="1" Grid.Column="3" Margin="0"></ComboBox>
+                                <ComboBox Name="comboBoxIps" ItemsSource="{Binding IpAddresses,  Mode=OneWay}" Grid.Row="1" Grid.Column="3" Margin="0" IsEditable="True"></ComboBox>
 
                                 <Label Content="Processor" Grid.Row="1" Grid.Column="0"></Label>
                                 <Label Name="labelCore" Content="{Binding Processor, Mode=OneWay}" Grid.Row="1" Grid.Column="1" Margin="0" ></Label>
-                                <Label Content="LocalTime" Grid.Row="2" Grid.Column="0"></Label>
-                                <Label Name="labelLocalDateTime" Content="{Binding LocalDateTime, Mode=OneWay}" Grid.Row="2" Grid.Column="1" Margin="0" ></Label>
+                                <Label Content="TimeSpan" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Width="100"></Label>
+                                <Label Content="{Binding TimeSpan,  Mode=OneWay}" Grid.Row="2" Grid.Column="1"></Label>
+                                <!--<Label Name="labelLocalDateTime" Content="{Binding LocalDateTime, Mode=OneWay}" Grid.Row="2" Grid.Column="1" Margin="0" ></Label>-->
                                 <Label Content="UtcTime" Grid.Row="2" Grid.Column="2"></Label>
                                 <Label Name="labelUtcDateTime" Content="{Binding UtcDateTime, Mode=OneWay}" Grid.Row="2" Grid.Column="3" Margin="0" ></Label>
                             </Grid>

@@ -22,14 +22,29 @@ namespace TqatProSocketTool.ViewModel {
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Start();
         }
+
+
+        private long timer = 0L;
+
         private void dispatcherTimer_Tick (object sender, EventArgs e) {
-            this.LocalDateTime = System.DateTime.Now.ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+
+            if (this.TimeSpanStart == true) {
+                timer += 1 * 10000000;
+                this.TimeSpan = new TimeSpan(timer);
+            } else if (this.TimeSpanStart == false) {
+                timer = 0;
+                this.TimeSpan = new TimeSpan(timer);
+            }
+
+ 
             this.UtcDateTime = System.DateTime.Now.ToUniversalTime().ToString("yyyy/MM/dd HH:mm:ss");
             OnPropertyChanged("UtcDateTime");
-            OnPropertyChanged("LocalDateTime");
+            OnPropertyChanged("TimeSpan");
         }
-        public String OperatingSystem {
-            get {
+        public String OperatingSystem
+        {
+            get
+            {
                 //string bit = "";
                 //if (System.Environment.Is64BitOperatingSystem) {
                 //    bit = " 64 bit";
@@ -39,13 +54,17 @@ namespace TqatProSocketTool.ViewModel {
                 return System.Environment.OSVersion.ToString();
             }
         }
-        public String Name {
-            get {
+        public String Name
+        {
+            get
+            {
                 return System.Environment.MachineName;
             }
         }
-        public List<String> IpAddresses {
-            get {
+        public List<String> IpAddresses
+        {
+            get
+            {
                 IPHostEntry host;
                 host = Dns.GetHostEntry(Dns.GetHostName());
 
@@ -61,16 +80,25 @@ namespace TqatProSocketTool.ViewModel {
                 return listIp;
             }
         }
-        public string LocalDateTime {
+
+        public bool? TimeSpanStart {
+            get;
+            set;
+        } 
+        public TimeSpan TimeSpan
+        {
             get;
             set;
         }
-        public string UtcDateTime {
+        public string UtcDateTime
+        {
             get;
             set;
         }
-        public string Processor {
-            get {
+        public string Processor
+        {
+            get
+            {
                 return System.Environment.ProcessorCount.ToString();
             }
         }

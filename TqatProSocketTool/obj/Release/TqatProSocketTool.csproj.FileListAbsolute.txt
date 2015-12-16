@@ -2,8 +2,6 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Release\TqatPro
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Release\TqatProSocketTool.exe
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Release\TqatProSocketTool.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Release\AtsGps.dll
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Release\Community.CsharpSqlite.dll
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Release\Community.CsharpSqlite.SQLiteClient.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Release\TqatProModel.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Release\MySql.Data.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\Release\Newtonsoft.Json.dll
