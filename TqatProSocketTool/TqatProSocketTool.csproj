@@ -78,7 +78,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DialogServerAdd.xaml.cs">
+      <DependentUpon>DialogServerAdd.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DialogTcpClient.xaml.cs">
+      <DependentUpon>DialogTcpClient.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\Machine.cs" />
+    <Page Include="DialogServerAdd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DialogTcpClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

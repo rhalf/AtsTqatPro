@@ -19,3 +19,7 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\TqatPro
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\TqatProSocketTool.csproj.GenerateResource.Cache
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\TqatProSocketTool.exe
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\TqatProSocketTool.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\DialogServerAdd.g.cs
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\DialogTcpClient.g.cs
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\DialogServerAdd.baml
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\Release\DialogTcpClient.baml

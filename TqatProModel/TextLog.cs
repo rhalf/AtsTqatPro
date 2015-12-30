@@ -17,7 +17,7 @@ namespace TqatProModel {
         }
 
 
-        public static void Write(string logMessage, TextLogType logType, TextLogFileType logFileType) {
+        public static void Write(string logMessage, String fileNameType, TextLogFileType textLogFileType) {
 
             string fullPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\" + TextLog.Name + "\\logs";
 
@@ -25,9 +25,12 @@ namespace TqatProModel {
                 Directory.CreateDirectory(fullPath);
             }
 
-            string logTypeValue = Enum.GetName(typeof(TextLogType), logType);
-            string logFileTypeValue = Enum.GetName(typeof(TextLogFileType), logFileType);
+            string logTypeValue = fileNameType;
+            string logFileTypeValue = Enum.GetName(typeof(TextLogFileType), textLogFileType);
             string dateValue = DateTime.Now.ToString("yyyyMMdd");
+            string timeValue = DateTime.Now.ToString("HH:mm:ss");
+
+            logMessage = timeValue + " : " + logMessage;
 
             string fileName = fullPath + "\\" + logTypeValue + "_" + dateValue + "." + logFileTypeValue;
 
@@ -58,7 +61,7 @@ namespace TqatProModel {
                 Directory.CreateDirectory(fullPath);
             }
 
-            string logTypeValue = Enum.GetName(typeof(TextLogType), TextLogType.EXCEPTION);
+            string logTypeValue = "EXCEPTION";
             string logFileTypeValue = Enum.GetName(typeof(TextLogFileType), TextLogFileType.TXT);
             string dateValue = DateTime.Now.ToString("yyyyMMdd");
             int lineNumber = new StackTrace(exception, true).GetFrame(0).GetFileLineNumber();

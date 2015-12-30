@@ -30,11 +30,12 @@ namespace TqatProModel {
         CSV
     }
 
-    public enum TextLogType {
-        NONE,
-        EVENT,
-        EXCEPTION
-    }
+    //public enum TextLogType {
+    //    NONE,
+    //    EVENT,
+    //    TRACKER,
+    //    EXCEPTION
+    //}
 
     public enum ServerStatus {
         STOP,

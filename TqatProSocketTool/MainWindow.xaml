@@ -32,8 +32,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Margin="5" Content="Start" Click="ButtonServersStart_Click" Grid.Column="0" Name="buttonServersStart"/>
-            <Button Margin="5" Content="Pause" Click="ButtonServersPause_Click" Grid.Column="1" Name="buttonServersPause" IsEnabled="False"/>
-            <Button Margin="5" Content="Stop" Click="ButtonServersStop_Click" Grid.Column="2"  Name="buttonServersStop" IsEnabled="False"/>
+            <Button Margin="5" Content="Stop" Click="ButtonServersStop_Click" Grid.Column="1"  Name="buttonServersStop" IsEnabled="False"/>
         </Grid>
         <Grid Grid.Row="1">
             <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
@@ -48,57 +47,61 @@
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="30"></RowDefinition>
                                 </Grid.RowDefinitions>
-                        
-                            <ListView Name="listViewTcpManagersSetup" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn Header="Company" Width="100">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <Label Content="{Binding Device.Company}"></Label>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="Device" Width="100">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <Label Content="{Binding Device.Name}"></Label>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="Ip Address" Width="140">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <!--<ComboBox
+
+                                <ListView Name="listViewTcpManagersSetup" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="listViewTcpManagersSetup_SelectionChanged">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Company" Width="100">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Label Content="{Binding Device.Company}"></Label>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="Device" Width="100">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Label Content="{Binding Device.Name}"></Label>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="Ip Address" Width="140">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <!--<ComboBox
                                                         SelectedItem="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}" 
                                                         ItemsSource="{Binding ItemsSource, ElementName=comboBoxIps}"  
                                                         Width="160"
                                                          SelectedIndex="0">
                                                     </ComboBox>-->
-                                                    <TextBox Text="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}"  Width="120"></TextBox>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="Port" Width="80">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <TextBox Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}"  Width="60"></TextBox>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="IsEnabled" Width="100">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <CheckBox IsChecked="{Binding IsEnabled}"></CheckBox>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                    </GridView>
-                                </ListView.View>
+                                                        <TextBox Text="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}"  Width="120"></TextBox>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="Port" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}"  Width="60"></TextBox>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="IsEnabled" Width="100">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <CheckBox IsChecked="{Binding IsEnabled}"></CheckBox>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
                                 </ListView>
 
                                 <StackPanel Grid.Row="1" Orientation="Vertical" Margin="1">
-                                    <Button Content="Save" Click="ButtonTcpManagerSetupSave_Click"></Button>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="Add" Click="ButtonTcpManagerSetupAdd_Click" Margin="3"></Button>
+                                        <Button Content="Save" Click="ButtonTcpManagerSetupSave_Click" Margin="3"></Button>
+                                        <Button Content="Delete" Click="ButtonTcpManagerSetupDelete_Click" Margin="3"></Button>
+                                    </StackPanel>
                                 </StackPanel>
                             </Grid>
                         </GroupBox>
@@ -167,6 +170,8 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="100"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
+
                         </Grid.RowDefinitions>
                         <GroupBox Header="Machine" Grid.Row="0" Name="groupMachine">
                             <Grid>
@@ -199,7 +204,7 @@
                             </Grid>
                         </GroupBox>
                         <GroupBox Header="Status"  Grid.Row="1">
-                            <ListView Name="listViewTcpManagers" HorizontalAlignment="Stretch" ItemsSource="{Binding ItemsCollection}">
+                            <ListView Name="listViewTcpManagers" HorizontalAlignment="Stretch" MouseDoubleClick="listViewTcpManagers_MouseDoubleClick">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Company" Width="70" DisplayMemberBinding="{Binding Device.Company, Mode=OneWay}"></GridViewColumn>
@@ -207,19 +212,31 @@
                                         <GridViewColumn Header="IpAddress" Width="100" DisplayMemberBinding="{Binding IpAddress, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="Port" Width="50" DisplayMemberBinding="{Binding Port, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="Packets" Width="60" DisplayMemberBinding="{Binding Packets, Mode=OneWay}"></GridViewColumn>
-                                        <GridViewColumn Header="TcpClients" Width="60" DisplayMemberBinding="{Binding TcpClient.Count, Mode=OneWay}"></GridViewColumn>
+                                        <GridViewColumn Header="TcpClients" Width="60" DisplayMemberBinding="{Binding TcpClients.Count, Mode=OneWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Trackers" Width="60" DisplayMemberBinding="{Binding TcpTrackers.Count, Mode=OneWay}"></GridViewColumn>
+
                                         <GridViewColumn Header="BufferIn" Width="75" DisplayMemberBinding="{Binding BufferIn.Count, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="BufferOut" Width="75" DisplayMemberBinding="{Binding BufferOut.Count, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="SendBytes" Width="75" DisplayMemberBinding="{Binding SendBytes, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="ReceiveBytes" Width="75" DisplayMemberBinding="{Binding ReceiveBytes, Mode=OneWay}"></GridViewColumn>
+                                        <GridViewColumn Header="IsActivated" Width="75" >
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox IsChecked="{Binding IsActivated, Mode=OneWay}"></CheckBox>
+                                                </DataTemplate>
+
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
                                     </GridView>
                                 </ListView.View>
-
                             </ListView>
                         </GroupBox>
+                        <StackPanel Orientation="Horizontal" Grid.Row="2">
+                            <Button Content="Clear" Margin="3" Padding="5,0,5,0" Click="ButtonClear_Click"></Button>
+                        </StackPanel>
                     </Grid>
                 </TabItem>
-
             </TabControl>
         </Grid>
     </Grid>

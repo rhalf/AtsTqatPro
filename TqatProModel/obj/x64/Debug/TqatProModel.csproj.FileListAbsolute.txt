@@ -1,0 +1,11 @@
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\x64\Debug\TqatProModel.dll.config
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\x64\Debug\TqatProModel.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\x64\Debug\TqatProModel.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\x64\Debug\AtsGps.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\x64\Debug\MySql.Data.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\x64\Debug\Newtonsoft.Json.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\x64\Debug\AtsGps.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\x64\Debug\Newtonsoft.Json.xml
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\x64\Debug\TqatProModel.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\x64\Debug\TqatProModel.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\x64\Debug\TqatProModel.csprojResolveAssemblyReference.cache

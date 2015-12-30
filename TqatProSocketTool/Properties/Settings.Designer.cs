@@ -89,8 +89,6 @@ namespace TqatProSocketTool.Properties {
 <ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
   <string>Ats|Command,127.0.0.1,50000,1</string>
   <string>Meitrack|Mvt100,127.0.0.1,50010,1</string>
-  <string>Meitrack|Mvt100,127.0.0.1,50011,1</string>
-  <string>Meitrack|Mvt100,127.0.0.1,50012,1</string>
   <string>Meitrack|T1,127.0.0.1,50020,1</string>
   <string>Teltonika|FM1100,127.0.0.1,50030,0</string>
 </ArrayOfString>")]

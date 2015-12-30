@@ -38,3 +38,4 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Release\AtsGps.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\Release\Newtonsoft.Json.xml
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Release\TqatProModel.dll
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Release\TqatProModel.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\Release\TqatProModel.csprojResolveAssemblyReference.cache

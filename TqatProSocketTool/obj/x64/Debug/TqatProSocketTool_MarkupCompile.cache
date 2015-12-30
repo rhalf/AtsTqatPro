@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\App.xaml
-11151548125
+31921134019
 
-7-898849600
+81836302938
 151167279748
-MainWindow.xaml;
+DialogServerAdd.xaml;DialogTcpClient.xaml;MainWindow.xaml;
 
-True
+False
 

@@ -22,8 +22,6 @@
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string&gt;Ats|Command,127.0.0.1,50000,1&lt;/string&gt;
   &lt;string&gt;Meitrack|Mvt100,127.0.0.1,50010,1&lt;/string&gt;
-  &lt;string&gt;Meitrack|Mvt100,127.0.0.1,50011,1&lt;/string&gt;
-  &lt;string&gt;Meitrack|Mvt100,127.0.0.1,50012,1&lt;/string&gt;
   &lt;string&gt;Meitrack|T1,127.0.0.1,50020,1&lt;/string&gt;
   &lt;string&gt;Teltonika|FM1100,127.0.0.1,50030,0&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>

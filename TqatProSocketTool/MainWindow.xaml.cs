@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using TqatProSocketTool.ViewModel;
 using AtsGps;
 using AtsGps.Meitrack;
+using AtsGps.Ats;
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Net;
@@ -34,86 +35,99 @@ namespace TqatProSocketTool {
             InitializeComponent();
         }
 
-        ObservableCollection<TcpManager> tcpManagers;
+        List<TcpManager> tcpManagers;
         ConcurrentDictionary<String, String[]> bufferOut;
         Machine machine;
 
         #region BufferStart
-        Thread threadUploaderManager;
+        Thread threadUploaderManager, threadGuiUpdater;
         Boolean debug = true;
 
         private void threadUploaderManagerFunc (Object state) {
             while (true) {
-                //for (int interval = 0; interval < 5; interval++) {
-                for (int count = 0; count < tcpManagers.Count; count++) {
-                    tcpManagers[count].Refresh();
-                }
-                //    Thread.Sleep(1000);
-                //}
-
-
+                Thread.Sleep(5000);
                 if (tcpManagers.Count <= 0)
                     continue;
 
-                for (Int32 index = 0; index < tcpManagers.Count; index++) {
-                    TcpManager tcpManager = tcpManagers[index];
-                    if (tcpManager == null)
-                        continue;
-                    if (tcpManager.BufferIn == null)
-                        continue;
-                    if (tcpManager.BufferIn.IsEmpty)
-                        continue;
-                    if (tcpManager.Device.Company == "Meitrack") {
-                        processBufferIn(tcpManager.BufferIn);
+                try {
+                    lock (tcpManagers) {
+                        foreach (TcpManager tcpManager in tcpManagers) {
+                            if (tcpManager == null)
+                                continue;
+                            if (tcpManager.BufferIn == null)
+                                continue;
+                            if (tcpManager.BufferIn.IsEmpty)
+                                continue;
+                            if (tcpManager.Device.Company == "Meitrack") {
+                                processBufferIn(tcpManager);
+                            }
+                        }
+                    }
+                } catch {
+                    continue;
+                }
+            }
+        }
+
+        private void threadGuiUpdaterFunc(Object state) {
+            while (true) {
+                Thread.Sleep(1000);
+                lock (tcpManagers) {
+                    foreach (TcpManager tcpManager in tcpManagers) {
+                        tcpManager.Refresh();
                     }
                 }
-
             }
         }
 
         private void processBufferIn (Object state) {
-            ConcurrentQueue<Object> queue = (ConcurrentQueue<Object>)state;
-            Object obj = null;
-            Gm gm = null;
+            Task newTask = Task.Factory.StartNew(() => {
 
-            while (queue.IsEmpty == false) {
-                if (!queue.TryDequeue(out obj)) {
-                    return;
-                }
+                TcpManager tcpManager = (TcpManager)state;
+                while (!tcpManager.BufferIn.IsEmpty) {
 
-                try {
-                    gm = (Gm)obj;
-                    if (gm == null) {
+                    Object obj = null;
+                    if (!tcpManager.BufferIn.TryDequeue(out obj)) {
+                        continue;
+                    }
+
+                    Gm gm = null;
+
+                    try {
+                        gm = (Gm)obj;
+                        if (gm == null) {
+                            return;
+                        }
+                    } catch (Exception exception) {
+                        if (debug) {
+                            TextLog.Write(exception);
+                        }
                         return;
                     }
-                } catch (Exception exception) {
-                    if (debug) {
-                        TextLog.Write(exception);
-                    }
-                    return;
-                }
 
-                try {
-                    Database database = new Database {
-                        IpAddress = Settings.Default.DatabaseIp,
-                        Port = Int32.Parse(Settings.Default.DatabasePort),
-                        DatabaseName = Settings.Default.DatabaseName,
-                        Username = Settings.Default.DatabaseUsername,
-                        Password = Settings.Default.DatabasePassword
-                    };
+                    try {
+                        Database database = new Database {
+                            IpAddress = Settings.Default.DatabaseIp,
+                            Port = Int32.Parse(Settings.Default.DatabasePort),
+                            DatabaseName = Settings.Default.DatabaseName,
+                            Username = Settings.Default.DatabaseUsername,
+                            Password = Settings.Default.DatabasePassword
+                        };
 
-                    Query query = new Query(database);
-                    Tracker tracker = query.getTracker(gm.Unit);
-                    query.insertTrackerData(tracker, gm);
-                } catch (Exception exception) {
-                    lock (queue) {
-                        queue.Enqueue(obj);
-                    }
-                    if (debug) {
-                        TextLog.Write(exception);
+                        Query query = new Query(database);
+                        Tracker tracker = query.getTracker(gm.Unit);
+                        query.insertTrackerData(tracker, gm);
+
+                        object object1 = obj;
+
+                    } catch (Exception exception) {
+                        tcpManager.BufferIn.Enqueue(obj);
+                        if (debug) {
+                            TextLog.Write(exception);
+                        }
                     }
                 }
-            }
+            });
         }
 
         #endregion BufferEnd
@@ -143,11 +157,19 @@ namespace TqatProSocketTool {
             threadUploaderManager = new Thread(threadUploaderManagerFunc);
             threadUploaderManager.Start(tcpManagers);
 
+
+            threadGuiUpdater = new Thread(threadGuiUpdaterFunc);
+            threadGuiUpdater.Start(tcpManagers);
+
+
             bufferOut = new ConcurrentDictionary<String, String[]>();
 
         }
+
+     
+
         private void initializedTcpManagers () {
-            tcpManagers = new ObservableCollection<TcpManager>();
+            tcpManagers = new List<TcpManager>();
 
             StringCollection servers = Settings.Default.Servers;
 
@@ -192,11 +214,6 @@ namespace TqatProSocketTool {
                         listViewTcpManagersSetup.Items.Add(tqatCommandTcpManager);
                     }
                 }
-
-
-
-
-
             }
 
 
@@ -204,35 +221,33 @@ namespace TqatProSocketTool {
         }
         private void ButtonServersStart_Click (object sender, RoutedEventArgs e) {
             try {
-                tcpManagers.Clear();
-                foreach (TcpManager tcpManager in listViewTcpManagersSetup.Items) {
-                    lock (tcpManager) {
+                if (tcpManagers.Count <= 0) {
+                    foreach (TcpManager tcpManager in listViewTcpManagersSetup.Items) {
+
                         if (tcpManager.IsEnabled == false)
                             continue;
                         tcpManagers.Add(tcpManager);
                     }
                 }
 
+
                 foreach (TcpManager tcpManager in tcpManagers) {
-                    lock (tcpManager) {
-                        if (buttonServersPause.IsEnabled == false) {
-                            tcpManager.Event += TcpManager_Event;
-                            tcpManager.DataReceived += TcpManager_DataReceived;
-                            tcpManager.Packets = 0;
-                            tcpManager.ReceiveBytes = 0;
-                            tcpManager.SendBytes = 0;
-                        }
+                    tcpManager.Event += TcpManager_Event;
+                    tcpManager.DataReceived += TcpManager_DataReceived;
+
+
+                    if (tcpManager.Device.Name != "Command") {
                         tcpManager.BufferOut = bufferOut;
                         tcpManager.BufferIn = new ConcurrentQueue<object>();
-                        tcpManager.Refresh();
-                        tcpManager.Start();
+                        tcpManager.TcpTrackers = new ConcurrentDictionary<String, TcpTracker>();
                     }
+                    tcpManager.Start();
                 }
+
 
                 groupTcpManagersSetup.IsEnabled = false;
                 buttonServersStart.IsEnabled = false;
                 buttonServersStop.IsEnabled = true;
-                buttonServersPause.IsEnabled = true;
                 machine.TimeSpanStart = true;
 
             } catch (Exception exception) {
@@ -240,13 +255,15 @@ namespace TqatProSocketTool {
                 foreach (TcpManager tcpManager1 in tcpManagers) {
                     try {
                         tcpManager1.Stop();
+                        Thread.Sleep(1);
                         tcpManager1.Event -= TcpManager_Event;
                         tcpManager1.DataReceived -= TcpManager_DataReceived;
                     } catch {
                         continue;
                     }
                 }
-                tcpManagers.Clear();
+                tcpManagerClear();
+
                 GC.Collect();
                 if (debug) {
                     TextLog.Write(exception);
@@ -259,16 +276,18 @@ namespace TqatProSocketTool {
                 groupTcpManagersSetup.IsEnabled = true;
                 foreach (TcpManager tcpManager in tcpManagers) {
                     lock (tcpManager) {
-                        tcpManager.Stop();
-                        tcpManager.Event -= TcpManager_Event;
-                        tcpManager.DataReceived -= TcpManager_DataReceived;
+                        if (tcpManager.IsActivated && tcpManager != null) {
+                            tcpManager.Stop();
+                            Thread.Sleep(1);
+                            tcpManager.Event -= TcpManager_Event;
+                            tcpManager.DataReceived -= TcpManager_DataReceived;
+                        }
                     }
                 }
-                tcpManagers.Clear();
+
                 GC.Collect();
 
                 buttonServersStart.IsEnabled = true;
-                buttonServersPause.IsEnabled = false;
                 buttonServersStop.IsEnabled = false;
                 machine.TimeSpanStart = false;
             } catch (Exception exception) {
@@ -278,23 +297,7 @@ namespace TqatProSocketTool {
                 MessageBox.Show(exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void ButtonServersPause_Click (object sender, RoutedEventArgs e) {
-            try {
-                foreach (TcpManager tcpManager in tcpManagers) {
-                    lock (tcpManager) {
-                        tcpManager.Stop();
-                    }
-                }
-                buttonServersPause.IsEnabled = false;
-                buttonServersStart.IsEnabled = true;
-                machine.TimeSpanStart = null;
-            } catch (Exception exception) {
-                if (debug) {
-                    TextLog.Write(exception);
-                }
-                MessageBox.Show(exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+
         private void TcpManager_DataReceived (object sender, object data) {
 
             if (data == null)
@@ -310,14 +313,12 @@ namespace TqatProSocketTool {
                     while (!bufferOut.TryAdd(array[0], array)) {
                         ;
                     }
-                    tcpManager.Refresh();
                     return;
                 }
             } else if (data.GetType() == typeof(Gm)) {
                 Gm gm = (Gm)data;
                 if (gm != null) {
                     tcpManager.BufferIn.Enqueue(gm);
-                    tcpManager.Refresh();
                     return;
                 }
             }
@@ -327,13 +328,25 @@ namespace TqatProSocketTool {
             TcpManager tcpManager = (TcpManager)sender;
             log.Description = tcpManager.Device.ToString() + " : " + log.Description;
 
-            if (debug) {
-                TextLog.Write(log.Description, TextLogType.EVENT, TextLogFileType.TXT);
-            }
 
-            Dispatcher.BeginInvoke(new Action(() => {
-                dataGridLog.Items.Add(log);
-            }));
+            if (debug) {
+                if (log.LogType == LogType.MVT100) {
+                    TextLog.Write(log.Description, "MVT100", TextLogFileType.TXT);
+                }
+                if (log.LogType == LogType.T1) {
+                    TextLog.Write(log.Description, "T1", TextLogFileType.TXT);
+                }
+                if (log.LogType == LogType.FM110) {
+                    TextLog.Write(log.Description, "FM1100", TextLogFileType.TXT);
+                }
+
+                if (log.LogType == LogType.SERVER) {
+                    TextLog.Write(log.Description, "SERVER", TextLogFileType.TXT);
+                    Dispatcher.BeginInvoke(new Action(() => {
+                        dataGridLog.Items.Add(log);
+                    }));
+                }
+            }
         }
         private void buttonMysqlTest_Click (object sender, RoutedEventArgs e) {
             Database database = (Database)mysqlCredential.DataContext;
@@ -373,14 +386,16 @@ namespace TqatProSocketTool {
         private void Window_Closing (object sender, System.ComponentModel.CancelEventArgs e) {
             if (tcpManagers.Count > 0) {
                 foreach (TcpManager tcpManager in tcpManagers) {
-                    tcpManager.Stop();
+                    if (tcpManager.IsActivated) {
+                        tcpManager.Stop();
+                        Thread.Sleep(1);
+                    }
                 }
-                tcpManagers.Clear();
+                tcpManagerClear();
             }
             Application.Current.Shutdown();
             Environment.Exit(0);
         }
-
         private void ButtonTcpManagerSetupSave_Click (object sender, RoutedEventArgs e) {
 
             StringCollection servers = new StringCollection();
@@ -394,6 +409,45 @@ namespace TqatProSocketTool {
             Settings.Default.Save();
 
             MessageBox.Show("Successful!", "Save", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        private void ButtonTcpManagerSetupAdd_Click (object sender, RoutedEventArgs e) {
+            DialogServerAdd formServerAdd = new DialogServerAdd();
+            formServerAdd.ShowDialog();
+            if (formServerAdd.Tag != null) {
+                listViewTcpManagersSetup.Items.Add((TcpManager)formServerAdd.Tag);
+            }
+        }
+        private void ButtonTcpManagerSetupDelete_Click (object sender, RoutedEventArgs e) {
+            listViewTcpManagersSetup.Items.Remove(listViewTcpManagersSetup.SelectedItem);
+        }
+
+        private void listViewTcpManagersSetup_SelectionChanged (object sender, SelectionChangedEventArgs e) {
+
+        }
+
+        private void listViewTcpManagers_MouseDoubleClick (object sender, MouseButtonEventArgs e) {
+            ListView listView = (ListView)sender;
+
+            if (listView.SelectedItem == null)
+                return;
+
+            TcpManager tcpManager = (TcpManager)listView.SelectedItem;
+
+            DialogTcpClient dialogTcpClient = new DialogTcpClient(tcpManager);
+            dialogTcpClient.Show();
+        }
+
+        private void ButtonClear_Click (object sender, RoutedEventArgs e) {
+            tcpManagerClear();
+        }
+
+        private void tcpManagerClear () {
+            if (buttonServersStart.IsEnabled) {
+                //while (!tcpManagers.IsEmpty) {
+                //    TcpManager tcpManager = null;
+                tcpManagers.Clear();
+                //}
+            }
         }
     }
 }
