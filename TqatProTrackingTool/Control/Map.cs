@@ -193,7 +193,6 @@ namespace TqatProTrackingTool.Control {
 
             }
         }
-
         public void processCommand(WebBrowser webBrowser, MapCommand mapCommand) {
             if (webBrowser != null) {
 

@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{664330AC-06C9-48E0-8D0D-6D7988A7F4AE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TqatProGpsTool</RootNamespace>
+    <AssemblyName>TqatProGpsTool</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>TqatProGpsTool.App</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Controls\UserControls\PanelLogin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DialogLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\UserControls\PanelLogin.xaml.cs">
+      <DependentUpon>PanelLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DialogLogin.xaml.cs">
+      <DependentUpon>DialogLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="Web\Maps\images\tracker.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\images\128\Animated\calendar_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\car_00.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\clock_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\copy_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\documents_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\earth_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\file_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\folder_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\folder_02.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\folder_green_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\lock_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\logout_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\monitor_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\pdf_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\pen_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\search_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\search_data_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\setting_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\shutdown_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\usb_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\user_00.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\user_00a.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\user_01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\user_02.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\user_03.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\user_04.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Animated\user_05.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\images\128\Ats\logo_01.png" />
+    <Resource Include="Resources\images\128\Ats\satellite_01.png" />
+    <Resource Include="Resources\images\128\Crystal\check_00.png" />
+    <Resource Include="Resources\images\128\Crystal\cross_00.png" />
+    <Resource Include="Resources\images\128\Crystal\enter_00.png" />
+    <Resource Include="Resources\images\128\Crystal\users_add_group_00.png" />
+    <Resource Include="Resources\images\128\Crystal\users_edit_group_00.png" />
+    <Resource Include="Resources\images\128\Crystal\users_offline_00.png" />
+    <Resource Include="Resources\images\128\Crystal\users_search_00.png" />
+    <Resource Include="Resources\images\128\Crystal\users_switch_00.png" />
+    <Resource Include="Resources\images\128\Crystal\user_00.png" />
+    <Resource Include="Resources\images\128\Crystal\user_01.png" />
+    <Resource Include="Resources\images\128\Crystal\user_02.png" />
+    <Resource Include="Resources\images\128\Crystal\user_03.png" />
+    <Resource Include="Resources\images\128\Crystal\user_04.png" />
+    <Resource Include="Resources\images\128\Crystal\user_05.png" />
+    <Resource Include="Resources\images\128\Flat\user_01.png" />
+    <Resource Include="Resources\images\16\checkAll.png" />
+    <Resource Include="Resources\images\16\uncheckAll.png" />
+    <Resource Include="Resources\images\48\user_01.png" />
+    <Resource Include="Resources\images\satellite_01.ico" />
+    <Content Include="Web\Maps\html.html" />
+    <Resource Include="Web\Maps\images\alarm\alarmBreakDown.png" />
+    <Resource Include="Web\Maps\images\alarm\alarmExpiry.png" />
+    <Resource Include="Web\Maps\images\alarm\alarmGeofence.png" />
+    <Resource Include="Web\Maps\images\alarm\alarmLostSignalGps.png" />
+    <Resource Include="Web\Maps\images\alarm\alarmLostSignalGsm.png" />
+    <Resource Include="Web\Maps\images\alarm\alarmLostTracker.png" />
+    <Resource Include="Web\Maps\images\alarm\alarmMileageLimit.png" />
+    <Resource Include="Web\Maps\images\alarm\alarmOk.png" />
+    <Resource Include="Web\Maps\images\alarm\alarmOverSpeed.png" />
+    <Resource Include="Web\Maps\images\alarm\alarmSignalGsm1.png" />
+    <Resource Include="Web\Maps\images\alarm\CRExpired.png" />
+    <Resource Include="Web\Maps\images\alarm\emergency.png" />
+    <Resource Include="Web\Maps\images\alarm\PowerOff.png" />
+    <Resource Include="Web\Maps\images\loader.gif" />
+    <Resource Include="Web\Maps\images\poi\0.png" />
+    <Resource Include="Web\Maps\images\poi\1.png" />
+    <Resource Include="Web\Maps\images\poi\10.png" />
+    <Resource Include="Web\Maps\images\poi\11.png" />
+    <Resource Include="Web\Maps\images\poi\12.png" />
+    <Resource Include="Web\Maps\images\poi\13.png" />
+    <Resource Include="Web\Maps\images\poi\14.png" />
+    <Resource Include="Web\Maps\images\poi\15.png" />
+    <Resource Include="Web\Maps\images\poi\16.png" />
+    <Resource Include="Web\Maps\images\poi\17.png" />
+    <Resource Include="Web\Maps\images\poi\18.png" />
+    <Resource Include="Web\Maps\images\poi\19.png" />
+    <Resource Include="Web\Maps\images\poi\2.png" />
+    <Resource Include="Web\Maps\images\poi\20.png" />
+    <Resource Include="Web\Maps\images\poi\21.png" />
+    <Resource Include="Web\Maps\images\poi\22.png" />
+    <Resource Include="Web\Maps\images\poi\23.png" />
+    <Resource Include="Web\Maps\images\poi\24.png" />
+    <Resource Include="Web\Maps\images\poi\25.png" />
+    <Resource Include="Web\Maps\images\poi\26.png" />
+    <Resource Include="Web\Maps\images\poi\27.png" />
+    <Resource Include="Web\Maps\images\poi\28.png" />
+    <Resource Include="Web\Maps\images\poi\29.png" />
+    <Resource Include="Web\Maps\images\poi\3.png" />
+    <Resource Include="Web\Maps\images\poi\30.png" />
+    <Resource Include="Web\Maps\images\poi\31.png" />
+    <Resource Include="Web\Maps\images\poi\32.png" />
+    <Resource Include="Web\Maps\images\poi\33.png" />
+    <Resource Include="Web\Maps\images\poi\34.png" />
+    <Resource Include="Web\Maps\images\poi\35.png" />
+    <Resource Include="Web\Maps\images\poi\36.png" />
+    <Resource Include="Web\Maps\images\poi\37.png" />
+    <Resource Include="Web\Maps\images\poi\38.png" />
+    <Resource Include="Web\Maps\images\poi\39.png" />
+    <Resource Include="Web\Maps\images\poi\4.png" />
+    <Resource Include="Web\Maps\images\poi\40.png" />
+    <Resource Include="Web\Maps\images\poi\41.png" />
+    <Resource Include="Web\Maps\images\poi\42.png" />
+    <Resource Include="Web\Maps\images\poi\43.png" />
+    <Resource Include="Web\Maps\images\poi\44.png" />
+    <Resource Include="Web\Maps\images\poi\45.png" />
+    <Resource Include="Web\Maps\images\poi\46.png" />
+    <Resource Include="Web\Maps\images\poi\47.png" />
+    <Resource Include="Web\Maps\images\poi\48.png" />
+    <Resource Include="Web\Maps\images\poi\49.png" />
+    <Resource Include="Web\Maps\images\poi\5.png" />
+    <Resource Include="Web\Maps\images\poi\50.png" />
+    <Resource Include="Web\Maps\images\poi\51.png" />
+    <Resource Include="Web\Maps\images\poi\52.png" />
+    <Resource Include="Web\Maps\images\poi\53.png" />
+    <Resource Include="Web\Maps\images\poi\54.png" />
+    <Resource Include="Web\Maps\images\poi\55.png" />
+    <Resource Include="Web\Maps\images\poi\56.png" />
+    <Resource Include="Web\Maps\images\poi\57.png" />
+    <Resource Include="Web\Maps\images\poi\58.png" />
+    <Resource Include="Web\Maps\images\poi\59.png" />
+    <Resource Include="Web\Maps\images\poi\6.png" />
+    <Resource Include="Web\Maps\images\poi\60.png" />
+    <Resource Include="Web\Maps\images\poi\7.png" />
+    <Resource Include="Web\Maps\images\poi\8.png" />
+    <Resource Include="Web\Maps\images\poi\9.png" />
+    <Resource Include="Web\Maps\images\tracker\icon_0_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_0_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_0_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_0_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_0_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_10_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_10_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_10_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_10_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_10_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_11_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_11_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_11_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_11_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_11_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_12_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_12_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_12_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_12_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_12_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_13_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_13_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_13_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_13_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_13_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_14_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_14_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_14_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_14_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_14_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_15_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_15_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_15_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_15_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_15_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_16_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_16_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_16_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_16_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_16_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_17_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_17_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_17_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_17_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_17_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_18_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_18_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_18_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_18_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_18_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_1_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_1_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_1_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_1_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_1_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_2_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_2_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_2_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_2_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_2_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_3_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_3_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_3_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_3_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_3_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_4_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_4_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_4_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_4_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_4_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_5_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_5_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_5_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_5_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_5_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_6_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_6_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_6_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_6_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_6_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_7_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_7_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_7_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_7_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_7_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_8_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_8_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_8_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_8_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_8_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_9_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_9_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_9_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_9_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\icon_9_stop.gif" />
+    <Resource Include="Web\Maps\images\tracker\New folder\icon_0_alarm.gif" />
+    <Resource Include="Web\Maps\images\tracker\New folder\icon_0_driver.gif" />
+    <Resource Include="Web\Maps\images\tracker\New folder\icon_0_idle.gif" />
+    <Resource Include="Web\Maps\images\tracker\New folder\icon_0_lost.gif" />
+    <Resource Include="Web\Maps\images\tracker\New folder\icon_0_stop.gif" />
+    <Content Include="Web\Maps\index.html" />
+    <Content Include="Web\Maps\libraries\css\style.css" />
+    <Content Include="Web\Maps\libraries\js\classes.js" />
+    <Content Include="Web\Maps\libraries\js\controls.js" />
+    <Content Include="Web\Maps\libraries\js\external\jquery-1.11.3.js" />
+    <Content Include="Web\Maps\libraries\js\external\markerwithlabel.js" />
+    <Content Include="Web\Maps\libraries\leaflet\leaflet.css" />
+    <Content Include="Web\Maps\libraries\leaflet\leaflet.js" />
+    <Content Include="Web\Maps\main.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\images\128\Plain\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

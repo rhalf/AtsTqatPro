@@ -247,8 +247,7 @@ function MapTool() {
 
 
 
-                getAddress(coordinate.lat(), coordinate.lng(),
-                    function (address) {
+                getAddress(coordinate.lat(), coordinate.lng(), function (address) {
                         //var message = "Address : " + address;
                         infoWindow.setContent(address);
                         setTimeout(function () {
@@ -265,7 +264,7 @@ function MapTool() {
 
 
                 break;
-            } case "CenterMap" : {
+            } case "CenterMap": {
                 map.setCenter(coordinateCenter);
                 break;
             }
@@ -278,21 +277,53 @@ function MapTool() {
 
 function getAddress(latitude, longitude, callback) {
     $.support.cors = true;
-    $.ajax({
-        async: true,
-        dataType: 'json',
-        cache: false,
-        url: "http://nominatim.openstreetmap.org/reverse",
-        data: { format: "json", lat: latitude, lon: longitude },
-        success: function (result) {
-            callback(result.display_name);
-        },
-        error: function (jqXHR) {
-            alert(jqXHR.status);
-            alert(jqXHR.statusText);
-            alert(jqXHR.responseText);
-        }
-    });
+    var parameter = latitude + "," + longitude;
+
+    $.get("https://maps.googleapis.com/maps/api/geocode/json", { latlng: parameter }, function (json) {
+        //var detail, country, city, area;
+        //for (var index = 0; index < json.results[0].address_components.length; index++) {
+        //    for (var index1 = 0; index1 < json.results[0].address_components[index].types.length; index1++) {
+
+        //        switch (json.results[0].address_components[index].types[index1]) {
+        //            case 'country':
+        //                country = json.results[0].address_components[index].long_name;
+        //                break;
+        //            case 'administrative_area_level_1':
+        //                city = json.results[0].address_components[index].short_name;
+        //                break;
+        //            case 'administrative_area_level_2':
+        //                area = json.results[0].address_components[index].short_name;
+        //                break;
+        //            case 'sublocality_level_1':
+        //                area = json.results[0].address_components[index].short_name;
+        //                break;
+        //            case 'locality':
+        //                area = json.results[0].address_components[index].short_name;
+        //                break;
+        //        }
+        //    }
+        //}
+
+        callback(json.results[0].formatted_address);
+    }, 'json');
+
+
+
+    //$.ajax({
+    //    async: true,
+    //    dataType: 'json',
+    //    cache: false,
+    //    url: "http://nominatim.openstreetmap.org/reverse",
+    //    data: { format: "json", lat: latitude, lon: longitude },
+    //    success: function (result) {
+    //        callback(result.display_name);
+    //    },
+    //    error: function (jqXHR) {
+    //        alert(jqXHR.status);
+    //        alert(jqXHR.statusText);
+    //        alert(jqXHR.responseText);
+    //    }
+    //});
 }
 
 //function clone(obj) {

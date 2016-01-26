@@ -30,7 +30,7 @@ namespace TqatProViewModel {
                 user.Username = value;
             }
         }
-        public bool? IsChecked {
+        public bool IsChecked {
             get;
             set;
         }

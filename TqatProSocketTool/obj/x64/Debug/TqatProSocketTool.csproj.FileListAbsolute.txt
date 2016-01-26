@@ -1,11 +1,4 @@
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\MainWindow.g.cs
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\App.g.cs
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\TqatProSocketTool_MarkupCompile.cache
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\TqatProSocketTool_MarkupCompile.lref
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\x64\Debug\TqatProSocketTool.exe.config
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\TqatProSocketTool.csprojResolveAssemblyReference.cache
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\DialogServerAdd.g.cs
-C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\DialogTcpClient.g.cs
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\x64\Debug\TqatProSocketTool.exe
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\x64\Debug\TqatProSocketTool.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\x64\Debug\AtsGps.dll
@@ -15,6 +8,13 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\x64\Debug\Newto
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\x64\Debug\TqatProModel.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\x64\Debug\AtsGps.pdb
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\bin\x64\Debug\Newtonsoft.Json.xml
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\TqatProSocketTool.csprojResolveAssemblyReference.cache
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\DialogServerAdd.g.cs
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\DialogTcpClient.g.cs
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\MainWindow.g.cs
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\App.g.cs
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\TqatProSocketTool_MarkupCompile.cache
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\TqatProSocketTool_MarkupCompile.lref
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\DialogServerAdd.baml
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\DialogTcpClient.baml
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProSocketTool\obj\x64\Debug\MainWindow.baml

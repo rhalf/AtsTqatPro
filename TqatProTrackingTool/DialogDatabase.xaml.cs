@@ -100,10 +100,12 @@ namespace TqatProTrackingTool {
         private void MetroWindow_Loaded (object sender, RoutedEventArgs e) {
             groupBoxOther.IsEnabled = false;
             if (Settings.Default.groupServersIndex == 1) {
-                radioButtonServer1.IsChecked = true;
-            } else if (Settings.Default.groupServersIndex == 2) {
+                radioButtonServer1.IsChecked = true; }
+            else if (Settings.Default.groupServersIndex == 2) {
                 radioButtonServer2.IsChecked = true;
             } else if (Settings.Default.groupServersIndex == 3) {
+                radioButtonServer3.IsChecked = true;
+            } else if (Settings.Default.groupServersIndex == 0) {
                 radioButtonServerX.IsChecked = true;
             }
 
@@ -124,7 +126,7 @@ namespace TqatProTrackingTool {
 
             if (radioButton.Name.Equals("radioButtonServerX")) {
                 groupBoxOther.IsEnabled = true;
-                Settings.Default.groupServersIndex = 3;
+                Settings.Default.groupServersIndex = 0;
                 Settings.Default.Save();
 
             } else if (radioButton.Name.Equals("radioButtonServer1")) {
@@ -145,6 +147,16 @@ namespace TqatProTrackingTool {
                 Settings.Default.databasePassword = "my5q1r3p0rt@pp!@#";
                 Settings.Default.groupServersIndex = 2;
                 Settings.Default.webServiceIp = "184.107.175.154";
+                Settings.Default.webServicePort = 8000;
+                Settings.Default.Save();
+            } else if (radioButton.Name.Equals("radioButtonServer3")) {
+                //Ats Mowasalat Server
+                Settings.Default.databaseHost = "108.163.190.202";
+                Settings.Default.databaseUsername = "atstqatpro";
+                Settings.Default.databasePort = 3306;
+                Settings.Default.databasePassword = "@t5tq@pr0!@#";
+                Settings.Default.groupServersIndex = 3;
+                Settings.Default.webServiceIp = "72.55.132.40";
                 Settings.Default.webServicePort = 8000;
                 Settings.Default.Save();
             } else {

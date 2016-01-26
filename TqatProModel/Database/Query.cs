@@ -19,7 +19,7 @@ using System.Collections.Concurrent;
 using System.Net;
 using System.IO;
 using System.Diagnostics;
-using AtsGps.Meitrack;
+using AtsGps.Ats;
 
 namespace TqatProModel.Database {
 
@@ -435,10 +435,20 @@ namespace TqatProModel.Database {
 
                 mysqlConnection.Open();
 
-                string sql =
+                string sql = "";
+
+                if (user.AccessLevel == 1 || user.AccessLevel == 2) {
+                    sql =
                     "SELECT * " +
                     "FROM cmp_" + company.DatabaseName + ".usrs " +
                     "WHERE cmp_" + company.DatabaseName + ".usrs.upriv >= " + user.AccessLevel.ToString() + ";";
+                } else {
+                    sql =
+                    "SELECT * " +
+                    "FROM cmp_" + company.DatabaseName + ".usrs " +
+                    "WHERE cmp_" + company.DatabaseName + ".usrs.upriv = " + user.AccessLevel.ToString() + " and " +
+                    "cmp_" + company.DatabaseName + ".usrs.uname = '" + user.Username + "';";
+                }
 
                 MySqlCommand mySqlCommand = new MySqlCommand(sql, mysqlConnection);
 
@@ -878,12 +888,13 @@ namespace TqatProModel.Database {
 
             try {
                 WebRequest request = WebRequest.Create("http://" + server.Ip + "/connect/get_realtime.php?url=http://" + server.Ip + ":" + server.PortHttp + "/?id=" + tracker.TrackerImei);
+
                 // If required by the server, set the credentials.
                 request.Credentials = CredentialCache.DefaultCredentials;
                 // Get the response.
                 WebResponse response = request.GetResponse();
                 // Display the status.
-                Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+                //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
                 // Get the stream containing content returned by the server.
                 Stream dataStream = response.GetResponseStream();
                 // Open the stream using a StreamReader for easy access.
@@ -891,7 +902,7 @@ namespace TqatProModel.Database {
                 // Read the content.
                 string responseFromServer = reader.ReadToEnd();
                 // Display the content.
-                Console.WriteLine(responseFromServer);
+                //Console.WriteLine(responseFromServer);
                 // Clean up the streams and the response.
                 reader.Close();
                 response.Close();
@@ -959,11 +970,14 @@ namespace TqatProModel.Database {
                     //Geofence
                     Coordinate coordinate = new Coordinate(latitude, longitude);
 
-                    foreach (Geofence geofence in company.Geofences) {
-                        if (Geofence.isPointInPolygon(geofence, coordinate)) {
-                            trackerData.Geofence = geofence;
-                        }
-                    };
+                    if (company.Geofences != null) {
+                        foreach (Geofence geofence in company.Geofences) {
+                            if (Geofence.isPointInPolygon(geofence, coordinate)) {
+                                trackerData.Geofence = geofence;
+                            }
+                        };
+                    }
+
 
                     double batteryStrength = (double)int.Parse(data[28], System.Globalization.NumberStyles.AllowHexSpecifier);
                     batteryStrength = ((batteryStrength - 2114f) * (100f / 492f));//*100.0;
@@ -988,14 +1002,14 @@ namespace TqatProModel.Database {
                     return trackerData;
                 }
 
-                //} catch (QueryException queryException) {
-                //throw queryException;
-                //} catch (MySqlException mySqlException) {
-                //throw new QueryException(1, mySqlException.Message);
+            } catch (QueryException queryException) {
+                throw queryException;
+            } catch (MySqlException mySqlException) {
+                throw new QueryException(1, mySqlException.Message);
             } catch (Exception exception) {
                 Debug.Write(exception);
-                //throw new QueryException(1, exception.Message);
-                return trackerData;
+                mysqlConnection.Close();
+                throw new QueryException(1, exception.Message);
             } finally {
                 mysqlConnection.Close();
             }

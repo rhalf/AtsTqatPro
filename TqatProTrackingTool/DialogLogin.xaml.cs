@@ -38,6 +38,8 @@ namespace TqatProTrackingTool {
 
         public DialogLogin () {
             InitializeComponent();
+
+            //Guid id = Guid.NewGuid();
         }
 
         Query query;

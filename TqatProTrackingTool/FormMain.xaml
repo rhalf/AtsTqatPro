@@ -10,7 +10,7 @@
     
         x:Class="TqatProTrackingTool.FormMain"
         
-         Height="600" Width="400"
+         Height="850" Width="500"
         GlowBrush="{DynamicResource AccentColorBrush}"
         ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"
@@ -35,23 +35,24 @@
             <Setter Property="ImageSource" Value="Resources/images/128/Animated/user_02.png"/>
             <Setter Property="Header" Value="{Binding Username}"/>
             <Setter Property="DataContext" Value="{Binding UserItem}"/>
-            <EventSetter Event="MenuItem.Click" Handler="StyleRibbonMenuButtonUser_Click"/>
+            <EventSetter Event="RibbonMenuItem.Click" Handler="StyleRibbonMenuButtonUser_Click"/>
         </Style>
+        
         <Style x:Key="StyleRibbonComboBoxDisplay" TargetType="{x:Type RibbonMenuItem}">
             <Setter Property="ImageSource" Value="Resources/images/128/Animated/user_02.png"/>
-            <EventSetter Event="MenuItem.Click" Handler="StyleRibbonMenuButtonUser_Click"/>
+            <EventSetter Event="RibbonMenuItem.Click" Handler="StyleRibbonMenuButtonUser_Click"/>
         </Style>
 
     </Controls:MetroWindow.Resources>
 
 
-    <Controls:MetroWindow.RightWindowCommands>
+    <!--<Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button Content="Trackers" Click="formCommandTrackers_Click"/>
 
 
         </Controls:WindowCommands>
-    </Controls:MetroWindow.RightWindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>-->
 
 
     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -67,10 +68,7 @@
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu>
                     <RibbonApplicationMenuItem ImageSource="Resources/images/128/Ats/logo_01.png" Header="Advanced Technologies And Solutions" Click="RibbonApplicationMenuItemAts_Click"></RibbonApplicationMenuItem>
-                    <Label></Label>
-                    <Label></Label>
-                    <Label></Label>
-                    <Label></Label>
+                   
                     <RibbonApplicationMenu.AuxiliaryPaneContent>
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
@@ -98,9 +96,10 @@
             <RibbonTab Header="Live Tracking">
                 <RibbonGroup Header="User">
                     <RibbonMenuButton x:Name="ribbonMenuButtonUser" LargeImageSource="Resources/images/128/Animated/user_00.png" Label="User" ItemContainerStyle="{StaticResource StyleRibbonMenuButtonUser}"/>
+               
                 </RibbonGroup>
                 <RibbonGroup Header="Display">
-                    <RibbonMenuButton  x:Name="ribbonMenuButtonDisplayMember" LargeImageSource="Resources/images/128/Animated/monitor_01.png" Label="VehicleRegistration" ItemContainerStyle="{StaticResource StyleRibbonMenuButtonUser}">
+                    <RibbonMenuButton  x:Name="ribbonMenuButtonDisplayMember" LargeImageSource="Resources/images/128/Animated/monitor_01.png" Label="VehicleRegistration">
                         <RibbonGallery x:Name="ribbonGalleryComboBoxDisplayMember" SelectedValue="VehicleRegistration"
 							SelectedValuePath="Content"
 							MaxColumnCount="1" SelectionChanged="RibbonComboBoxDisplayMember_SelectionChanged">

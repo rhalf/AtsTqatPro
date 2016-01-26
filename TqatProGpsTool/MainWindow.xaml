@@ -1,0 +1,82 @@
+﻿<Window x:Class="TqatProGpsTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TqatProGpsTool"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="850"
+        WindowStyle="None"
+        Loaded="Window_Loaded" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Ribbon x:Name="rWindow" SelectedIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0">
+
+            <Ribbon.ApplicationMenu>
+                <RibbonApplicationMenu>
+                    <RibbonApplicationMenuItem>
+
+                    </RibbonApplicationMenuItem>
+                </RibbonApplicationMenu>
+            </Ribbon.ApplicationMenu>
+            <RibbonTab Header="Tracking" KeyTip="L">
+                <RibbonGroup Header="User">
+                    <RibbonMenuButton x:Name="rMenuButtonUser" Label="-" LargeImageSource="Resources/images/128/Animated/user_00.png">
+                    </RibbonMenuButton>
+                </RibbonGroup>
+                <RibbonGroup Header="Display">
+                    <RibbonMenuButton x:Name="rMenuButtonDisplay" Label="-" LargeImageSource="Resources/images/128/Animated/monitor_01.png">
+                    </RibbonMenuButton>
+                </RibbonGroup>
+                <RibbonGroup Header="Collection">
+                    <RibbonMenuButton x:Name="rMenuButtonCollection" Label="-" LargeImageSource="Resources/images/128/Animated/car_00.png">
+                    </RibbonMenuButton>
+                </RibbonGroup>
+            </RibbonTab>
+            <RibbonTab Header="Reports" KeyTip="R">
+
+            </RibbonTab>
+
+        </Ribbon>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Header="Trackers" Margin="3" Grid.Column="0">
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Search : " Grid.Column="0"></Label>
+                        <TextBox Grid.Column="1"></TextBox>
+                    </Grid>
+                    <ListView x:Name="listViewTracker">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox IsChecked="{Binding IsChecked}"></CheckBox>
+                                    <Label Content="{Binding}"></Label>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </GroupBox>
+            <Grid Grid.Column="1" Margin="3">
+                <TabControl>
+                    <TabItem Header="Map">
+
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

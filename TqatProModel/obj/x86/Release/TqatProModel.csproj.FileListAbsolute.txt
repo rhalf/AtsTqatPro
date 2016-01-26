@@ -1,0 +1,10 @@
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\x86\Release\TqatProModel.dll.config
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\x86\Release\TqatProModel.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\x86\Release\TqatProModel.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\x86\Release\AtsGps.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\x86\Release\MySql.Data.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\x86\Release\Newtonsoft.Json.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\x86\Release\AtsGps.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\bin\x86\Release\Newtonsoft.Json.xml
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\x86\Release\TqatProModel.dll
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProModel\obj\x86\Release\TqatProModel.pdb

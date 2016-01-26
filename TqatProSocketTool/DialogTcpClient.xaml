@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TqatProSocketTool"
         mc:Ignorable="d"
-        Title="DialogTcpClient" Height="400" Width="400"
+        Title="DialogTcpClient" Height="400" Width="600"
         WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
@@ -19,19 +19,56 @@
                 <Button Name="buttonSearch" Content="Search" Click="buttonSearch_Click" Margin="3"></Button>
             </StackPanel>
         </GroupBox>
-        <DataGrid x:Name="dataGridTrackers" AutoGenerateColumns="False" LoadingRow="dialogTrackers_LoadingRow" Grid.Row="1" VerticalScrollBarVisibility="Auto">
+        <DataGrid x:Name="dataGridTrackers" AutoGenerateColumns="False" LoadingRow="dialogTrackers_LoadingRow" Grid.Row="1" VerticalScrollBarVisibility="Auto" Sorting="dataGridTrackers_Sorting">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Imei" Width="*" IsReadOnly="True">
+                <DataGridTemplateColumn Header="Id" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Content="{Binding Imei, Mode=OneWay}" ></Label>
+                            <TextBox Text="{Binding Id, Mode=OneWay}" ></TextBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="TcpClient" Width="*" IsReadOnly="True">
+                <DataGridTemplateColumn Header="Imei" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Content="{Binding TcpClient.Client.RemoteEndPoint.Address,Mode=OneWay}"></Label>
+                            <TextBox Text="{Binding Imei, Mode=OneWay}" ></TextBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Ip" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Ip, Mode=OneWay}"></TextBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Port" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Port, Mode=OneWay}"></TextBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="DataIn" Width="*" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding DataIn, Mode=OneWay}"></TextBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="DataOut" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding DataOut, Mode=OneWay}"></TextBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="DateTime" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding DateTime, Mode=OneWay}"></TextBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

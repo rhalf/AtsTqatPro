@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using AtsGps;
 using System.Collections;
+using System.Threading;
 
 namespace TqatProSocketTool {
     /// <summary>
@@ -22,24 +23,9 @@ namespace TqatProSocketTool {
     /// </summary>
     public partial class DialogTcpClient : Window {
 
-
-
         public DialogTcpClient (TcpManager tcpManager) {
             InitializeComponent();
-            dataGridTrackers.Items.Clear();
-
-            if (tcpManager.Device.Company != "Ats") {
-                foreach (TcpTracker tcpTracker in tcpManager.TcpTrackers.Values) {
-                    TcpTracker tcpTracker1 = new TcpTracker() { Imei = tcpTracker.Imei, TcpClient = tcpTracker.TcpClient };
-                    dataGridTrackers.Items.Add(tcpTracker1);
-                }
-            } else {
-                foreach (TcpClient tcpClient in tcpManager.TcpClients) {
-                    TcpTracker tcpPair1 = new TcpTracker() {Imei = "Not A Tracking Device", TcpClient = tcpClient };
-                    dataGridTrackers.Items.Add(tcpPair1);
-                }
-            }
-
+            dataGridTrackers.ItemsSource = tcpManager.TcpClients.Values;
         }
 
         private void dialogTrackers_LoadingRow (object sender, DataGridRowEventArgs e) {
@@ -53,6 +39,10 @@ namespace TqatProSocketTool {
                     dataGridTrackers.SelectedItem = tcpPair;
                 }
             }
+        }
+
+        private void dataGridTrackers_Sorting (object sender, DataGridSortingEventArgs e) {
+
         }
     }
 }

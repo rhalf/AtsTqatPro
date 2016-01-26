@@ -8,7 +8,7 @@
 
         xmlns:sys="clr-namespace:Microsoft.CSharp;assembly=System"
        
-        Title="MainWindow" Height="400" Width="700"
+        Title="MainWindow" Height="400" Width="800"
         
         
         Loaded="Window_Loaded"
@@ -211,14 +211,19 @@
                                         <GridViewColumn Header="Device" Width="70" DisplayMemberBinding="{Binding Device.Name, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="IpAddress" Width="100" DisplayMemberBinding="{Binding IpAddress, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="Port" Width="50" DisplayMemberBinding="{Binding Port, Mode=OneWay}"></GridViewColumn>
-                                        <GridViewColumn Header="Packets" Width="60" DisplayMemberBinding="{Binding Packets, Mode=OneWay}"></GridViewColumn>
-                                        <GridViewColumn Header="TcpClients" Width="60" DisplayMemberBinding="{Binding TcpClients.Count, Mode=OneWay}"></GridViewColumn>
-                                        <GridViewColumn Header="Trackers" Width="60" DisplayMemberBinding="{Binding TcpTrackers.Count, Mode=OneWay}"></GridViewColumn>
+
+                                        <GridViewColumn Header="Tcp" Width="60" DisplayMemberBinding="{Binding TcpClients.Count, Mode=OneWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Trackers" Width="60" DisplayMemberBinding="{Binding TcpClients.TrackersCount, Mode=OneWay}"></GridViewColumn>
+
+                                        <GridViewColumn Header="Packet S" Width="60" DisplayMemberBinding="{Binding PacketSent, Mode=OneWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Packet R" Width="60" DisplayMemberBinding="{Binding PacketReceived, Mode=OneWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Byte S" Width="75" DisplayMemberBinding="{Binding ByteSent, Mode=OneWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Byte R" Width="75" DisplayMemberBinding="{Binding ByteReceived, Mode=OneWay}"></GridViewColumn>
+
 
                                         <GridViewColumn Header="BufferIn" Width="75" DisplayMemberBinding="{Binding BufferIn.Count, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="BufferOut" Width="75" DisplayMemberBinding="{Binding BufferOut.Count, Mode=OneWay}"></GridViewColumn>
-                                        <GridViewColumn Header="SendBytes" Width="75" DisplayMemberBinding="{Binding SendBytes, Mode=OneWay}"></GridViewColumn>
-                                        <GridViewColumn Header="ReceiveBytes" Width="75" DisplayMemberBinding="{Binding ReceiveBytes, Mode=OneWay}"></GridViewColumn>
+
                                         <GridViewColumn Header="IsActivated" Width="75" >
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
