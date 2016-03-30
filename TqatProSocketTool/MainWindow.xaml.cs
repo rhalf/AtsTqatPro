@@ -67,6 +67,7 @@ namespace TqatProSocketTool {
                         //    processBufferIn(tcpManager);
                         //}
 
+                        Thread.Sleep(1000);
                         ThreadPool.QueueUserWorkItem(new WaitCallback(processBufferIn), tcpManager);
                     }
 
@@ -108,7 +109,6 @@ namespace TqatProSocketTool {
         }
 
         private void processBufferIn (Object state) {
-            Thread.Sleep(10);
             TcpManager tcpManager = (TcpManager)state;
             while (!tcpManager.BufferIn.IsEmpty) {
 
@@ -174,6 +174,8 @@ namespace TqatProSocketTool {
                         TextLog.Write(exception);
                     }
                 }
+
+                Thread.Sleep(10);
             }
 
 
@@ -497,9 +499,14 @@ namespace TqatProSocketTool {
             tcpManagerClear();
         }
         private void tcpManagerClear () {
-            if (buttonServersStart.IsEnabled) {
-                tcpManagers.Clear();
+            try {
+                if (buttonServersStart.IsEnabled) {
+                    tcpManagers.Clear();
+                }
+            }catch {
+                ;
             }
+          
         }
     }
 }

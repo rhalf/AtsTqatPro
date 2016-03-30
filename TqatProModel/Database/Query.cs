@@ -909,6 +909,7 @@ namespace TqatProModel.Database {
                 //===========================================
 
                 //===========================================
+                responseFromServer = responseFromServer.Trim();
                 if (responseFromServer == "1") {
                     trackerData.IsDataEmpty = true;
                     return trackerData;

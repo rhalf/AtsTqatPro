@@ -37,7 +37,7 @@ namespace TqatProTrackingTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("atstqatpro")]
+        [global::System.Configuration.DefaultSettingValueAttribute("tqattrack1")]
         public string databaseUsername {
             get {
                 return ((string)(this["databaseUsername"]));
@@ -49,7 +49,7 @@ namespace TqatProTrackingTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("@t5tq@pr0!@#")]
+        [global::System.Configuration.DefaultSettingValueAttribute("BMS3FxkWGbfgzDwQ")]
         public string databasePassword {
             get {
                 return ((string)(this["databasePassword"]));

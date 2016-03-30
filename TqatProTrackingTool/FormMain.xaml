@@ -68,7 +68,9 @@
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu>
                     <RibbonApplicationMenuItem ImageSource="Resources/images/128/Ats/logo_01.png" Header="Advanced Technologies And Solutions" Click="RibbonApplicationMenuItemAts_Click"></RibbonApplicationMenuItem>
-                   
+                    <Label></Label>
+                    <Label></Label>
+
                     <RibbonApplicationMenu.AuxiliaryPaneContent>
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">

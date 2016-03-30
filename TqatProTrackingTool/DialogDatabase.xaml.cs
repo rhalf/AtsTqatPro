@@ -132,9 +132,9 @@ namespace TqatProTrackingTool {
             } else if (radioButton.Name.Equals("radioButtonServer1")) {
                 //Ats Database Server
                 Settings.Default.databaseHost = "108.163.190.202";
-                Settings.Default.databaseUsername = "atstqatpro";
+                Settings.Default.databaseUsername = "tqattrack1";
                 Settings.Default.databasePort = 3306;
-                Settings.Default.databasePassword = "@t5tq@pr0!@#";
+                Settings.Default.databasePassword = "BMS3FxkWGbfgzDwQ";
                 Settings.Default.groupServersIndex = 1;
                 Settings.Default.webServiceIp = "67.205.85.177";
                 Settings.Default.webServicePort = 8000;
@@ -150,11 +150,11 @@ namespace TqatProTrackingTool {
                 Settings.Default.webServicePort = 8000;
                 Settings.Default.Save();
             } else if (radioButton.Name.Equals("radioButtonServer3")) {
-                //Ats Mowasalat Server
+                //New Server
                 Settings.Default.databaseHost = "108.163.190.202";
-                Settings.Default.databaseUsername = "atstqatpro";
+                Settings.Default.databaseUsername = "tqattrack1";
                 Settings.Default.databasePort = 3306;
-                Settings.Default.databasePassword = "@t5tq@pr0!@#";
+                Settings.Default.databasePassword = "BMS3FxkWGbfgzDwQ";
                 Settings.Default.groupServersIndex = 3;
                 Settings.Default.webServiceIp = "72.55.132.40";
                 Settings.Default.webServicePort = 8000;

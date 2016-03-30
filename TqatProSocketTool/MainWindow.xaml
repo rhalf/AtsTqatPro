@@ -217,8 +217,8 @@
 
                                         <GridViewColumn Header="Packet S" Width="60" DisplayMemberBinding="{Binding PacketSent, Mode=OneWay}"></GridViewColumn>
                                         <GridViewColumn Header="Packet R" Width="60" DisplayMemberBinding="{Binding PacketReceived, Mode=OneWay}"></GridViewColumn>
-                                        <GridViewColumn Header="Byte S" Width="75" DisplayMemberBinding="{Binding ByteSent, Mode=OneWay}"></GridViewColumn>
-                                        <GridViewColumn Header="Byte R" Width="75" DisplayMemberBinding="{Binding ByteReceived, Mode=OneWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Byte S" Width="75" DisplayMemberBinding="{Binding ByteSent, Mode=OneWay, StringFormat={}{0:N0}}"></GridViewColumn>
+                                        <GridViewColumn Header="Byte R" Width="75" DisplayMemberBinding="{Binding ByteReceived, Mode=OneWay, StringFormat={}{0:N0}}"></GridViewColumn>
 
 
                                         <GridViewColumn Header="BufferIn" Width="75" DisplayMemberBinding="{Binding BufferIn.Count, Mode=OneWay}"></GridViewColumn>
