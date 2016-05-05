@@ -219,6 +219,13 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
+                                        <GridViewColumn Header="EPC" Width="Auto">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox IsChecked="{Binding EPC}"  IsHitTestVisible="False"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
                                         <GridViewColumn Header="OverSpeed" Width="Auto">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
@@ -226,6 +233,7 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
+                                    
                                         <GridViewColumn Header="EventCode" Width="Auto" DisplayMemberBinding="{Binding EventCode}" />
                                         <GridViewColumn Header="Battery" Width="Auto" DisplayMemberBinding="{Binding Battery}" />
                                         <GridViewColumn Header="BatteryVoltage" Width="Auto" DisplayMemberBinding="{Binding BatteryVoltage}" />

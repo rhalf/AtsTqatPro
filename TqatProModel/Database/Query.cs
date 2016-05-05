@@ -40,7 +40,7 @@ namespace TqatProModel.Database {
         }
 
 
-
+    
         public void checkConnection () {
             MySqlConnection mysqlConnection = new MySqlConnection(database.getConnectionString());
 
@@ -930,17 +930,26 @@ namespace TqatProModel.Database {
                     //} else {
                     //    trackerData.DateTime = DateTime.Now;
                     //}
-                    double latitude = double.Parse((string)jsonData.gm_lat);
-                    double longitude = double.Parse((string)jsonData.gm_lng);
+
+
+                    double latitude = 0;
+                    double.TryParse((string)jsonData.gm_lat, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out latitude);
+                    double longitude = 0;
+                    double.TryParse((string)jsonData.gm_lng, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out longitude);
+
                     trackerData.Coordinate = new Coordinate(latitude, longitude);
 
                     trackerData.Speed = int.Parse((string)jsonData.gm_speed);
                     trackerData.Degrees = int.Parse((string)jsonData.gm_ori);
                     trackerData.Direction = Direction.degreesToCardinalDetailed(double.Parse((string)jsonData.gm_ori));
                     //trackerData.Mileage = double.Parse((string)jsonData.gm_mileage);
-                    double deviceMileage = double.Parse((string)jsonData.gm_mileage);
+
+                    double deviceMileage = 0;
+                    double.TryParse((string)jsonData.gm_mileage, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out deviceMileage);
+
                     double carMileage = (tracker.MileageInitial);
                     trackerData.Mileage = deviceMileage + carMileage;
+
                     //1,			            //(0)
                     //35,			            //Event code(Decimal)
                     //11,			            //Number of satellites(Decimal)
@@ -980,25 +989,26 @@ namespace TqatProModel.Database {
                     }
 
 
-                    double batteryStrength = (double)int.Parse(data[28], System.Globalization.NumberStyles.AllowHexSpecifier);
-                    batteryStrength = ((batteryStrength - 2114f) * (100f / 492f));//*100.0;
-                    batteryStrength = Math.Round(batteryStrength, 2);
-                    if (batteryStrength > 100) {
-                        batteryStrength = 100f;
-                    } else if (batteryStrength < 0) {
+                    double batteryVoltage = (double)int.Parse(data[28], System.Globalization.NumberStyles.AllowHexSpecifier);
+                    batteryVoltage = (batteryVoltage * 3.3 * 2) / 4096;
+
+                    double externalVoltage = (double)int.Parse(data[29], System.Globalization.NumberStyles.AllowHexSpecifier);
+                    externalVoltage = (externalVoltage * 3.3 * 16) / 4096;
+
+                    double batteryStrength = batteryVoltage - 3.5;
+                    batteryStrength = (batteryStrength / 0.8) * 100;
+
+                    if (batteryStrength < 0) {
                         batteryStrength = 0;
+                    } else if (batteryStrength > 100) {
+                        batteryStrength = 100;
                     }
 
-                    double batteryVoltage = (double)int.Parse(data[28], System.Globalization.NumberStyles.AllowHexSpecifier);
-                    batteryVoltage = (batteryVoltage * 3 * 2) / 1024;
-                    batteryVoltage = Math.Round(batteryVoltage, 2);
-                    double externalVoltage = (double)int.Parse(data[29], System.Globalization.NumberStyles.AllowHexSpecifier);
-                    externalVoltage = (externalVoltage * 3 * 16) / 1024;
-                    externalVoltage = Math.Round(externalVoltage, 2);
+                    trackerData.EPC = (externalVoltage > 3) ? false : true;
 
-                    trackerData.Battery = batteryStrength;
-                    trackerData.BatteryVoltage = batteryVoltage;
-                    trackerData.ExternalVoltage = externalVoltage;
+                    trackerData.Battery = Math.Round(batteryStrength, 2);
+                    trackerData.BatteryVoltage = Math.Round(batteryVoltage, 2);
+                    trackerData.ExternalVoltage = Math.Round(externalVoltage, 2);
 
                     return trackerData;
                 }

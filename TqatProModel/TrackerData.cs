@@ -77,6 +77,12 @@ namespace TqatProModel {
             get;
             set;
         }
+        public bool EPC
+        {
+            get;
+            set;
+        }
+
         public bool OverSpeed {
             get;
             set;
