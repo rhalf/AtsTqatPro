@@ -17,3 +17,4 @@ C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProGpsTool\obj\Release\TqatProGps
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProGpsTool\obj\Release\TqatProGpsTool.csproj.GenerateResource.Cache
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProGpsTool\obj\Release\TqatProGpsTool.exe
 C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProGpsTool\obj\Release\TqatProGpsTool.pdb
+C:\Users\Rhalf\Documents\GitHub\AtsTqatPro\TqatProGpsTool\obj\Release\TqatProGpsTool.csprojResolveAssemblyReference.cache

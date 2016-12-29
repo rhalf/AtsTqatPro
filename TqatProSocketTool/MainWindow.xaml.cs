@@ -38,81 +38,24 @@ namespace TqatProSocketTool {
 
         ConcurrentDictionary<Int64, TcpManager> tcpManagers;
         ConcurrentDictionary<String, String[]> bufferOut;
+
         Machine machine;
 
         #region BufferStart
-        Thread threadUploaderManager, threadGuiUpdater;
+        Thread threadGuiUpdater;
         Boolean debug = true;
+        Boolean taskUploader = false;
 
-        private void threadUploaderManagerFunc (Object state) {
-            while (true) {
-                Thread.Sleep(10000);
+        Database _database;
+
+        private void createTaskUploader () {
+            try {
                 if (tcpManagers.Count <= 0)
-                    continue;
+                    throw new Exception("tcpManagers is empty.");
 
-                try {
+                taskUploader = true;
 
-                    foreach (TcpManager tcpManager in tcpManagers.Values) {
-                        if (tcpManager == null)
-                            continue;
-                        if (tcpManager.BufferIn == null)
-                            continue;
-                        if (tcpManager.BufferIn.IsEmpty)
-                            continue;
-                        //if (tcpManager.Device.Company == "Meitrack") {
-                        //    processBufferIn(tcpManager);
-                        //}
-
-                        //if (tcpManager.Device.Company == "Teltonika") {
-                        //    processBufferIn(tcpManager);
-                        //}
-
-                        Thread.Sleep(1000);
-                        ThreadPool.QueueUserWorkItem(new WaitCallback(processBufferIn), tcpManager);
-                    }
-
-                } catch (Exception exception) {
-                    if (debug) {
-                        TextLog.Write(exception);
-                    }
-                }
-            }
-        }
-
-        private void threadGuiUpdaterFunc (Object state) {
-            while (true) {
-                Thread.Sleep(5000);
-                try {
-                    foreach (TcpManager tcpManager in tcpManagers.Values) {
-                        //foreach (TcpTracker tcpTracker in tcpManager.TcpClients.Values) {
-                        //    if (!tcpTracker.TcpClient.Connected) {
-                        //        TcpTracker value = null;
-                        //        tcpManager.TcpClients.TryRemove(tcpTracker.Id, out value);
-                        //    }
-                        //    //if (String.IsNullOrEmpty(tcpTracker.Imei)) {
-                        //    //    TcpTracker value = null;
-                        //    //    tcpManager.TcpClients.TryRemove(tcpTracker.Id, out value);
-                        //    //}
-                        //}
-                        tcpManager.Refresh();
-                    }
-
-                    Dispatcher.Invoke(new Action(() => {
-                        this.listViewTcpManagers.Items.Refresh();
-                    }));
-                } catch (Exception exception) {
-                    if (debug) {
-                        TextLog.Write(exception);
-                    }
-                }
-            }
-        }
-
-        private void processBufferIn (Object state) {
-            TcpManager tcpManager = (TcpManager)state;
-            while (!tcpManager.BufferIn.IsEmpty) {
-
-                Database database = new Database {
+                _database = new Database {
                     IpAddress = Settings.Default.DatabaseIp,
                     Port = Int32.Parse(Settings.Default.DatabasePort),
                     DatabaseName = Settings.Default.DatabaseName,
@@ -120,66 +63,128 @@ namespace TqatProSocketTool {
                     Password = Settings.Default.DatabasePassword
                 };
 
-                Query query = null;
-                Object obj = null;
-                Gm gm = null;
-                Tracker tracker = null;
+                foreach (TcpManager tcpManager in tcpManagers.Values) {
+                    if (tcpManager == null)
+                        continue;
 
-                //Get data from the buffer.
-                if (!tcpManager.BufferIn.TryDequeue(out obj))
-                    continue;
+                    //if (tcpManager.Device.Company == "Meitrack") {
+                    //    processBufferIn(tcpManager);
+                    //}
 
-                //Cast Obj into Gm
-                try {
-                    gm = null;
-                    gm = (Gm)obj;
-                    if (gm == null) {
-                        return;
+                    //if (tcpManager.Device.Company == "Teltonika") {
+                    //    processBufferIn(tcpManager);
+                    //}
+
+                    int taskCount = 10;
+
+                    for (int count = 0; count < taskCount; count++) {
+                        Task task = new Task(new Action(() => {
+                            processBufferIn(tcpManager);
+                        }));
+
+                        task.Start();
                     }
-                } catch (Exception exception) {
-                    if (debug) {
-                        TextLog.Write(exception);
-                    }
-                    return;
+
+
                 }
-
-                //Check Database Connection
-                try {
-                    query = new Query(database);
-                    query.checkConnection();
-                } catch (Exception exception) {
-                    object object1 = obj;
-                    tcpManager.BufferIn.Enqueue(obj);
-                    if (debug) {
-                        TextLog.Write(exception);
-                    }
-                    continue;
+            } catch (Exception exception) {
+                if (debug) {
+                    TextLog.Write(exception);
                 }
-
-                //Check tracker if registered to the database, return 
-                try {
-                    tracker = query.getTracker(gm.Unit);
-                } catch (Exception exception) {
-                    if (debug) {
-                        TextLog.Write(exception);
-                    }
-                    continue;
-                }
-
-                //Insert Data to the database server
-                try {
-                    query.insertTrackerData(tracker, gm);
-                } catch (Exception exception) {
-                    if (debug) {
-                        TextLog.Write(exception);
-                    }
-                }
-
-                Thread.Sleep(10);
             }
-
-
         }
+        private void disposeTaskUploader () {
+            taskUploader = false;
+        }
+
+        private void processBufferIn (Object state) {
+
+            TcpManager tcpManager = (TcpManager)state;
+
+            using (Query query = new Query(_database)) {
+
+                while (taskUploader == true) {
+
+                    if (tcpManager.BufferIn == null) {
+                        Thread.Sleep(100);
+                        continue;
+                    }
+                    if (tcpManager.BufferIn.IsEmpty) {
+                        Thread.Sleep(100);
+                        continue;
+                    }
+
+                    Object obj = null;
+                    Gm gm = null;
+                    Tracker tracker = null;
+
+                    //Get data from the buffer.
+                    if (!tcpManager.BufferIn.TryDequeue(out obj))
+                        continue;
+
+                    //Cast Obj into Gm
+                    try {
+                        gm = (Gm)obj;
+                        if (gm == null) {
+                            return;
+                        }
+                    } catch (Exception exception) {
+                        if (debug) {
+                            TextLog.Write(exception);
+                        }
+                        continue;
+                    }
+
+
+                    //Check tracker if registered to the database, return 
+                    try {
+                        tracker = query.getTracker(gm.Unit);
+                    } catch (Exception exception) {
+                        if (debug) {
+                            TextLog.Write(exception);
+                        }
+                        continue;
+                    }
+
+                    //Insert Data to the database server
+                    try {
+
+                        query.insertTrackerData(tracker, gm);
+                        tracker.Dispose();
+
+                    } catch (Exception exception) {
+                        tcpManager.BufferIn.Enqueue(obj);
+                        if (debug) {
+                            TextLog.Write(exception);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void threadGuiUpdaterFunc (Object state) {
+
+            Action action = new Action(() => {
+                this.listViewTcpManagers.Items.Refresh();
+            });
+
+            while (true) {
+                Thread.Sleep(5000);
+                try {
+                    foreach (TcpManager tcpManager in tcpManagers.Values) {
+                        tcpManager.Refresh();
+                    }
+
+                    Dispatcher.Invoke(action);
+
+                } catch (Exception exception) {
+                    if (debug) {
+                        TextLog.Write(exception);
+                    }
+                }
+            }
+        }
+
 
         #endregion BufferEnd
         private void Window_Loaded (object sender, RoutedEventArgs e) {
@@ -204,8 +209,7 @@ namespace TqatProSocketTool {
 
             initializedTcpManagers();
 
-            threadUploaderManager = new Thread(threadUploaderManagerFunc);
-            threadUploaderManager.Start(tcpManagers);
+
 
 
             threadGuiUpdater = new Thread(threadGuiUpdaterFunc);
@@ -305,6 +309,9 @@ namespace TqatProSocketTool {
                     tcpManager.Start();
                 }
 
+                createTaskUploader();
+
+
 
                 groupTcpManagersSetup.IsEnabled = false;
                 buttonServersStart.IsEnabled = false;
@@ -325,7 +332,6 @@ namespace TqatProSocketTool {
                 }
                 tcpManagerClear();
 
-                GC.Collect();
                 if (debug) {
                     TextLog.Write(exception);
                 }
@@ -334,19 +340,21 @@ namespace TqatProSocketTool {
         }
         private void ButtonServersStop_Click (object sender, RoutedEventArgs e) {
             try {
+
+                disposeTaskUploader();
+
                 groupTcpManagersSetup.IsEnabled = true;
                 foreach (TcpManager tcpManager in tcpManagers.Values) {
                     lock (tcpManager) {
                         if (tcpManager.IsActivated && tcpManager != null) {
                             tcpManager.Stop();
-                            Thread.Sleep(1);
+                            Thread.Sleep(10);
                             tcpManager.Event -= TcpManager_Event;
                             tcpManager.DataReceived -= TcpManager_DataReceived;
                         }
                     }
                 }
 
-                GC.Collect();
                 listViewTcpManagers.ItemsSource = null;
                 listViewTcpManagers.Items.Refresh();
                 buttonServersStart.IsEnabled = true;
@@ -503,10 +511,14 @@ namespace TqatProSocketTool {
                 if (buttonServersStart.IsEnabled) {
                     tcpManagers.Clear();
                 }
-            }catch {
+            } catch {
                 ;
             }
-          
+
+        }
+
+        private void buttonCollect_Click (object sender, RoutedEventArgs e) {
+            GC.Collect();
         }
     }
 }

@@ -33,6 +33,7 @@
             </Grid.ColumnDefinitions>
             <Button Margin="5" Content="Start" Click="ButtonServersStart_Click" Grid.Column="0" Name="buttonServersStart"/>
             <Button Margin="5" Content="Stop" Click="ButtonServersStop_Click" Grid.Column="1"  Name="buttonServersStop" IsEnabled="False"/>
+            <Button Margin="5" Content="Clean" Click="buttonCollect_Click" Grid.Column="2"  Name="buttonCollect"/>
         </Grid>
         <Grid Grid.Row="1">
             <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
